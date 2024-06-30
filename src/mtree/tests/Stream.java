@@ -76,9 +76,7 @@ public class Stream {
             streamInstance = new Stream();
             streamInstance.getRandomInput(1000, 10);
             return streamInstance;
-
         }
-
     }
 
     public boolean hasNext() {

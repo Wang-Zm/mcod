@@ -44,59 +44,32 @@ public class MicroCluster {
     public static double avgLengthExps = 0;
     public static double avgLengthExpsAllWindows = 0;
     public ArrayList<Data> detectOutlier(ArrayList<Data> data, int currentTime, int W, int slide) {
-
-        
         ArrayList<Data> result = new ArrayList<Data>();
-        /**
-         * purge expired objects
-         */
-
+        /* purge expired objects */
         long startTime = Utils.getCPUTime();
         ArrayList<MCObject> expiredData = new ArrayList<MCObject>();
-
         int index = -1;
-
         for (int i = 0; i < dataList.size(); i++) {
-
-            MCObject d =  dataList.get(i);
-
+            MCObject d = dataList.get(i);
             if (d.arrivalTime <= currentTime - W) {
-
                 index = i;
                 expiredData.add(d);
-
                 if (d.isInCluster) {
                     ArrayList<MCObject> inCluster_objects2;
                     if (d.isCenter) {
                         inCluster_objects2 = micro_clusters.get(d);
-
+                    } else {
+                        // 得到的是 cluster 对象
+                        inCluster_objects2 = micro_clusters.get(d.cluster); // update cluster
                     }
-                    // update cluster
-                    else inCluster_objects2 = micro_clusters.get(d.cluster);
-//                   
-//                    if (inCluster_objects2 != null) 
-//                    {
-                        long startTime2 = Utils.getCPUTime();
-                        
-                        inCluster_objects2.remove(d);
-                        
-                        
-//                        micro_clusters.put(inCluster_objects2.get(0).cluster, inCluster_objects2);
-                        MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime2;
-
-                        /**
-                         * check if size of cluster shrink below k+1
-                         */
-                        if (inCluster_objects2.size() < Constants.k + 1) {
-//                            if(d.isCenter)
-//                                micro_clusters.remove(d);
-//                            MicroCluster.inCluster_objects.addAll(inCluster_objects2);
-                            process_shrink_cluster(inCluster_objects2, currentTime);
-//                            MicroCluster.inCluster_objects.clear();
-                        }
-//                    }
-
-                } else {// d is in PD
+                    long startTime2 = Utils.getCPUTime();
+                    inCluster_objects2.remove(d);
+                    MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime2;
+                    /* check if size of cluster shrink below k+1 */
+                    if (inCluster_objects2.size() < Constants.k + 1) {
+                        process_shrink_cluster(inCluster_objects2, currentTime);
+                    }
+                } else { // d is in PD
                     long startTime2 = Utils.getCPUTime();
                     PD.remove(d);
                     d.Rmc.stream().map((c) -> associate_objects.get(c)).filter((list_associates) -> (list_associates != null)).forEach((list_associates) -> {
@@ -104,40 +77,33 @@ public class MicroCluster {
                     });
                     MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime2;
                 }
-
-            } else break;
+            } else {
+                break;
+            }
         }
         process_event_queue(expiredData, currentTime);
         for (int i = index; i >= 0; i--) {
-            
             dataList.remove(i);
         }
-        
         MesureMemoryThread.timeForExpireSlide += Utils.getCPUTime() - startTime;
         
-        /*
-         * process new incoming data
-         */
+        /* process new incoming data */
         // do range query with mtree of cluster centers
         startTime = Utils.getCPUTime();
         data.stream().map((d2) -> new MCObject(d2)).map((d) -> {
-            
             process_data(d, currentTime, false);
             return d;
         }).forEach((d) -> {
             dataList.add(d);
         });
-
-
         outlierList.stream().forEach((o) -> {
             result.add(o);
         });
         MesureMemoryThread.timeForNewSlide += Utils.getCPUTime() - startTime;
         
-        
         numberCluster += micro_clusters.size();
         if(numberPointsInEventQueue < eventQueue.size())
-        numberPointsInEventQueue = eventQueue.size();
+            numberPointsInEventQueue = eventQueue.size();
         HashSet<Integer> tempTest = new HashSet<>();
         for(Data center: micro_clusters.keySet()){
             ArrayList<MCObject> l = micro_clusters.get(center);
@@ -148,7 +114,6 @@ public class MicroCluster {
                 }
             }
         }
-        
         dataList.stream().forEach((o) -> {
             avgPointsInRmc += o.Rmc.size();
             avgLengthExps += o.exps.size();
@@ -160,7 +125,6 @@ public class MicroCluster {
         numberPointsInClustersAllWindows += tempTest.size();
         System.out.println("#points in clusters: "+numberPointsInClusters);
         return result;
-
     }
 
     public void print_cluster() {
@@ -209,7 +173,7 @@ public class MicroCluster {
         micro_clusters.remove(inCluster_objects.get(0).cluster);
         
         MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime;
-        inCluster_objects.stream().map((d) -> {
+        inCluster_objects.stream().map((d) -> { // 就只是 reset 操作，搞这么花哨...
             d.cluster = null;
             return d;
         }).map((d) -> {
@@ -234,12 +198,9 @@ public class MicroCluster {
             if(d.arrivalTime > currentTime - Constants.W)
                 process_data(d, currentTime, true);
         });
-
     }
 
     public void addObjectToCluster(MCObject d, MCObject cluster, boolean fromCluster) {
-
-       
         d.cluster = cluster;
         d.isInCluster = true;
 
@@ -260,17 +221,14 @@ public class MicroCluster {
                 // o.numberOfSucceeding++;
                 if (o.arrivalTime < d.arrivalTime) {
                     if (MicroCluster.inCluster_objects.contains(o) || fromCluster == false) o.numberOfSucceeding++;
-                    
-                    else 
-                    {
+                    else {
                         if((o.arrivalTime-1)/Constants.slide == (d.arrivalTime-1)/Constants.slide)
                             d.numberOfSucceeding++;
                         else 
                             d.exps.add(o.arrivalTime + Constants.W);
                     }
                 } else {
-                    if (MicroCluster.inCluster_objects.contains(o) || fromCluster == false) 
-                    {
+                    if (MicroCluster.inCluster_objects.contains(o) || fromCluster == false) {
                         if((o.arrivalTime-1)/Constants.slide == (d.arrivalTime-1)/Constants.slide)
                             o.numberOfSucceeding++;
                         else o.exps.add(d.arrivalTime + Constants.W);//?
@@ -288,7 +246,6 @@ public class MicroCluster {
                 }
             }
         });
-
     }
 
     public void process_data(MCObject d, int currentTime, boolean fromCluster) {
@@ -488,39 +445,27 @@ public class MicroCluster {
 
     private void process_event_queue(ArrayList<MCObject> expireData, int currentTime) {
         MCObject x = eventQueue.peek();
-
         while (x != null && x.ev <= currentTime) {
-
             x = eventQueue.poll();
-            
             for (int i = x.exps.size() - 1; i >= 0; i--) {
                 if (x.exps.get(i) <= currentTime) x.exps.remove(i);
             }
-
             if (x.exps.size() + x.numberOfSucceeding < Constants.k) {
-
                 outlierList.add(x);
-
             } else if (x.exps.size() > 0) {
                 x.ev = min(x.exps);
-//                long startTime3 = Utils.getCPUTime();
                 eventQueue.add(x);
-//                MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime3;
             }
-
             x = eventQueue.peek();
         }
-
         expireData.stream().forEach((p) -> {
             outlierList.remove(p);
         });
-
         outlierList.stream().map((outlierList1) -> (MCObject) outlierList1).forEach((d) -> {
             for (int k = d.exps.size() - 1; k >= 0; k--) {
                 if (d.exps.get(k) <= currentTime) d.exps.remove(k);
             }
         });
-
     }
 
     private int min(ArrayList<Integer> exps) {

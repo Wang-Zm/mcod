@@ -36,18 +36,16 @@ public class MTTest {
     public static Date currentRealTime;
 
     public static void main(String[] args) throws IOException, FileNotFoundException, ParseException {
-
         readArguments(args);
-
         MesureMemoryThread mesureThread = new MesureMemoryThread();
         mesureThread.start();
-//         Stream s = Stream.getInstance("ForestCover");
+        // Stream s = Stream.getInstance("ForestCover");
         Stream s = Stream.getInstance("TAO");
-//         Stream s = Stream.getInstance("randomData");
-//        Stream s = Stream.getInstance("randomData1");
+        // Stream s = Stream.getInstance("randomData");
+        // Stream s = Stream.getInstance("randomData1");
         // Stream s = Stream.getInstance(null);
         // Stream s = Stream.getInstance("tagData");
-//        Stream s = Stream.getInstance("Trade");
+        // Stream s = Stream.getInstance("Trade");
 
         ExactStorm estorm = new ExactStorm();
         ApproxStorm apStorm = new ApproxStorm(0.1);
@@ -61,7 +59,6 @@ public class MTTest {
         int numberWindows = 0;
         double totalTime = 0;
         while (!stop) {
-
             if (Constants.numberWindow != -1 && numberWindows > Constants.numberWindow) {
                 break;
             }
@@ -77,7 +74,6 @@ public class MTTest {
 //            }
             currentRealTime = s.getFirstTimeStamp(Constants.dataFile);
             
-            
             if (currentTime != 0) {
                 incomingData = s.getTimeBasedIncomingData(currentRealTime, Constants.slide, Constants.dataFile);
                 currentRealTime.setTime(currentRealTime.getTime()+ Constants.slide*1000);
@@ -87,10 +83,6 @@ public class MTTest {
             }
 
             long start = Utils.getCPUTime(); // requires java 1.5
-
-            /**
-             * do algorithm
-             */
             switch (algorithm) {
                 case "exactStorm":
                     ArrayList<Data> outliers = estorm.detectOutlier(incomingData, currentTime, Constants.W, Constants.slide);
@@ -267,7 +259,6 @@ public class MTTest {
 
     public static void readArguments(String[] args) {
         for (int i = 0; i < args.length; i++) {
-
             //check if arg starts with --
             String arg = args[i];
             if (arg.indexOf("--") == 0) {
