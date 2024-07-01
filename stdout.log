@@ -1,0 +1,467 @@
+#points in clusters: 9455.0
+#window: 1
+Total #outliers: 205
+Average Time: 0.0
+Peak memory: 4.8248443603515625
+Time index, remove data from structure: 0.0
+Time for querying: 0.009407
+Time for new slide: 0.0
+Time for expired slide: 0.0
+------------------------------------
+Number clusters = 31.0
+Max  Number points in event queue = 129.0
+Avg number points in clusters= 9455.0
+Avg Rmc size = 0.8778
+Avg Length exps= 0.3528
+#points in clusters: 18950.0
+#window: 2
+Total #outliers: 197
+Average Time: 0.0105255
+Peak memory: 4.8248443603515625
+Time index, remove data from structure: 0.00459
+Time for querying: 0.0049115
+Time for new slide: 0.0080855
+Time for expired slide: 0.0015855
+------------------------------------
+Number clusters = 31.5
+Max  Number points in event queue = 137.0
+Avg number points in clusters= 9475.0
+Avg Rmc size = 0.86729389
+Avg Length exps= 0.42701764000000003
+#points in clusters: 28453.0
+#window: 3
+Total #outliers: 198
+Average Time: 0.015603666666666668
+Peak memory: 5.516334533691406
+Time index, remove data from structure: 0.004839666666666667
+Time for querying: 0.0034179999999999996
+Time for new slide: 0.012277666666666666
+Time for expired slide: 0.0023306666666666667
+------------------------------------
+Number clusters = 32.333333333333336
+Max  Number points in event queue = 151.0
+Avg number points in clusters= 9484.333333333334
+Avg Rmc size = 0.8899578195926666
+Avg Length exps= 0.4738284678426667
+#points in clusters: 37923.0
+#window: 4
+Total #outliers: 194
+Average Time: 0.015387000000000001
+Peak memory: 5.516334533691406
+Time index, remove data from structure: 0.0053195
+Time for querying: 0.002663
+Time for new slide: 0.01202925
+Time for expired slide: 0.0022635
+------------------------------------
+Number clusters = 32.75
+Max  Number points in event queue = 151.0
+Avg number points in clusters= 9480.75
+Avg Rmc size = 0.8893167468364694
+Avg Length exps= 0.4850855371350882
+#points in clusters: 47318.0
+#window: 5
+Total #outliers: 202
+Average Time: 0.0159364
+Peak memory: 6.533119201660156
+Time index, remove data from structure: 0.005344
+Time for querying: 0.0022122
+Time for new slide: 0.012688399999999999
+Time for expired slide: 0.0021176
+------------------------------------
+Number clusters = 33.2
+Max  Number points in event queue = 226.0
+Avg number points in clusters= 9463.6
+Avg Rmc size = 0.8868311453397469
+Avg Length exps= 0.5671188068429708
+#points in clusters: 56648.0
+#window: 6
+Total #outliers: 200
+Average Time: 0.016274333333333335
+Peak memory: 6.533119201660156
+Time index, remove data from structure: 0.005422666666666667
+Time for querying: 0.0019245
+Time for new slide: 0.012960166666666667
+Time for expired slide: 0.0021895
+------------------------------------
+Number clusters = 33.5
+Max  Number points in event queue = 231.0
+Avg number points in clusters= 9441.333333333334
+Avg Rmc size = 0.891473902595445
+Avg Length exps= 0.6226139265672369
+#points in clusters: 65992.0
+#window: 7
+Total #outliers: 214
+Average Time: 0.016832000000000003
+Peak memory: 6.533119201660156
+Time index, remove data from structure: 0.0056052857142857146
+Time for querying: 0.0017102857142857143
+Time for new slide: 0.01359957142857143
+Time for expired slide: 0.002093714285714286
+------------------------------------
+Number clusters = 33.857142857142854
+Max  Number points in event queue = 231.0
+Avg number points in clusters= 9427.42857142857
+Avg Rmc size = 0.9002764120487939
+Avg Length exps= 0.6657533669079915
+#points in clusters: 75432.0
+#window: 8
+Total #outliers: 175
+Average Time: 0.01694025
+Peak memory: 10.467262268066406
+Time index, remove data from structure: 0.005631625
+Time for querying: 0.00155125
+Time for new slide: 0.01367575
+Time for expired slide: 0.002137
+------------------------------------
+Number clusters = 34.0
+Max  Number points in event queue = 238.0
+Avg number points in clusters= 9429.0
+Avg Rmc size = 0.9141037741860543
+Avg Length exps= 0.7050957534196044
+#points in clusters: 84917.0
+#window: 9
+Total #outliers: 160
+Average Time: 0.016647444444444447
+Peak memory: 10.467262268066406
+Time index, remove data from structure: 0.0056185555555555555
+Time for querying: 0.0014227777777777778
+Time for new slide: 0.013445555555555556
+Time for expired slide: 0.0021314444444444445
+------------------------------------
+Number clusters = 34.111111111111114
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9435.222222222223
+Avg Rmc size = 0.9257256981132609
+Avg Length exps= 0.7358515640669706
+#points in clusters: 94355.0
+#window: 10
+Total #outliers: 167
+Average Time: 0.0165503
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.0056944000000000005
+Time for querying: 0.0013298000000000001
+Time for new slide: 0.0130667
+Time for expired slide: 0.00246
+------------------------------------
+Number clusters = 33.8
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9435.5
+Avg Rmc size = 0.9316933153128302
+Avg Length exps= 0.740356226640766
+#points in clusters: 103759.0
+#window: 11
+Total #outliers: 171
+Average Time: 0.016431
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005747818181818182
+Time for querying: 0.001248090909090909
+Time for new slide: 0.012688636363636364
+Time for expired slide: 0.002755909090909091
+------------------------------------
+Number clusters = 33.27272727272727
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9432.636363636364
+Avg Rmc size = 0.9301574266650284
+Avg Length exps= 0.7490127596569672
+#points in clusters: 113183.0
+#window: 12
+Total #outliers: 172
+Average Time: 0.016070833333333336
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005797833333333333
+Time for querying: 0.0011779166666666667
+Time for new slide: 0.012249666666666666
+Time for expired slide: 0.002867416666666667
+------------------------------------
+Number clusters = 32.583333333333336
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9431.916666666666
+Avg Rmc size = 0.9197519310974442
+Avg Length exps= 0.7513103261696351
+#points in clusters: 122589.0
+#window: 13
+Total #outliers: 194
+Average Time: 0.01585923076923077
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005956538461538462
+Time for querying: 0.0011217692307692309
+Time for new slide: 0.012045153846153846
+Time for expired slide: 0.0028780000000000003
+------------------------------------
+Number clusters = 31.76923076923077
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9429.923076923076
+Avg Rmc size = 0.9042002847936398
+Avg Length exps= 0.7532155055685694
+#points in clusters: 132177.0
+#window: 14
+Total #outliers: 97
+Average Time: 0.015335857142857146
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.0059138571428571434
+Time for querying: 0.0010672857142857144
+Time for new slide: 0.01164542857142857
+Time for expired slide: 0.0027819285714285715
+------------------------------------
+Number clusters = 31.0
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9441.214285714286
+Avg Rmc size = 0.8849839614550165
+Avg Length exps= 0.7535556557255171
+#points in clusters: 141731.0
+#window: 15
+Total #outliers: 128
+Average Time: 0.015041933333333335
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.0059382666666666665
+Time for querying: 0.0010241333333333334
+Time for new slide: 0.011429133333333334
+Time for expired slide: 0.002729933333333333
+------------------------------------
+Number clusters = 30.2
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9448.733333333334
+Avg Rmc size = 0.8655625985030692
+Avg Length exps= 0.7492903318612011
+#points in clusters: 151273.0
+#window: 16
+Total #outliers: 125
+Average Time: 0.014684375000000001
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005876625
+Time for querying: 9.83625E-4
+Time for new slide: 0.0111870625
+Time for expired slide: 0.0026433125
+------------------------------------
+Number clusters = 29.5
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9454.5625
+Avg Rmc size = 0.8471936464936096
+Avg Length exps= 0.746570245968612
+#points in clusters: 160915.0
+#window: 17
+Total #outliers: 122
+Average Time: 0.014403529411764707
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005878470588235294
+Time for querying: 9.439411764705881E-4
+Time for new slide: 0.011009117647058822
+Time for expired slide: 0.0025738235294117647
+------------------------------------
+Number clusters = 28.941176470588236
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9465.588235294117
+Avg Rmc size = 0.8297150299902583
+Avg Length exps= 0.7337820301407971
+#points in clusters: 170539.0
+#window: 18
+Total #outliers: 127
+Average Time: 0.014140222222222224
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005845166666666667
+Time for querying: 9.083888888888889E-4
+Time for new slide: 0.010843166666666666
+Time for expired slide: 0.002502944444444445
+------------------------------------
+Number clusters = 28.444444444444443
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9474.388888888889
+Avg Rmc size = 0.814411695308388
+Avg Length exps= 0.72121930163618
+#points in clusters: 180148.0
+#window: 19
+Total #outliers: 134
+Average Time: 0.014074789473684212
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005801736842105263
+Time for querying: 8.795263157894737E-4
+Time for new slide: 0.010784631578947369
+Time for expired slide: 0.0025128947368421055
+------------------------------------
+Number clusters = 28.0
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9481.473684210527
+Avg Rmc size = 0.8015245232132396
+Avg Length exps= 0.7037893786706814
+#points in clusters: 189731.0
+#window: 20
+Total #outliers: 125
+Average Time: 0.013978250000000001
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.0058026
+Time for querying: 8.5635E-4
+Time for new slide: 0.010638499999999999
+Time for expired slide: 0.0025843000000000003
+------------------------------------
+Number clusters = 27.5
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9486.55
+Avg Rmc size = 0.7875111448297052
+Avg Length exps= 0.6856568599909737
+#points in clusters: 199183.0
+#window: 21
+Total #outliers: 176
+Average Time: 0.013942142857142858
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005765238095238095
+Time for querying: 8.34952380952381E-4
+Time for new slide: 0.010532095238095238
+Time for expired slide: 0.0026765238095238096
+------------------------------------
+Number clusters = 27.0
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9484.904761904761
+Avg Rmc size = 0.7740940486804598
+Avg Length exps= 0.6760319673199991
+#points in clusters: 208684.0
+#window: 22
+Total #outliers: 167
+Average Time: 0.014074863636363637
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005869818181818182
+Time for querying: 8.165454545454546E-4
+Time for new slide: 0.010571454545454545
+Time for expired slide: 0.0027903181818181816
+------------------------------------
+Number clusters = 26.5
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9485.636363636364
+Avg Rmc size = 0.7596602544319194
+Avg Length exps= 0.6618054394150623
+#points in clusters: 218222.0
+#window: 23
+Total #outliers: 153
+Average Time: 0.014016260869565218
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.0059129130434782615
+Time for querying: 7.977391304347825E-4
+Time for new slide: 0.010448347826086956
+Time for expired slide: 0.0028706521739130437
+------------------------------------
+Number clusters = 25.956521739130434
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9487.91304347826
+Avg Rmc size = 0.7416857066330327
+Avg Length exps= 0.6481024335637702
+#points in clusters: 227748.0
+#window: 24
+Total #outliers: 178
+Average Time: 0.013846208333333332
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005958291666666666
+Time for querying: 7.797916666666666E-4
+Time for new slide: 0.01036125
+Time for expired slide: 0.0028044583333333337
+------------------------------------
+Number clusters = 25.458333333333332
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9489.5
+Avg Rmc size = 0.723800244880219
+Avg Length exps= 0.6382496098165499
+#points in clusters: 237385.0
+#window: 25
+Total #outliers: 138
+Average Time: 0.013588999999999997
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.00587252
+Time for querying: 7.631599999999999E-4
+Time for new slide: 0.01017572
+Time for expired slide: 0.002746
+------------------------------------
+Number clusters = 25.08
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9495.4
+Avg Rmc size = 0.7059374848235085
+Avg Length exps= 0.6242892719625424
+#points in clusters: 246980.0
+#window: 26
+Total #outliers: 140
+Average Time: 0.013530115384615383
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005898615384615385
+Time for querying: 7.504615384615385E-4
+Time for new slide: 0.010086230769230767
+Time for expired slide: 0.002790423076923077
+------------------------------------
+Number clusters = 24.692307692307693
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9499.23076923077
+Avg Rmc size = 0.6884678786043099
+Avg Length exps= 0.612017720122304
+#points in clusters: 256582.0
+#window: 27
+Total #outliers: 137
+Average Time: 0.013354407407407407
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005870148148148148
+Time for querying: 7.348148148148148E-4
+Time for new slide: 0.009978962962962964
+Time for expired slide: 0.0027355925925925924
+------------------------------------
+Number clusters = 24.333333333333332
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9503.037037037036
+Avg Rmc size = 0.6709700006105322
+Avg Length exps= 0.6047107868915673
+#points in clusters: 266137.0
+#window: 28
+Total #outliers: 137
+Average Time: 0.013311107142857142
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005847892857142857
+Time for querying: 7.226428571428571E-4
+Time for new slide: 0.009848285714285714
+Time for expired slide: 0.002835857142857143
+------------------------------------
+Number clusters = 23.964285714285715
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9504.892857142857
+Avg Rmc size = 0.6542825578214874
+Avg Length exps= 0.5975011685401644
+#points in clusters: 275696.0
+#window: 29
+Total #outliers: 136
+Average Time: 0.013134413793103447
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005833
+Time for querying: 7.082758620689654E-4
+Time for new slide: 0.009736344827586207
+Time for expired slide: 0.002781586206896552
+------------------------------------
+Number clusters = 23.620689655172413
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9506.758620689656
+Avg Rmc size = 0.6381321376262723
+Avg Length exps= 0.59031286218179
+#points in clusters: 285279.0
+#window: 30
+Total #outliers: 133
+Average Time: 0.013033166666666667
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005806066666666667
+Time for querying: 6.989333333333334E-4
+Time for new slide: 0.009627133333333334
+Time for expired slide: 0.002800966666666667
+------------------------------------
+Number clusters = 23.3
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9509.3
+Avg Rmc size = 0.6230250194399705
+Avg Length exps= 0.5821903969100108
+#points in clusters: 294873.0
+#window: 31
+Total #outliers: 127
+Average Time: 0.012882032258064516
+Peak memory: 13.353248596191406
+Time index, remove data from structure: 0.005791806451612903
+Time for querying: 6.917096774193549E-4
+Time for new slide: 0.009537612903225806
+Time for expired slide: 0.002750709677419355
+------------------------------------
+Number clusters = 23.0
+Max  Number points in event queue = 244.0
+Avg number points in clusters= 9512.032258064517
+Avg Rmc size = 0.6087699701631716
+Avg Length exps= 0.5748563410061526
+Peak memory: 13.353248596191406
+Average CPU time: 0.013311433333333334
