@@ -65,21 +65,12 @@ public class MTTest {
             numberWindows++;
 
             ArrayList<Data> incomingData;
-//            if (currentTime != 0) {
-//                incomingData = s.getIncomingData(currentTime, Constants.slide, Constants.dataFile);
-//                currentTime = currentTime + Constants.slide;
-//            } else {
-//                incomingData = s.getIncomingData(currentTime, Constants.W, Constants.dataFile);
-//                currentTime = currentTime + Constants.W;
-//            }
-            currentRealTime = s.getFirstTimeStamp(Constants.dataFile);
-            
             if (currentTime != 0) {
-                incomingData = s.getTimeBasedIncomingData(currentRealTime, Constants.slide, Constants.dataFile);
-                currentRealTime.setTime(currentRealTime.getTime()+ Constants.slide*1000);
+                incomingData = s.getIncomingData(currentTime, Constants.slide, Constants.dataFile);
+                currentTime = currentTime + Constants.slide;
             } else {
-                incomingData = s.getTimeBasedIncomingData(currentRealTime, Constants.slide, Constants.dataFile);
-                currentRealTime.setTime(currentRealTime.getTime()+ Constants.W*1000);
+                incomingData = s.getIncomingData(currentTime, Constants.W, Constants.dataFile);
+                currentTime = currentTime + Constants.W;
             }
 
             long start = Utils.getCPUTime(); // requires java 1.5
@@ -143,9 +134,7 @@ public class MTTest {
                     totalTime += elapsedTimeInSec;
                     outliers6.stream().forEach((outlier) -> {
                         idOutliers.add(outlier.arrivalTime);
-
                     });
-
                     break;
                 case "microCluster_new":
                     ArrayList<Data> outliers9 = mcnew.detectOutlier(incomingData, currentTime, Constants.W,
@@ -155,19 +144,19 @@ public class MTTest {
                     totalTime += elapsedTimeInSec;
                     outliers9.stream().forEach((outlier) -> {
                         idOutliers.add(outlier.arrivalTime);
-
                     });
 
-//                    ArrayList<Data> outliers10 = estorm.detectOutlier(incomingData, currentTime, Constants.W,
-//                            Constants.slide);
-//                    
-//                    System.out.println("--------------------------------------------------");
-//                    System.out.println("Not in exact storm");
-//                    for(Data d: outliers9){
-//                        if(!outliers10.contains(d))
-//                            System.out.println(d.arrivalTime);
-//                    }
-//                    System.out.println("---------------------------------------------------");
+                    // ? original code?
+                    // ArrayList<Data> outliers10 = estorm.detectOutlier(incomingData, currentTime, Constants.W,
+                    //         Constants.slide);
+                    
+                    // System.out.println("--------------------------------------------------");
+                    // System.out.println("Not in exact storm");
+                    // for(Data d: outliers9){
+                    //     if(!outliers10.contains(d))
+                    //         System.out.println(d.arrivalTime);
+                    // }
+                    // System.out.println("---------------------------------------------------");
                     break;
                 case "mesi":
                     ArrayList<Data> outliers7 = mesi.detectOutlier(incomingData, currentTime, Constants.W,
@@ -208,22 +197,18 @@ public class MTTest {
             System.out.println("------------------------------------");
 
             if (algorithm.equals("exactStorm")) {
-
                 System.out.println("Avg neighbor list length = " + ExactStorm.avgAllWindowNeighbor / numberWindows);
             } else if (algorithm.equals("mesi")) {
-
                 System.out.println("Avg trigger list = " + MESI.avgAllWindowTriggerList / numberWindows);
                 System.out.println("Avg neighbor list = " + MESI.avgAllWindowNeighborList / numberWindows);
             } else if (algorithm.equals("microCluster")) {
-
                 System.out.println("Number clusters = " + MicroCluster.numberCluster / numberWindows);
                 System.out.println("Max  Number points in event queue = " + MicroCluster.numberPointsInEventQueue);
-
                 System.out.println("Avg number points in clusters= " + MicroCluster.numberPointsInClustersAllWindows / numberWindows);
                 System.out.println("Avg Rmc size = " + MicroCluster.avgPointsInRmcAllWindows / numberWindows);
                 System.out.println("Avg Length exps= " + MicroCluster.avgLengthExpsAllWindows / numberWindows);
             } else if (algorithm.equals("due")) {
-//            Direct_Update_Event.numberPointsInEventQueue = Direct_Update_Event.numberPointsInEventQueue /numberWindows;
+                Direct_Update_Event.numberPointsInEventQueue = Direct_Update_Event.numberPointsInEventQueue /numberWindows;
                 Direct_Update_Event.avgAllWindowNumberPoints = Direct_Update_Event.numberPointsInEventQueue;
                 System.out.println("max #points in event queue = " + Direct_Update_Event.avgAllWindowNumberPoints);
             }
@@ -232,10 +217,11 @@ public class MTTest {
                 System.out.println("Avg points in event queue = " + MicroCluster_New.avgNumPointsInEventQueue * 1.0 / numberWindows);
                 System.out.println("avg neighbor list length = " + MicroCluster_New.avgNeighborListLength * 1.0 / numberWindows);
             }
+
+            // reset
+            idOutliers.clear();
         }
 
-//       
-//        Constants.numberWindow--;
         ExactStorm.avgAllWindowNeighbor = ExactStorm.avgAllWindowNeighbor / numberWindows;
         MESI.avgAllWindowTriggerList = MESI.avgAllWindowTriggerList / numberWindows;
         MicroCluster.numberCluster = MicroCluster.numberCluster / numberWindows;
@@ -247,14 +233,6 @@ public class MTTest {
         mesureThread.writeResult();
         mesureThread.stop();
         mesureThread.interrupt();
-
-        /**
-         * Write result to file
-         */
-        if (!"".equals(Constants.resultFile)) {
-            writeResult();
-        }
-//      
     }
 
     public static void readArguments(String[] args) {
@@ -296,20 +274,17 @@ public class MTTest {
                     case "--likely":
                         Constants.likely = Double.valueOf(args[i + 1]);
                         break;
-
                 }
             }
         }
     }
 
     public static void writeResult() {
-
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Constants.resultFile, true)))) {
             for (Integer time : idOutliers) {
                 out.println(time);
             }
         } catch (IOException e) {
         }
-
     }
 }

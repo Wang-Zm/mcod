@@ -43,8 +43,4 @@ public class Constants {
     public static String outputFile= "outputDefault.txt";
     public static String resultFile="";
     public static double likely = 0.5;
-    
-    
-    
-
 }
