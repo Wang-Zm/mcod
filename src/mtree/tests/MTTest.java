@@ -78,18 +78,15 @@ public class MTTest {
                 case "exactStorm":
                     ArrayList<Data> outliers = estorm.detectOutlier(incomingData, currentTime, Constants.W, Constants.slide);
                     double elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-
                     totalTime += elapsedTimeInSec;
                     outliers.stream().forEach((outlier) -> {
                         idOutliers.add(outlier.arrivalTime);
                     });
-
                     break;
                 case "approximateStorm":
                     ArrayList<Data> outliers2 = apStorm.detectOutlier(incomingData, currentTime, Constants.W,
                             Constants.slide);
                     elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-
                     totalTime += elapsedTimeInSec;
                     outliers2.stream().forEach((outlier) -> {
                         idOutliers.add(outlier.arrivalTime);
@@ -103,14 +100,12 @@ public class MTTest {
                     totalTime += elapsedTimeInSec;
                     outliers3.stream().forEach((outlier) -> {
                         idOutliers.add(outlier.arrivalTime);
-
                     });
                     break;
                 case "lue":
                     HashSet<DataLUEObject> outliers4 = lue.detectOutlier(incomingData, currentTime, Constants.W,
                             Constants.slide);
                     elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-
                     totalTime += elapsedTimeInSec;
                     outliers4.stream().forEach((outlier) -> {
                         idOutliers.add(outlier.arrivalTime);
@@ -120,7 +115,6 @@ public class MTTest {
                     HashSet<DataLUEObject> outliers5 = due.detectOutlier(incomingData, currentTime, Constants.W,
                             Constants.slide);
                     elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-
                     totalTime += elapsedTimeInSec;
                     outliers5.stream().forEach((outlier) -> {
                         idOutliers.add(outlier.arrivalTime);
@@ -130,7 +124,6 @@ public class MTTest {
                     ArrayList<Data> outliers6 = micro.detectOutlier(incomingData, currentTime, Constants.W,
                             Constants.slide);
                     elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-
                     totalTime += elapsedTimeInSec;
                     outliers6.stream().forEach((outlier) -> {
                         idOutliers.add(outlier.arrivalTime);
@@ -140,7 +133,6 @@ public class MTTest {
                     ArrayList<Data> outliers9 = mcnew.detectOutlier(incomingData, currentTime, Constants.W,
                             Constants.slide);
                     elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-
                     totalTime += elapsedTimeInSec;
                     outliers9.stream().forEach((outlier) -> {
                         idOutliers.add(outlier.arrivalTime);

@@ -84,11 +84,9 @@ public class Stream {
     }
 
     public ArrayList<Data> getIncomingData(int currentTime, int length, String filename) {
-
         ArrayList<Data> results = new ArrayList<>();
         try {
             BufferedReader bfr = new BufferedReader(new FileReader(new File(filename)));
-
             String line = "";
             int time = 0;
             try {
@@ -98,8 +96,8 @@ public class Stream {
                         String[] atts = line.split(",");
                         double[] d = new double[atts.length];
                         for (int i = 0; i < d.length; i++) {
-
-                            d[i] = Double.valueOf(atts[i]) + (new Random()).nextDouble() / 10000000;
+                            // d[i] = Double.valueOf(atts[i]) + (new Random()).nextDouble() / 10000000;
+                            d[i] = Double.parseDouble(atts[i]);
                         }
                         Data data = new Data(d);
                         data.arrivalTime = time;
