@@ -23,7 +23,7 @@ import mtree.utils.Utils;
 import org.junit.Test;
 
 
- class MTreeClass extends MTree<Data> {
+class MTreeClass extends MTree<Data> {
 	
 	private static final PromotionFunction<Data> nonRandomPromotion = new PromotionFunction<Data>() {
 		@Override
