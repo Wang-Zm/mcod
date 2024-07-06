@@ -1,5 +1,6 @@
 package outlierdetection;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import mtree.tests.Data;
@@ -9,10 +10,10 @@ import mtree.utils.Utils;
 
 public class MicroCluster {
 
-    public static HashMap<Data,ArrayList<MCObject>> micro_clusters = new HashMap<>();
+    public static HashMap<Data,ArrayList<MCObject>> microClusters = new HashMap<>();
 
     // 影响每个 cluster 的 PD 中的点（是否是 PD 中的？）
-    public static HashMap<Data,ArrayList<MCObject>> associate_objects = new HashMap<>();
+    public static HashMap<Data,ArrayList<MCObject>> associateObjects = new HashMap<>();
 
     public static ArrayList<MCObject> PD = new ArrayList<>();
 
@@ -46,7 +47,7 @@ public class MicroCluster {
                 expiredData.add(d);
                 if (d.isInCluster) {
                     ArrayList<MCObject> inCluster_objects2;
-                    inCluster_objects2 = micro_clusters.get(d.cluster);
+                    inCluster_objects2 = microClusters.get(d.cluster);
                     long startTime2 = Utils.getCPUTime();
                     inCluster_objects2.remove(d);
                     MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime2;
@@ -58,7 +59,7 @@ public class MicroCluster {
                     long startTime2 = Utils.getCPUTime();
                     PD.remove(d);
                     d.Rmc.stream()
-                    .map((c) -> associate_objects.get(c))
+                    .map((c) -> associateObjects.get(c))
                     .forEach((list_associates) -> list_associates.remove(d));
                     MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime2;
                 }
@@ -71,6 +72,10 @@ public class MicroCluster {
             dataList.subList(0, index + 1).clear();
         }
         MesureMemoryThread.timeForExpireSlide += Utils.getCPUTime() - startTime;
+        OutlierTest.computeOutlier(dataList, mtree);
+        System.out.println("Outlier detected for expired");
+        OutlierTest.compareOutlier(outlierList);
+        System.out.println("Outlier compared for expired");
 
         // * process new incoming data
         // do range query with MTree of cluster centers
@@ -81,13 +86,17 @@ public class MicroCluster {
         .forEach((d) -> dataList.add(d));
         ArrayList<Data> result = new ArrayList<>(outlierList);
         MesureMemoryThread.timeForNewSlide += Utils.getCPUTime() - startTime;
+        OutlierTest.computeOutlier(dataList, mtree);
+        System.out.println("Outlier detected for new");
+        OutlierTest.compareOutlier(outlierList);
+        System.out.println("Outlier compared for new");
 
-        numberCluster += micro_clusters.size();
+        numberCluster += microClusters.size();
         if(numberPointsInEventQueue < eventQueue.size())
             numberPointsInEventQueue = eventQueue.size();
         HashSet<Integer> tempTest = new HashSet<>();
-        for(Data center: micro_clusters.keySet()){
-            ArrayList<MCObject> l = micro_clusters.get(center);
+        for(Data center: microClusters.keySet()){
+            ArrayList<MCObject> l = microClusters.get(center);
             for(MCObject o:l){
                 if(o.arrivalTime >= currentTime - Constants.W){
                     tempTest.add(o.arrivalTime);
@@ -109,14 +118,14 @@ public class MicroCluster {
     }
 
     public void print_cluster() {
-        micro_clusters.keySet().stream().map((o) -> {
+        microClusters.keySet().stream().map((o) -> {
             System.out.println("Center: " + o.values[0]);
             return o;
         }).map((o) -> {
             System.out.print("Member:");
             return o;
         }).map((o) -> {
-            micro_clusters.get(o).forEach((o2) -> {
+            microClusters.get(o).forEach((o2) -> {
                 System.out.print(o2.values[0] + " ; ");
             });
             return o;
@@ -148,12 +157,12 @@ public class MicroCluster {
         // * 3.将这些点下放到 PD 中，看是否能够再凑齐 cluster；或参考现在的实现，使用 process_data 方法当作新点处理
 
         long startTime = Utils.getCPUTime();
-        ArrayList<MCObject> list_associates = associate_objects.get(inCluster_objects.get(0).cluster);
+        ArrayList<MCObject> list_associates = associateObjects.get(inCluster_objects.get(0).cluster);
         if (list_associates != null)
             list_associates.forEach((o) -> o.Rmc.remove(inCluster_objects.get(0).cluster));
         mtree.remove(inCluster_objects.get(0).cluster);
-        associate_objects.remove(inCluster_objects.get(0).cluster);
-        micro_clusters.remove(inCluster_objects.get(0).cluster);
+        associateObjects.remove(inCluster_objects.get(0).cluster);
+        microClusters.remove(inCluster_objects.get(0).cluster);
 
         MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime;
         inCluster_objects.forEach((d) -> {
@@ -170,71 +179,20 @@ public class MicroCluster {
         });
     }
 
-/*
-    public void addObjectToCluster(MCObject d, MCObject cluster, boolean fromCluster) {
-        d.cluster = cluster;
-        d.isInCluster = true;
-
-        // 放到 micro cluster 中
-        ArrayList<MCObject> list = micro_clusters.get(cluster);
-        if(!list.contains(d))
-            list.add(d);
-        micro_clusters.put(cluster, list);
-
-        // * evaluate distance between the new object and objects in PD that associate with cluster
-        ArrayList<MCObject> objects = associate_objects.get(cluster); // 都是 PD 中的点
-        if (objects != null) {
-            objects.stream().forEach((o) -> {
-                double distance = mtree.getDistanceFunction().calculate(d, o);
-                if (distance <= Constants.R) {
-                    // increase number if succeeding neighbors
-                    if (o.arrivalTime < d.arrivalTime) {
-                        if (!fromCluster) {
-                            o.numberOfSucceeding++;
-                        } else {
-                            if((o.arrivalTime-1)/Constants.slide == (d.arrivalTime-1)/Constants.slide)
-                                d.numberOfSucceeding++; // d 与 o 处于同一次滑动中
-                            else
-                                d.exps.add(o.arrivalTime + Constants.W); // 记录前面的邻居的过期时间
-                        }
-                    } else {
-                        if (!fromCluster) {
-                            if((o.arrivalTime-1)/Constants.slide == (d.arrivalTime-1)/Constants.slide)
-                                o.numberOfSucceeding++;
-                            else
-                                o.exps.add(d.arrivalTime + Constants.W);
-                        }
-                        d.numberOfSucceeding++;
-                    }
-                    // check if o is inlier
-                    if (o.exps.size() + o.numberOfSucceeding >= Constants.k && outlierList.contains(o)) {
-                        outlierList.remove(o);
-                        // add o to event queue
-                        if (!o.exps.isEmpty()) {
-                            o.ev = min(o.exps);
-                            eventQueue.add(o);
-                        }
-                    }
-                }
-            });
-        }
-    }
-*/
-
     public void addObjectToCluster(MCObject d, MCObject cluster) {
         d.cluster = cluster;
         d.isInCluster = true;
 
         // 放到 micro cluster 中
-        ArrayList<MCObject> list = micro_clusters.get(cluster);
+        ArrayList<MCObject> list = microClusters.get(cluster);
         if (list.contains(d)) {
             throw new RuntimeException("Duplicate object in micro_cluster");
         }
         list.add(d);
-        micro_clusters.put(cluster, list);
+        microClusters.put(cluster, list);
 
         // * evaluate distance between the new object and objects in PD that associate with cluster
-        ArrayList<MCObject> objects = associate_objects.get(cluster); // 都是 PD 中的点
+        ArrayList<MCObject> objects = associateObjects.get(cluster); // 都是 PD 中的点
         if (objects != null) {
             objects.forEach((o) -> {
                 double distance = mtree.getDistanceFunction().calculate(d, o);
@@ -296,14 +254,14 @@ public class MicroCluster {
             outlierList.remove(o);
         }
         d.isCenter = true;
-        if (micro_clusters.containsKey(d))
+        if (microClusters.containsKey(d))
             throw new RuntimeException("d should not have been a cluster center before");
-        micro_clusters.put(d, neighbor_in_R2);
+        microClusters.put(d, neighbor_in_R2);
         mtree.add(d);
 
         // update Rmc for points in PD
         neighbor_in_3_2Apart_PD.forEach((o) -> o.Rmc.add(d));
-        associate_objects.put(d, neighbor_in_3_2Apart_PD); // associate_objects value 是 PD 中的点
+        associateObjects.put(d, neighbor_in_3_2Apart_PD); // associate_objects value 是 PD 中的点
     }
 
     private void applyEventBasedAlgo(MTreeClass.Query query, ArrayList<MCObject> neighbor_in_PD, MCObject d) {
@@ -313,10 +271,10 @@ public class MicroCluster {
         for (MTreeClass.ResultItem ri2 : query) {
             if (ri2.distance == 0) d.values[0] += (new Random()).nextDouble() / 1000000; // TODO: why
             d.Rmc.add((MCObject) ri2.data); // 意味着 d 受这个 cluster 影响
-            ArrayList<MCObject> l = associate_objects.getOrDefault(ri2.data, new ArrayList<>());
+            ArrayList<MCObject> l = associateObjects.getOrDefault(ri2.data, new ArrayList<>());
             l.add(d);
-            associate_objects.put(ri2.data, l);
-            ArrayList<MCObject> object_in_cluster = micro_clusters.get(ri2.data);
+            associateObjects.put(ri2.data, l);
+            ArrayList<MCObject> object_in_cluster = microClusters.get(ri2.data);
             if (object_in_cluster != null) {
                 for (MCObject o : object_in_cluster) {
                     if (mtree.getDistanceFunction().calculate(d, o) <= Constants.R) {
@@ -372,159 +330,6 @@ public class MicroCluster {
         }
     }
 
-    /*
-    public void process_data(MCObject d, int currentTime, boolean fromCluster) {
-        if(d.arrivalTime <= currentTime - Constants.W) return;
-        long startTime = Utils.getCPUTime();
-        MTreeClass.Query query = mtree.getNearestByRange(d, Constants.R * 3 / 2); // 由近到远返回若干个
-        MesureMemoryThread.timeForQuerying += Utils.getCPUTime() - startTime;
-        double min_distance = Double.MAX_VALUE;
-        MTreeClass.ResultItem ri = null;
-        boolean isFoundCluster = false;
-        if (query.iterator().hasNext()) {
-            ri = query.iterator().next();
-            min_distance = ri.distance;
-            if (micro_clusters.get(ri.data) != null && !micro_clusters.get(ri.data).isEmpty())
-                isFoundCluster = true; // 有邻居在 cluster 中
-        }
-
-        if (min_distance <= Constants.R / 2 && isFoundCluster && !fromCluster) {
-            // assign to this closet cluster；应该是与最近的 cluster 的 center 的距离小于 R / 2 添加到对应的 cluster 中
-            MCObject closest_cluster = (MCObject) ri.data;
-            long startTime2 = Utils.getCPUTime();
-            addObjectToCluster(d, closest_cluster, fromCluster);
-            MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime2;
-        } else {
-            // * do range query in PD and mtree (distance to center <= 3/2R)
-            ArrayList<MCObject> neighbor_in_mtree = new ArrayList<>();
-            ArrayList<MCObject> neighbor_in_PD = new ArrayList<>();
-            ArrayList<MCObject> neighbor_in_3_2Apart_PD = new ArrayList<>();
-            ArrayList<MCObject> neighbor_in_R2 = new ArrayList<>();
-
-            // 记录 d 引用的 cluster + 设置 cluster 引用 d  ->  但若 d 在 PD 中的邻居 >= k，这些记录无效
-            for (MTreeClass.ResultItem ri2 : query) {
-                if (ri2.distance == 0) d.values[0] += (new Random()).nextDouble() / 1000000; // ? 为什么
-                // * scan in cluster to find neighbors
-                d.Rmc.add((MCObject) ri2.data); // 意味着 d 受这个 cluster 影响
-                ArrayList<MCObject> l = associate_objects.getOrDefault(ri2.data, new ArrayList<>());
-                l.add(d);
-                associate_objects.put(ri2.data, l);
-                ArrayList<MCObject> object_in_cluster = micro_clusters.get(ri2.data);
-                if (object_in_cluster != null)
-                    for (MCObject o : object_in_cluster) {
-                        if (mtree.getDistanceFunction().calculate(d, o) <= Constants.R) {
-                            neighbor_in_mtree.add(o); // 记录 d 的在 cluster 中的邻居
-                    }
-                }
-            }
-
-            // 记录 d 在 PD 中的邻居
-            PD.stream().forEach((m) -> {
-                double distance = mtree.getDistanceFunction().calculate(d, m);
-                if (distance <= Constants.R / 2) neighbor_in_R2.add(m);
-                if (distance <= Constants.R) {
-                    neighbor_in_PD.add(m);
-                    neighbor_in_3_2Apart_PD.add(m);
-                } else if (distance <= Constants.R * 3 / 2) {
-                    neighbor_in_3_2Apart_PD.add(m);
-                }
-            });
-
-            // 设置 d 在 PD 中的邻居的 exps 与 succeeding + 设置 d 的 exps 与 succeeding
-            neighbor_in_PD.stream().peek((o) -> {
-                if (o.arrivalTime < d.arrivalTime) {
-                    if (!fromCluster)
-                        o.numberOfSucceeding++;
-                    else {
-                        if((o.arrivalTime-1)/Constants.slide == (d.arrivalTime-1)/Constants.slide)
-                            d.numberOfSucceeding++;
-                        else
-                            d.exps.add(o.arrivalTime + Constants.W);
-                    }
-                } else {
-                    if (!fromCluster) {
-                        if((o.arrivalTime-1)/Constants.slide == (d.arrivalTime-1)/Constants.slide)
-                            o.numberOfSucceeding++;
-                        else
-                            o.exps.add(d.arrivalTime + Constants.W);
-                    }
-                    d.numberOfSucceeding++;
-                }
-                // * check for o becomes inlier
-            }).filter((o) -> (o.numberOfSucceeding + o.exps.size() >= Constants.k && outlierList.contains(o))
-            ).peek((o) -> outlierList.remove(o)
-            ).peek((o) -> {
-                if (!o.exps.isEmpty()) o.ev = min(o.exps);
-            }).forEach((o) -> {
-                eventQueue.add(o);
-            }); // 更新 PD 中的点的 outlier -> inlier，并设置 ev 和 eventQueue (只有 PD 中的点才会设置 ev 和 eventQueue)
-
-            // 此时 d 不会放到已有的 cluster 中，因此和 PD 中的点的待遇一样，也设置 exps 与 succeeding
-            neighbor_in_mtree.stream().forEach((o) -> { // 为了更新 d 的邻居
-                if (o.arrivalTime < d.arrivalTime) {
-                    if((o.arrivalTime-1)/Constants.slide == (d.arrivalTime-1)/Constants.slide)
-                        d.numberOfSucceeding++;
-                    else
-                        d.exps.add(o.arrivalTime + Constants.W);
-                } else {
-                    d.numberOfSucceeding++;
-                }
-            });
-
-            // TODO: 明确在 form cluster 之前的代码的用意：d 和 cluster 中的点的情况
-            if (neighbor_in_R2.size() > Constants.k * 1.1 && !fromCluster) { // 凑成了一个新的 cluster
-                long startTime2 = Utils.getCPUTime();
-                // form cluster
-                d.isCenter = true;
-                d.isInCluster = true;
-                neighbor_in_R2.add(d);
-                for (MCObject o : neighbor_in_R2) {
-                    if(o.isInCluster && o.arrivalTime != d.arrivalTime)
-                        throw new RuntimeException("o should not be in cluster if o is not d");
-                    o.isCenter = false;
-                    o.cluster = d;
-                    o.isInCluster = true;
-                    o.numberOfSucceeding = 0;
-                    o.exps.clear();
-                    if(inClusters.contains(o.arrivalTime))
-                        throw new RuntimeException("o should not be in inClusters");
-                    inClusters.add(o.arrivalTime);
-                    PD.remove(o);
-                    eventQueue.remove(o); // ? 不再会处理 o 的事件？只有 PD 中的点才会触发事件？
-                    outlierList.remove(o);
-                }
-
-                if(!micro_clusters.containsKey(d)){ // 之前不应该存在，存在就是异常，
-                    micro_clusters.put(d, neighbor_in_R2); // neighbor_in_R2 应该也包含自己
-                    mtree.add(d);
-                }
-                // else micro_clusters.get(d).addAll(neighbor_in_R2);
-
-                // update Rmc for points in PD
-                neighbor_in_3_2Apart_PD.stream().forEach((o) -> o.Rmc.add(d));
-                associate_objects.put(d, neighbor_in_3_2Apart_PD); // associate_objects value 是 PD 中的点
-                MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime2;
-            } else { // add to event queue and PD
-                PD.add(d);
-                d.exps.sort(Collections.reverseOrder());
-                for (int i = d.exps.size() - 1; i >= Constants.k - d.numberOfSucceeding && i >= 0; i--) {
-                    d.exps.remove(i); // 当 d.exps.size() + d.numberOfSucceeding > k 时，去掉多余的 d.exps 中的点，但是要剩 k - d.numberOfSucceeding 个，即 i = k - d.numberOfSucceeding - 1
-                }
-                if (d.numberOfSucceeding + d.exps.size() < Constants.k) {
-                    outlierList.add(d); // outlier 无需再设置 ev，无需添加到 eventQueue 中
-                } else if (d.numberOfSucceeding + d.exps.size() >= Constants.k && !d.exps.isEmpty()) {
-                    // * keep k most recent preceding neighbors
-                    d.ev = min(d.exps);
-                    long startTime2 = Utils.getCPUTime();
-                    eventQueue.add(d); // eventQueue 看的是 element.ev
-                    MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime2;
-                }
-            }
-        }
-        Utils.computeUsedMemory();
-    }
-     */
-
     public void processData(MCObject d, int currentTime) {
         if (d.arrivalTime <= currentTime - Constants.W) {
             throw new RuntimeException("d.arrivalTime <= currentTime - Constants.W");
@@ -536,7 +341,7 @@ public class MicroCluster {
         if (query.iterator().hasNext()) {
             ri = query.iterator().next();
             min_distance = ri.distance;
-            if (micro_clusters.get(ri.data) != null && !micro_clusters.get(ri.data).isEmpty())
+            if (microClusters.get(ri.data) != null && !microClusters.get(ri.data).isEmpty())
                 isFoundCluster = true; // 有邻居在 cluster 中
         }
 
@@ -579,14 +384,54 @@ public class MicroCluster {
             if (i < min) min = i;
         return min;
     }
+
+    /*
+    1.每次滑动重新计算 outlier 是多少
+    2.增加移除点后的 outlier 检查
+    3.增加点进来后的 outlier 检查
+    4.维护几份 dataList
+     */
+    private static class OutlierTest {
+        private static final ArrayList<MCObject> outlierList = new ArrayList<>();
+        private static final int[] numNeighbors = new int[Constants.W];
+
+        public static void computeOutlier(ArrayList<MCObject> dataList, MTreeClass mTree) {
+            Arrays.fill(numNeighbors, 0);
+            for (int i = 0; i < dataList.size(); i++) {
+                for (int j = i + 1; j < dataList.size(); j++) {
+                    if (mTree.getDistanceFunction().calculate(dataList.get(i), dataList.get(j)) <= Constants.R) {
+                        numNeighbors[i]++;
+                        numNeighbors[j]++;
+                    }
+                }
+            }
+            outlierList.clear();
+            for (int i = 0; i < dataList.size(); i++) {
+                if (numNeighbors[i] < Constants.k) {
+                    outlierList.add(dataList.get(i));
+                }
+            }
+        }
+
+        public static void compareOutlier(ArrayList<MCObject> MCODOutlier) {
+            if (MCODOutlier.size() != outlierList.size()) {
+                System.out.println("MCODOutlier.size() != outlierList.size(), MCODOutlier.size()=" + MCODOutlier.size() + ", outlierList.size()=" + outlierList.size());
+                System.exit(-1);
+            }
+            for (int i = 0; i < MCODOutlier.size(); i++) {
+                if (MCODOutlier.get(i) != outlierList.get(i)) {
+                    System.out.println("MCODOutlier.get(i) != outlierList.get(i), i=" + i);
+                    System.exit(-1);
+                }
+            }
+        }
+    }
 }
 
 class MCComparator implements Comparator<MCObject> {
     @Override
     public int compare(MCObject o1, MCObject o2) {
-        if (o1.ev < o2.ev) return -1;
-        else if (o1.ev == o2.ev) return 0;
-        else return 1;
+        return Integer.compare(o1.ev, o2.ev);
     }
 }
 
