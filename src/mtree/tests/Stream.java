@@ -20,278 +20,48 @@ import mtree.utils.Constants;
 
 public class Stream {
 
-    PriorityQueue<Data> streams;
-
     public static Stream streamInstance;
+    public ArrayList<Data> dataList;
 
-    public static Stream getInstance(String type) {
-
-        if (streamInstance != null) {
-            return streamInstance;
-        } else if (!Constants.dataFile.trim().equals("")) {
-            streamInstance = new Stream();
-//            streamInstance.getData(Constants.dataFile);
-            return streamInstance;
-        } else if ("ForestCover".equals(type)) {
-            streamInstance = new Stream();
-            streamInstance.getData(Constants.forestCoverFileName);
-            return streamInstance;
-        } else if ("TAO".equals(type)) {
-            streamInstance = new Stream();
-            streamInstance.getData(Constants.taoFileName);
-            return streamInstance;
-        } else if ("randomData".equals(type)) {
-            streamInstance = new Stream();
-            streamInstance.getData(Constants.randomFileName1111);
-            return streamInstance;
-        } else if ("randomData0.001".equals(type)) {
-            streamInstance = new Stream();
-            streamInstance.getData(Constants.randomFileName001);
-            return streamInstance;
-        } else if ("randomData0.01".equals(type)) {
-            streamInstance = new Stream();
-            streamInstance.getData(Constants.randomFileName01);
-            return streamInstance;
-        } else if ("randomData0.1".equals(type)) {
-            streamInstance = new Stream();
-            streamInstance.getData(Constants.randomFileName1);
-            return streamInstance;
-        } else if ("randomData1".equals(type)) {
-            streamInstance = new Stream();
-            streamInstance.getData(Constants.randomFileName1percent);
-            return streamInstance;
-        } else if ("randomData10".equals(type)) {
-            streamInstance = new Stream();
-            streamInstance.getData(Constants.randomFileName10percent);
-            return streamInstance;
-        } else if ("tagData".equals(type)) {
-            streamInstance = new Stream();
-            streamInstance.getData(Constants.tagCALC);
-            return streamInstance;
-        } else if ("Trade".equals(type)) {
-            streamInstance = new Stream();
-            streamInstance.getData(Constants.STT);
-            return streamInstance;
-        } else {
-            streamInstance = new Stream();
-            streamInstance.getRandomInput(1000, 10);
-            return streamInstance;
-        }
-    }
-
-    public boolean hasNext() {
-        return !streams.isEmpty();
-    }
-
-    public ArrayList<Data> getIncomingData(int currentTime, int length, String filename) {
-        ArrayList<Data> results = new ArrayList<>();
-        try {
-            BufferedReader bfr = new BufferedReader(new FileReader(new File(filename)));
-            String line = "";
-            int time = 0;
-            try {
-                while ((line = bfr.readLine()) != null) {
-                    time++;
-                    if (time > currentTime && time <= currentTime + length) {
-                        String[] atts = line.split(",");
-                        double[] d = new double[atts.length];
-                        for (int i = 0; i < d.length; i++) {
-                            // d[i] = Double.valueOf(atts[i]) + (new Random()).nextDouble() / 10000000;
-                            d[i] = Double.parseDouble(atts[i]);
-                        }
-                        Data data = new Data(d);
-                        data.arrivalTime = time;
-                        results.add(data);
-                    }
-                }
-                bfr.close();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return results;
-    }
-
-    public Date getFirstTimeStamp(String filename) throws FileNotFoundException, IOException, ParseException {
-        BufferedReader bfr = new BufferedReader(new FileReader(new File(filename)));
-
-        String line = "";
-        line = bfr.readLine();
-        String[] atts = line.split(",");
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        Date data_time = formatter.parse(atts[0].trim());
-        return data_time;
-    }
-
-    public ArrayList<Data> getRandomIncomingData(int currentTime, int length, String filename, double likely) {
-        Random r = new Random();
-        ArrayList<Data> results = new ArrayList<>();
-        try {
-            BufferedReader bfr = new BufferedReader(new FileReader(new File(filename)));
-
-            String line = "";
-            int time = 0;
-            try {
-                while ((line = bfr.readLine()) != null) {
-                    time++;
-                    if (time > currentTime && time <= currentTime + length) {
-                        String[] atts = line.split(",");
-                        double[] d = new double[atts.length];
-                        for (int i = 0; i < d.length; i++) {
-
-                            d[i] = Double.valueOf(atts[i]) + (new Random()).nextDouble() / 10000000;
-                        }
-                        Data data = new Data(d);
-                        data.arrivalTime = time;
-
-                        if (likely > r.nextDouble()) {
-                            results.add(data);
-                        }
-                    }
-                }
-                bfr.close();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return results;
-
-    }
-
-    public ArrayList<Data> getTimeBasedIncomingData(Date currentTime, int lengthInSecond, String filename) {
-        ArrayList<Data> results = new ArrayList<>();
-        try {
-            BufferedReader bfr = new BufferedReader(new FileReader(new File(filename)));
-
-            String line = "";
-            int time = 0;
-            Date endTime = new Date();
-            endTime.setTime(currentTime.getTime() + lengthInSecond * 1000);
-            try {
-                while ((line = bfr.readLine()) != null) {
-                    String[] atts = line.split(",");
-                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-
-                    try {
-                        Date data_time = formatter.parse(atts[0].trim());
-                        if (data_time.after(currentTime) && data_time.before(endTime)) {
-
-                            double[] d = new double[atts.length - 1];
-                            for (int i = 1; i < d.length; i++) {
-
-                                d[i - 1] = Double.valueOf(atts[i]) + (new Random()).nextDouble() / 10000000;
-                            }
-                            Data data = new Data(d);
-                            data.arrivalTime = time;
-
-                            results.add(data);
-
-                        }
-                    } catch (ParseException ex) {
-                        Logger.getLogger(Stream.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                }
-                bfr.close();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return results;
-
+    public static Stream getInstance(String file) {
+        // 根据传入的文件名，生成一个数组，每次返回指定区间的数据
+        streamInstance = new Stream();
+        // 读取文件中的数据
+        streamInstance.getData(file);
+        return streamInstance;
     }
 
     public ArrayList<Data> getIncomingData(int currentTime, int length) {
-        ArrayList<Data> results = new ArrayList<Data>();
-        Data d = streams.peek();
-        while (d != null && d.arrivalTime > currentTime
-                && d.arrivalTime <= currentTime + length) {
-            results.add(d);
-            streams.poll();
-            d = streams.peek();
-
+        if (currentTime + length <= dataList.size()) {
+            return new ArrayList<>(dataList.subList(currentTime, currentTime + length));
         }
-        return results;
-
-    }
-
-    public void getRandomInput(int length, int range) {
-
-        Random r = new Random();
-        for (int i = 1; i <= length; i++) {
-            double d = r.nextInt(range);
-            Data data = new Data(d);
-            data.arrivalTime = i;
-            streams.add(data);
-
-        }
-
+        return new ArrayList<>(dataList.subList(currentTime + length, dataList.size()));
     }
 
     public void getData(String filename) {
-
         try {
             BufferedReader bfr = new BufferedReader(new FileReader(new File(filename)));
-
-            String line = "";
-            int time = 1;
+            String line;
+            int time = 0;
+            dataList = new ArrayList<>();
             try {
                 while ((line = bfr.readLine()) != null) {
-
-                    String[] atts = line.split(",");
-                    double[] d = new double[atts.length];
+                    time++;
+                    String[] attrs = line.split(",");
+                    double[] d = new double[attrs.length];
                     for (int i = 0; i < d.length; i++) {
-
-                        d[i] = Double.valueOf(atts[i]) + (new Random()).nextDouble() / 10000000;
+                        d[i] = Double.parseDouble(attrs[i]);
                     }
                     Data data = new Data(d);
                     data.arrivalTime = time;
-                    streams.add(data);
-                    time++;
+                    dataList.add(data);
                 }
+
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
-
-    public Stream() {
-        Comparator<Data> comparator = new DataComparator();
-
-//        streams = new PriorityQueue<Data>(comparator);
-    }
-
-}
-
-class DataComparator implements Comparator<Data> {
-
-    @Override
-    public int compare(Data x, Data y) {
-        if (x.arrivalTime < y.arrivalTime) {
-            return -1;
-        } else if (x.arrivalTime > y.arrivalTime) {
-            return 1;
-        } else {
-            return 0;
-        }
-
-    }
-
 }

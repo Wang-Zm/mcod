@@ -202,14 +202,14 @@ public class MicroCluster {
             }
         });
         if (neighbor_in_R2.size() > Constants.k * 1.1) {
-            formNewCluster(neighbor_in_R2, neighbor_in_3_2Apart_PD, d);
+            formNewCluster(neighbor_in_R2, neighbor_in_3_2Apart_PD, d, fromCluster);
         } else {
             applyEventBasedAlgo(query, neighbor_in_PD, d, fromCluster);
         }
     }
 
     // 1.设置自己 2.设置自己影响的点，包括 cluster associateObjects 与邻居情况
-    private void formNewCluster(ArrayList<MCObject> neighbor_in_R2, ArrayList<MCObject> neighbor_in_3_2Apart_PD, MCObject d) {
+    private void formNewCluster(ArrayList<MCObject> neighbor_in_R2, ArrayList<MCObject> neighbor_in_3_2Apart_PD, MCObject d, boolean fromCluster) {
         neighbor_in_R2.add(d);
         for (MCObject o : neighbor_in_R2) {
             if(o.isInCluster && o.arrivalTime != d.arrivalTime)
@@ -244,7 +244,14 @@ public class MicroCluster {
         associateObjects.put(d, neighbor_in_3_2Apart_PD); // associate_objects value 是 PD 中的点
 
         // * 对于新插入的点 d，更新 neighbor_in_3_2Apart_PD 点的邻居
-        updateNeighborsOfList(neighbor_in_3_2Apart_PD, d);
+        if (fromCluster) {
+            List<MCObject> collect = neighbor_in_3_2Apart_PD.stream().filter(o -> o.fromShrinkCluster).collect(Collectors.toList());
+            if (!collect.isEmpty()) {
+                updateNeighborsOfList(new ArrayList<>(collect), d);
+            }
+        } else {
+            updateNeighborsOfList(neighbor_in_3_2Apart_PD, d);
+        }
     }
 
     private void applyEventBasedAlgo(MTreeClass.Query query, ArrayList<MCObject> neighbor_in_PD, MCObject d, boolean fromCluster) {
@@ -367,10 +374,6 @@ public class MicroCluster {
         return min;
     }
 
-    /*
-    1.增加移除点后的 outlier 检查
-    2.增加点进来后的 outlier 检查
-     */
     private static class OutlierTest {
         private static final int[] numNeighbors = new int[Constants.W];
         private static final ArrayList<MCObject> outlierList = new ArrayList<>();
@@ -417,6 +420,7 @@ public class MicroCluster {
 
                         printRealNumNeighbors(MCODOutlier.get(i), mTree, "MCODOutlier");
                         printRealNumNeighbors(outlierList.get(i), mTree, "outlierList");
+                        printExps(i, mTree);
                         printSucceeding(i, mTree);
                         System.exit(-1);
                     }
@@ -450,6 +454,20 @@ public class MicroCluster {
             System.out.println("numNeighborsOfOutliers.get(i)=" + numNeighborsOfOutliers.get(i));
         }
 
+        private static void printExps(int i, MTreeClass mTree) {
+            ArrayList<Integer> exps = outlierList.get(i).exps;
+            for (int i1 = 0; i1 < exps.size(); i1++) {
+                for (MCObject mcObject : dataList) {
+                    if (mcObject.arrivalTime == exps.get(i1)) {
+                        double dist = mTree.getDistanceFunction().calculate(mcObject, outlierList.get(i));
+                        System.out.printf("%d, %d, dist=%f\n", i1, exps.get(i1), dist);
+                    }
+                }
+            }
+            HashSet<Integer> set = new HashSet<>(exps);
+            System.out.println("expsSet.size()=" + set.size()); // succeeding 中有重复的
+        }
+
         private static void printSucceeding(int i, MTreeClass mTree) {
             ArrayList<Integer> succ = outlierList.get(i).succeedings;
             for (int i1 = 0; i1 < succ.size(); i1++) {
@@ -461,7 +479,7 @@ public class MicroCluster {
                 }
             }
             HashSet<Integer> set = new HashSet<>(succ);
-            System.out.println("set.size()=" + set.size()); // succeeding 中有重复的
+            System.out.println("succSet.size()=" + set.size()); // succeeding 中有重复的
         }
 
         private static void printRealNumNeighbors(MCObject d, MTreeClass mTree, String name) {

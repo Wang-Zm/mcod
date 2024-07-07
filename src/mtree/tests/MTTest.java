@@ -39,7 +39,7 @@ public class MTTest {
         readArguments(args);
         MesureMemoryThread mesureThread = new MesureMemoryThread();
         mesureThread.start();
-        Stream s = Stream.getInstance("TAO");
+        Stream s = Stream.getInstance(Constants.dataFile);
 
         ExactStorm estorm = new ExactStorm();
         ApproxStorm apStorm = new ApproxStorm(0.1);
@@ -59,11 +59,11 @@ public class MTTest {
             numberWindows++;
 
             ArrayList<Data> incomingData;
-            if (currentTime != 0) {
-                incomingData = s.getIncomingData(currentTime, Constants.slide, Constants.dataFile);
+            if (numberWindows > 1) {
+                incomingData = s.getIncomingData(currentTime, Constants.slide);
                 currentTime = currentTime + Constants.slide;
             } else {
-                incomingData = s.getIncomingData(currentTime, Constants.W, Constants.dataFile);
+                incomingData = s.getIncomingData(currentTime, Constants.W);
                 currentTime = currentTime + Constants.W;
             }
 
