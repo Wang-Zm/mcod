@@ -11,9 +11,6 @@ public class Data implements EuclideanCoordinate, Comparable<Data> {
 	
 	//arrival time 
 	public int arrivalTime;
-	
-	
-	
         
 	public Data(double... values) {
 		this.values = values;

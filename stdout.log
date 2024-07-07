@@ -2,96 +2,486 @@ Outlier detected for expired
 Outlier compared for expired
 Outlier detected for new
 Outlier compared for new
-#points in clusters: 9462.0
 #window: 1
 Total #outliers: 169
 Average Time: 0.0
-Peak memory: 5.41497802734375
+Peak memory: 12.490097045898438
 Time index, remove data from structure: 0.0
 Time for querying: 0.0
 Time for new slide: 0.0
 Time for expired slide: 0.0
 ------------------------------------
-Number clusters = 31.0
-Max  Number points in event queue = 148.0
-Avg number points in clusters= 9462.0
-Avg Rmc size = 0.3795
-Avg Length exps= 0.4308
+Number clusters = 0.0
+Max  Number points in event queue = 0.0
+Avg number points in clusters= 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
 Outlier detected for expired
 Outlier compared for expired
 Outlier detected for new
 Outlier compared for new
-#points in clusters: 18964.0
 #window: 2
 Total #outliers: 161
-Average Time: 0.190808
-Peak memory: 6.833412170410156
-Time index, remove data from structure: 7.35E-4
+Average Time: 0.1967895
+Peak memory: 12.490097045898438
+Time index, remove data from structure: 7.245E-4
 Time for querying: 0.0
-Time for new slide: 0.006489
-Time for expired slide: 0.001239
+Time for new slide: 0.0109035
+Time for expired slide: 0.001776
 ------------------------------------
-Number clusters = 31.5
-Max  Number points in event queue = 158.0
-Avg number points in clusters= 9482.0
-Avg Rmc size = 0.365368975
-Avg Length exps= 0.47502153999999996
+Number clusters = 0.0
+Max  Number points in event queue = 0.0
+Avg number points in clusters= 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
 Outlier detected for expired
 Outlier compared for expired
 Outlier detected for new
 Outlier compared for new
-#points in clusters: 28415.0
 #window: 3
 Total #outliers: 162
-Average Time: 0.24587466666666669
-Peak memory: 6.833412170410156
-Time index, remove data from structure: 8.020000000000001E-4
+Average Time: 0.251917
+Peak memory: 13.96319580078125
+Time index, remove data from structure: 7.74E-4
 Time for querying: 0.0
-Time for new slide: 0.010902666666666666
-Time for expired slide: 0.0015426666666666668
+Time for new slide: 0.017449666666666665
+Time for expired slide: 0.001809
 ------------------------------------
-Number clusters = 32.0
-Max  Number points in event queue = 176.0
-Avg number points in clusters= 9471.666666666666
-Avg Rmc size = 0.37212435793166665
-Avg Length exps= 0.5157983347693333
+Number clusters = 0.0
+Max  Number points in event queue = 0.0
+Avg number points in clusters= 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
 Outlier detected for expired
 Outlier compared for expired
 Outlier detected for new
 Outlier compared for new
-#points in clusters: 37827.0
 #window: 4
 Total #outliers: 158
-Average Time: 0.27031275
-Peak memory: 6.833412170410156
-Time index, remove data from structure: 7.37E-4
+Average Time: 0.28040625
+Peak memory: 15.004486083984375
+Time index, remove data from structure: 6.975E-4
 Time for querying: 0.0
-Time for new slide: 0.0102925
-Time for expired slide: 0.0014455
+Time for new slide: 0.020978
+Time for expired slide: 0.001635
 ------------------------------------
-Number clusters = 32.25
-Max  Number points in event queue = 176.0
-Avg number points in clusters= 9456.75
-Avg Rmc size = 0.37820290932684486
-Avg Length exps= 0.5252386848751077
+Number clusters = 0.0
+Max  Number points in event queue = 0.0
+Avg number points in clusters= 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
 Outlier detected for expired
 Outlier compared for expired
 Outlier detected for new
 Outlier compared for new
-#points in clusters: 47262.0
 #window: 5
 Total #outliers: 163
-Average Time: 0.2858172
-Peak memory: 7.291290283203125
-Time index, remove data from structure: 7.012E-4
+Average Time: 0.2969416
+Peak memory: 15.004486083984375
+Time index, remove data from structure: 6.577999999999999E-4
 Time for querying: 0.0
-Time for new slide: 0.0103106
-Time for expired slide: 0.0013646
+Time for new slide: 0.0216798
+Time for expired slide: 0.0015156
 ------------------------------------
-Number clusters = 33.0
-Max  Number points in event queue = 220.0
-Avg number points in clusters= 9452.4
-Avg Rmc size = 0.37461025623274613
-Avg Length exps= 0.56216201909479
+Number clusters = 0.0
+Max  Number points in event queue = 0.0
+Avg number points in clusters= 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
 Outlier detected for expired
 MCODOutlier.size() != outlierList.size(), MCODOutlier.size()=159, outlierList.size()=164
+MCODOutlier.get(i) != outlierList.get(i), i=5, MCODOutlier.get(i).arrivalTime=2880, outlierList.get(i).arrivalTime=2597
+MCODOutlier.get(i).exps.size()=0, MCODOutlier.get(i).numberOfSucceeding=14
+numNeighborsOfOutliers.get(i)=49
+MCODOutlier:
+0, 2576, exps.size()=0, numberOfSucceeding=8
+1, 2577, exps.size()=0, numberOfSucceeding=9
+2, 2588, exps.size()=0, numberOfSucceeding=8
+3, 2589, exps.size()=0, numberOfSucceeding=6
+4, 2590, exps.size()=0, numberOfSucceeding=7
+5, 2880, exps.size()=0, numberOfSucceeding=14
+6, 2881, exps.size()=0, numberOfSucceeding=10
+7, 3008, exps.size()=2, numberOfSucceeding=15
+8, 3009, exps.size()=2, numberOfSucceeding=14
+9, 3018, exps.size()=1, numberOfSucceeding=13
+10, 3019, exps.size()=0, numberOfSucceeding=12
+11, 3120, exps.size()=2, numberOfSucceeding=12
+12, 3121, exps.size()=2, numberOfSucceeding=11
+13, 3279, exps.size()=4, numberOfSucceeding=6
+14, 3280, exps.size()=3, numberOfSucceeding=8
+15, 3304, exps.size()=0, numberOfSucceeding=13
+16, 3305, exps.size()=3, numberOfSucceeding=8
+17, 3410, exps.size()=5, numberOfSucceeding=5
+18, 3411, exps.size()=1, numberOfSucceeding=10
+19, 3412, exps.size()=0, numberOfSucceeding=13
+20, 3413, exps.size()=1, numberOfSucceeding=2
+21, 3415, exps.size()=2, numberOfSucceeding=11
+22, 3416, exps.size()=2, numberOfSucceeding=9
+23, 3417, exps.size()=5, numberOfSucceeding=16
+24, 3434, exps.size()=9, numberOfSucceeding=27
+25, 3447, exps.size()=0, numberOfSucceeding=2
+26, 3448, exps.size()=1, numberOfSucceeding=2
+27, 3600, exps.size()=0, numberOfSucceeding=1
+28, 3601, exps.size()=0, numberOfSucceeding=4
+29, 3712, exps.size()=10, numberOfSucceeding=6
+30, 3713, exps.size()=9, numberOfSucceeding=6
+31, 3836, exps.size()=6, numberOfSucceeding=7
+32, 3837, exps.size()=6, numberOfSucceeding=7
+33, 3996, exps.size()=10, numberOfSucceeding=6
+34, 3997, exps.size()=10, numberOfSucceeding=7
+35, 4023, exps.size()=12, numberOfSucceeding=1
+36, 4024, exps.size()=9, numberOfSucceeding=1
+37, 4592, exps.size()=1, numberOfSucceeding=2
+38, 4593, exps.size()=1, numberOfSucceeding=2
+39, 4594, exps.size()=1, numberOfSucceeding=2
+40, 5143, exps.size()=0, numberOfSucceeding=9
+41, 5144, exps.size()=0, numberOfSucceeding=9
+42, 5437, exps.size()=0, numberOfSucceeding=7
+43, 5438, exps.size()=0, numberOfSucceeding=7
+44, 5475, exps.size()=0, numberOfSucceeding=7
+45, 5476, exps.size()=0, numberOfSucceeding=7
+46, 5508, exps.size()=3, numberOfSucceeding=8
+47, 5558, exps.size()=0, numberOfSucceeding=6
+48, 5559, exps.size()=0, numberOfSucceeding=0
+49, 5560, exps.size()=0, numberOfSucceeding=1
+50, 5564, exps.size()=0, numberOfSucceeding=4
+51, 5565, exps.size()=0, numberOfSucceeding=4
+52, 5568, exps.size()=0, numberOfSucceeding=5
+53, 5569, exps.size()=0, numberOfSucceeding=5
+54, 5570, exps.size()=0, numberOfSucceeding=20
+55, 5630, exps.size()=0, numberOfSucceeding=13
+56, 5721, exps.size()=0, numberOfSucceeding=5
+57, 5722, exps.size()=0, numberOfSucceeding=5
+58, 5725, exps.size()=2, numberOfSucceeding=3
+59, 5726, exps.size()=0, numberOfSucceeding=5
+60, 5910, exps.size()=2, numberOfSucceeding=3
+61, 5911, exps.size()=2, numberOfSucceeding=3
+62, 5925, exps.size()=4, numberOfSucceeding=3
+63, 6037, exps.size()=0, numberOfSucceeding=38
+64, 6038, exps.size()=0, numberOfSucceeding=38
+65, 6039, exps.size()=0, numberOfSucceeding=38
+66, 6040, exps.size()=0, numberOfSucceeding=38
+67, 6041, exps.size()=0, numberOfSucceeding=38
+68, 6042, exps.size()=0, numberOfSucceeding=38
+69, 6043, exps.size()=0, numberOfSucceeding=38
+70, 6044, exps.size()=0, numberOfSucceeding=38
+71, 6045, exps.size()=0, numberOfSucceeding=38
+72, 6046, exps.size()=0, numberOfSucceeding=38
+73, 6047, exps.size()=0, numberOfSucceeding=38
+74, 6048, exps.size()=0, numberOfSucceeding=38
+75, 6049, exps.size()=0, numberOfSucceeding=38
+76, 6050, exps.size()=0, numberOfSucceeding=38
+77, 6051, exps.size()=0, numberOfSucceeding=38
+78, 6052, exps.size()=0, numberOfSucceeding=38
+79, 6053, exps.size()=0, numberOfSucceeding=38
+80, 6054, exps.size()=0, numberOfSucceeding=38
+81, 6055, exps.size()=0, numberOfSucceeding=38
+82, 6056, exps.size()=0, numberOfSucceeding=38
+83, 6057, exps.size()=0, numberOfSucceeding=38
+84, 6058, exps.size()=0, numberOfSucceeding=38
+85, 6059, exps.size()=0, numberOfSucceeding=38
+86, 6060, exps.size()=0, numberOfSucceeding=38
+87, 6061, exps.size()=0, numberOfSucceeding=38
+88, 6062, exps.size()=0, numberOfSucceeding=38
+89, 6063, exps.size()=0, numberOfSucceeding=38
+90, 6064, exps.size()=0, numberOfSucceeding=38
+91, 6065, exps.size()=0, numberOfSucceeding=38
+92, 6066, exps.size()=0, numberOfSucceeding=38
+93, 6067, exps.size()=0, numberOfSucceeding=38
+94, 6068, exps.size()=0, numberOfSucceeding=38
+95, 6069, exps.size()=0, numberOfSucceeding=38
+96, 6070, exps.size()=0, numberOfSucceeding=38
+97, 6071, exps.size()=0, numberOfSucceeding=38
+98, 6072, exps.size()=0, numberOfSucceeding=38
+99, 6073, exps.size()=0, numberOfSucceeding=38
+100, 6074, exps.size()=0, numberOfSucceeding=38
+101, 6075, exps.size()=0, numberOfSucceeding=38
+102, 6076, exps.size()=9, numberOfSucceeding=0
+103, 6267, exps.size()=0, numberOfSucceeding=48
+104, 6268, exps.size()=0, numberOfSucceeding=47
+105, 6269, exps.size()=0, numberOfSucceeding=47
+106, 6270, exps.size()=0, numberOfSucceeding=45
+107, 6273, exps.size()=0, numberOfSucceeding=44
+108, 6274, exps.size()=0, numberOfSucceeding=38
+109, 6275, exps.size()=0, numberOfSucceeding=35
+110, 6276, exps.size()=0, numberOfSucceeding=37
+111, 6277, exps.size()=0, numberOfSucceeding=38
+112, 6278, exps.size()=0, numberOfSucceeding=38
+113, 6621, exps.size()=1, numberOfSucceeding=9
+114, 7435, exps.size()=0, numberOfSucceeding=1
+115, 7436, exps.size()=0, numberOfSucceeding=0
+116, 7437, exps.size()=0, numberOfSucceeding=1
+117, 7443, exps.size()=0, numberOfSucceeding=1
+118, 7922, exps.size()=0, numberOfSucceeding=10
+119, 9264, exps.size()=0, numberOfSucceeding=0
+120, 9265, exps.size()=1, numberOfSucceeding=9
+121, 10506, exps.size()=0, numberOfSucceeding=2
+122, 10507, exps.size()=4, numberOfSucceeding=10
+123, 10778, exps.size()=3, numberOfSucceeding=17
+124, 10779, exps.size()=4, numberOfSucceeding=8
+125, 10828, exps.size()=2, numberOfSucceeding=4
+126, 10829, exps.size()=0, numberOfSucceeding=6
+127, 10830, exps.size()=1, numberOfSucceeding=8
+128, 10831, exps.size()=0, numberOfSucceeding=6
+129, 10832, exps.size()=0, numberOfSucceeding=6
+130, 10833, exps.size()=0, numberOfSucceeding=0
+131, 10834, exps.size()=0, numberOfSucceeding=1
+132, 10835, exps.size()=0, numberOfSucceeding=1
+133, 10836, exps.size()=0, numberOfSucceeding=4
+134, 10837, exps.size()=5, numberOfSucceeding=9
+135, 11699, exps.size()=0, numberOfSucceeding=0
+136, 11702, exps.size()=1, numberOfSucceeding=1
+137, 11703, exps.size()=0, numberOfSucceeding=0
+138, 11704, exps.size()=0, numberOfSucceeding=0
+139, 11705, exps.size()=0, numberOfSucceeding=0
+140, 11706, exps.size()=1, numberOfSucceeding=0
+141, 11707, exps.size()=5, numberOfSucceeding=1
+142, 11717, exps.size()=5, numberOfSucceeding=5
+143, 11718, exps.size()=1, numberOfSucceeding=0
+144, 11719, exps.size()=0, numberOfSucceeding=0
+145, 11720, exps.size()=3, numberOfSucceeding=2
+146, 11725, exps.size()=7, numberOfSucceeding=17
+147, 11726, exps.size()=2, numberOfSucceeding=2
+148, 11727, exps.size()=4, numberOfSucceeding=2
+149, 11728, exps.size()=9, numberOfSucceeding=6
+150, 11729, exps.size()=9, numberOfSucceeding=24
+151, 11830, exps.size()=40, numberOfSucceeding=5
+152, 11831, exps.size()=40, numberOfSucceeding=5
+153, 11938, exps.size()=0, numberOfSucceeding=0
+154, 11939, exps.size()=2, numberOfSucceeding=1
+155, 11956, exps.size()=6, numberOfSucceeding=4
+156, 11983, exps.size()=1, numberOfSucceeding=0
+157, 11984, exps.size()=6, numberOfSucceeding=6
+158, 2611, exps.size()=0, numberOfSucceeding=43
+outlierList:
+0, 2576, numNeighborsOfOutliers=8, exps.size()=0, numberOfSucceeding=8
+1, 2577, numNeighborsOfOutliers=9, exps.size()=0, numberOfSucceeding=9
+2, 2588, numNeighborsOfOutliers=8, exps.size()=0, numberOfSucceeding=8
+3, 2589, numNeighborsOfOutliers=6, exps.size()=0, numberOfSucceeding=6
+4, 2590, numNeighborsOfOutliers=7, exps.size()=0, numberOfSucceeding=7
+5, 2597, numNeighborsOfOutliers=49, exps.size()=0, numberOfSucceeding=65
+6, 2611, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=43
+7, 2880, numNeighborsOfOutliers=14, exps.size()=0, numberOfSucceeding=14
+8, 2881, numNeighborsOfOutliers=10, exps.size()=0, numberOfSucceeding=10
+9, 3008, numNeighborsOfOutliers=17, exps.size()=2, numberOfSucceeding=15
+10, 3009, numNeighborsOfOutliers=16, exps.size()=2, numberOfSucceeding=14
+11, 3018, numNeighborsOfOutliers=14, exps.size()=1, numberOfSucceeding=13
+12, 3019, numNeighborsOfOutliers=12, exps.size()=0, numberOfSucceeding=12
+13, 3120, numNeighborsOfOutliers=14, exps.size()=2, numberOfSucceeding=12
+14, 3121, numNeighborsOfOutliers=13, exps.size()=2, numberOfSucceeding=11
+15, 3149, numNeighborsOfOutliers=46, exps.size()=18, numberOfSucceeding=41
+16, 3279, numNeighborsOfOutliers=10, exps.size()=4, numberOfSucceeding=6
+17, 3280, numNeighborsOfOutliers=11, exps.size()=3, numberOfSucceeding=8
+18, 3304, numNeighborsOfOutliers=13, exps.size()=0, numberOfSucceeding=13
+19, 3305, numNeighborsOfOutliers=11, exps.size()=3, numberOfSucceeding=8
+20, 3402, numNeighborsOfOutliers=48, exps.size()=20, numberOfSucceeding=43
+21, 3410, numNeighborsOfOutliers=10, exps.size()=5, numberOfSucceeding=5
+22, 3411, numNeighborsOfOutliers=11, exps.size()=1, numberOfSucceeding=10
+23, 3412, numNeighborsOfOutliers=13, exps.size()=0, numberOfSucceeding=13
+24, 3413, numNeighborsOfOutliers=3, exps.size()=1, numberOfSucceeding=2
+25, 3414, numNeighborsOfOutliers=44, exps.size()=14, numberOfSucceeding=41
+26, 3415, numNeighborsOfOutliers=13, exps.size()=2, numberOfSucceeding=11
+27, 3416, numNeighborsOfOutliers=11, exps.size()=2, numberOfSucceeding=9
+28, 3417, numNeighborsOfOutliers=21, exps.size()=5, numberOfSucceeding=16
+29, 3419, numNeighborsOfOutliers=42, exps.size()=14, numberOfSucceeding=37
+30, 3434, numNeighborsOfOutliers=32, exps.size()=9, numberOfSucceeding=27
+31, 3447, numNeighborsOfOutliers=2, exps.size()=0, numberOfSucceeding=2
+32, 3448, numNeighborsOfOutliers=3, exps.size()=1, numberOfSucceeding=2
+33, 3600, numNeighborsOfOutliers=1, exps.size()=0, numberOfSucceeding=1
+34, 3601, numNeighborsOfOutliers=4, exps.size()=0, numberOfSucceeding=4
+35, 3712, numNeighborsOfOutliers=16, exps.size()=10, numberOfSucceeding=6
+36, 3713, numNeighborsOfOutliers=15, exps.size()=9, numberOfSucceeding=6
+37, 3836, numNeighborsOfOutliers=13, exps.size()=6, numberOfSucceeding=7
+38, 3837, numNeighborsOfOutliers=13, exps.size()=6, numberOfSucceeding=7
+39, 3996, numNeighborsOfOutliers=16, exps.size()=10, numberOfSucceeding=6
+40, 3997, numNeighborsOfOutliers=17, exps.size()=10, numberOfSucceeding=7
+41, 4023, numNeighborsOfOutliers=13, exps.size()=12, numberOfSucceeding=1
+42, 4024, numNeighborsOfOutliers=10, exps.size()=9, numberOfSucceeding=1
+43, 4592, numNeighborsOfOutliers=3, exps.size()=1, numberOfSucceeding=2
+44, 4593, numNeighborsOfOutliers=3, exps.size()=1, numberOfSucceeding=2
+45, 4594, numNeighborsOfOutliers=3, exps.size()=1, numberOfSucceeding=2
+46, 5143, numNeighborsOfOutliers=9, exps.size()=0, numberOfSucceeding=9
+47, 5144, numNeighborsOfOutliers=9, exps.size()=0, numberOfSucceeding=9
+48, 5437, numNeighborsOfOutliers=7, exps.size()=0, numberOfSucceeding=7
+49, 5438, numNeighborsOfOutliers=7, exps.size()=0, numberOfSucceeding=7
+50, 5475, numNeighborsOfOutliers=7, exps.size()=0, numberOfSucceeding=7
+51, 5476, numNeighborsOfOutliers=7, exps.size()=0, numberOfSucceeding=7
+52, 5508, numNeighborsOfOutliers=11, exps.size()=3, numberOfSucceeding=8
+53, 5558, numNeighborsOfOutliers=6, exps.size()=0, numberOfSucceeding=6
+54, 5559, numNeighborsOfOutliers=0, exps.size()=0, numberOfSucceeding=0
+55, 5560, numNeighborsOfOutliers=1, exps.size()=0, numberOfSucceeding=1
+56, 5564, numNeighborsOfOutliers=4, exps.size()=0, numberOfSucceeding=4
+57, 5565, numNeighborsOfOutliers=4, exps.size()=0, numberOfSucceeding=4
+58, 5568, numNeighborsOfOutliers=5, exps.size()=0, numberOfSucceeding=5
+59, 5569, numNeighborsOfOutliers=5, exps.size()=0, numberOfSucceeding=5
+60, 5570, numNeighborsOfOutliers=20, exps.size()=0, numberOfSucceeding=20
+61, 5630, numNeighborsOfOutliers=13, exps.size()=0, numberOfSucceeding=13
+62, 5721, numNeighborsOfOutliers=5, exps.size()=0, numberOfSucceeding=5
+63, 5722, numNeighborsOfOutliers=5, exps.size()=0, numberOfSucceeding=5
+64, 5725, numNeighborsOfOutliers=5, exps.size()=2, numberOfSucceeding=3
+65, 5726, numNeighborsOfOutliers=5, exps.size()=0, numberOfSucceeding=5
+66, 5910, numNeighborsOfOutliers=5, exps.size()=2, numberOfSucceeding=3
+67, 5911, numNeighborsOfOutliers=5, exps.size()=2, numberOfSucceeding=3
+68, 5925, numNeighborsOfOutliers=7, exps.size()=4, numberOfSucceeding=3
+69, 6037, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+70, 6038, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+71, 6039, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+72, 6040, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+73, 6041, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+74, 6042, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+75, 6043, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+76, 6044, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+77, 6045, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+78, 6046, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+79, 6047, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+80, 6048, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+81, 6049, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+82, 6050, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+83, 6051, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+84, 6052, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+85, 6053, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+86, 6054, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+87, 6055, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+88, 6056, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+89, 6057, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+90, 6058, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+91, 6059, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+92, 6060, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+93, 6061, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+94, 6062, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+95, 6063, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+96, 6064, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+97, 6065, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+98, 6066, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+99, 6067, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+100, 6068, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+101, 6069, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+102, 6070, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+103, 6071, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+104, 6072, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+105, 6073, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+106, 6074, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+107, 6075, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+108, 6076, numNeighborsOfOutliers=9, exps.size()=9, numberOfSucceeding=0
+109, 6267, numNeighborsOfOutliers=48, exps.size()=0, numberOfSucceeding=48
+110, 6268, numNeighborsOfOutliers=47, exps.size()=0, numberOfSucceeding=47
+111, 6269, numNeighborsOfOutliers=47, exps.size()=0, numberOfSucceeding=47
+112, 6270, numNeighborsOfOutliers=45, exps.size()=0, numberOfSucceeding=45
+113, 6273, numNeighborsOfOutliers=44, exps.size()=0, numberOfSucceeding=44
+114, 6274, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+115, 6275, numNeighborsOfOutliers=35, exps.size()=0, numberOfSucceeding=35
+116, 6276, numNeighborsOfOutliers=37, exps.size()=0, numberOfSucceeding=37
+117, 6277, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+118, 6278, numNeighborsOfOutliers=38, exps.size()=0, numberOfSucceeding=38
+119, 6621, numNeighborsOfOutliers=10, exps.size()=1, numberOfSucceeding=9
+120, 7435, numNeighborsOfOutliers=1, exps.size()=0, numberOfSucceeding=1
+121, 7436, numNeighborsOfOutliers=0, exps.size()=0, numberOfSucceeding=0
+122, 7437, numNeighborsOfOutliers=1, exps.size()=0, numberOfSucceeding=1
+123, 7443, numNeighborsOfOutliers=1, exps.size()=0, numberOfSucceeding=1
+124, 7922, numNeighborsOfOutliers=10, exps.size()=0, numberOfSucceeding=10
+125, 9264, numNeighborsOfOutliers=0, exps.size()=0, numberOfSucceeding=0
+126, 9265, numNeighborsOfOutliers=10, exps.size()=1, numberOfSucceeding=9
+127, 10506, numNeighborsOfOutliers=2, exps.size()=0, numberOfSucceeding=2
+128, 10507, numNeighborsOfOutliers=14, exps.size()=4, numberOfSucceeding=10
+129, 10778, numNeighborsOfOutliers=20, exps.size()=3, numberOfSucceeding=17
+130, 10779, numNeighborsOfOutliers=12, exps.size()=4, numberOfSucceeding=8
+131, 10828, numNeighborsOfOutliers=6, exps.size()=2, numberOfSucceeding=4
+132, 10829, numNeighborsOfOutliers=6, exps.size()=0, numberOfSucceeding=6
+133, 10830, numNeighborsOfOutliers=9, exps.size()=1, numberOfSucceeding=8
+134, 10831, numNeighborsOfOutliers=6, exps.size()=0, numberOfSucceeding=6
+135, 10832, numNeighborsOfOutliers=6, exps.size()=0, numberOfSucceeding=6
+136, 10833, numNeighborsOfOutliers=0, exps.size()=0, numberOfSucceeding=0
+137, 10834, numNeighborsOfOutliers=1, exps.size()=0, numberOfSucceeding=1
+138, 10835, numNeighborsOfOutliers=1, exps.size()=0, numberOfSucceeding=1
+139, 10836, numNeighborsOfOutliers=4, exps.size()=0, numberOfSucceeding=4
+140, 10837, numNeighborsOfOutliers=14, exps.size()=5, numberOfSucceeding=9
+141, 11699, numNeighborsOfOutliers=0, exps.size()=0, numberOfSucceeding=0
+142, 11702, numNeighborsOfOutliers=2, exps.size()=1, numberOfSucceeding=1
+143, 11703, numNeighborsOfOutliers=0, exps.size()=0, numberOfSucceeding=0
+144, 11704, numNeighborsOfOutliers=0, exps.size()=0, numberOfSucceeding=0
+145, 11705, numNeighborsOfOutliers=0, exps.size()=0, numberOfSucceeding=0
+146, 11706, numNeighborsOfOutliers=1, exps.size()=1, numberOfSucceeding=0
+147, 11707, numNeighborsOfOutliers=6, exps.size()=5, numberOfSucceeding=1
+148, 11717, numNeighborsOfOutliers=10, exps.size()=5, numberOfSucceeding=5
+149, 11718, numNeighborsOfOutliers=1, exps.size()=1, numberOfSucceeding=0
+150, 11719, numNeighborsOfOutliers=0, exps.size()=0, numberOfSucceeding=0
+151, 11720, numNeighborsOfOutliers=5, exps.size()=3, numberOfSucceeding=2
+152, 11725, numNeighborsOfOutliers=24, exps.size()=7, numberOfSucceeding=17
+153, 11726, numNeighborsOfOutliers=4, exps.size()=2, numberOfSucceeding=2
+154, 11727, numNeighborsOfOutliers=6, exps.size()=4, numberOfSucceeding=2
+155, 11728, numNeighborsOfOutliers=15, exps.size()=9, numberOfSucceeding=6
+156, 11729, numNeighborsOfOutliers=33, exps.size()=9, numberOfSucceeding=24
+157, 11830, numNeighborsOfOutliers=45, exps.size()=40, numberOfSucceeding=5
+158, 11831, numNeighborsOfOutliers=45, exps.size()=40, numberOfSucceeding=5
+159, 11938, numNeighborsOfOutliers=0, exps.size()=0, numberOfSucceeding=0
+160, 11939, numNeighborsOfOutliers=3, exps.size()=2, numberOfSucceeding=1
+161, 11956, numNeighborsOfOutliers=10, exps.size()=6, numberOfSucceeding=4
+162, 11983, numNeighborsOfOutliers=1, exps.size()=1, numberOfSucceeding=0
+163, 11984, numNeighborsOfOutliers=12, exps.size()=6, numberOfSucceeding=6
+_numNeighbors=49
+0, 2596, dist=1.600125
+1, 2598, dist=0.156208
+2, 2599, dist=0.598422
+3, 2602, dist=1.894021
+4, 2603, dist=1.225907
+5, 2605, dist=1.222125
+6, 2606, dist=1.680161
+7, 2610, dist=0.622514
+8, 2611, dist=0.541839
+9, 2612, dist=0.134744
+10, 2613, dist=1.256234
+11, 2614, dist=1.886299
+12, 2615, dist=0.792445
+13, 2616, dist=1.209874
+14, 2617, dist=1.020867
+15, 2618, dist=0.164451
+16, 2619, dist=1.271140
+17, 2620, dist=1.600800
+18, 3148, dist=0.502299
+19, 3149, dist=0.445759
+20, 3151, dist=1.316277
+21, 3401, dist=1.655290
+22, 3402, dist=0.715380
+23, 3403, dist=0.966507
+24, 3404, dist=0.820503
+25, 3407, dist=1.352147
+26, 3414, dist=0.831871
+27, 3415, dist=1.819642
+28, 3416, dist=1.888462
+29, 3417, dist=1.642955
+30, 3418, dist=0.819183
+31, 3419, dist=0.892875
+32, 3420, dist=0.790759
+33, 3421, dist=0.772236
+34, 3422, dist=0.763812
+35, 3423, dist=0.876936
+36, 3424, dist=1.366975
+37, 3425, dist=1.553113
+38, 3427, dist=1.014347
+39, 3428, dist=1.645192
+40, 3429, dist=1.330204
+41, 3430, dist=1.474966
+42, 3431, dist=1.649453
+43, 3432, dist=1.266880
+44, 3433, dist=0.691899
+45, 3434, dist=0.896011
+46, 3435, dist=0.750339
+47, 3436, dist=1.138148
+48, 3446, dist=1.573601
+49, 2596, dist=1.600125
+50, 2602, dist=1.894021
+51, 2606, dist=1.680161
+52, 2614, dist=1.886299
+53, 2620, dist=1.600800
+54, 3151, dist=1.316277
+55, 3401, dist=1.655290
+56, 3407, dist=1.352147
+57, 3424, dist=1.366975
+58, 3425, dist=1.553113
+59, 3428, dist=1.645192
+60, 3429, dist=1.330204
+61, 3430, dist=1.474966
+62, 3431, dist=1.649453
+63, 3432, dist=1.266880
+64, 3446, dist=1.573601
+set.size()=49

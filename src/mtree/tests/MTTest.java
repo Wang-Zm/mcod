@@ -39,13 +39,7 @@ public class MTTest {
         readArguments(args);
         MesureMemoryThread mesureThread = new MesureMemoryThread();
         mesureThread.start();
-        // Stream s = Stream.getInstance("ForestCover");
         Stream s = Stream.getInstance("TAO");
-        // Stream s = Stream.getInstance("randomData");
-        // Stream s = Stream.getInstance("randomData1");
-        // Stream s = Stream.getInstance(null);
-        // Stream s = Stream.getInstance("tagData");
-        // Stream s = Stream.getInstance("Trade");
 
         ExactStorm estorm = new ExactStorm();
         ApproxStorm apStorm = new ApproxStorm(0.1);
@@ -125,7 +119,7 @@ public class MTTest {
                             Constants.slide);
                     elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
                     totalTime += elapsedTimeInSec;
-                    outliers6.stream().forEach((outlier) -> {
+                    outliers6.forEach((outlier) -> {
                         idOutliers.add(outlier.arrivalTime);
                     });
                     break;
