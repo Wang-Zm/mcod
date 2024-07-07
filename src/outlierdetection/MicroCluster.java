@@ -1,6 +1,5 @@
 package outlierdetection;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -150,7 +149,6 @@ public class MicroCluster {
         d.cluster = cluster;
         d.isInCluster = true;
 
-        // 放到 micro cluster 中
         ArrayList<MCObject> list = microClusters.get(cluster);
         if (list.contains(d)) {
             throw new RuntimeException("Duplicate object in micro_cluster");
@@ -159,14 +157,7 @@ public class MicroCluster {
         microClusters.put(cluster, list);
 
         // * evaluate distance between the new object and objects in PD that associate with cluster
-        ArrayList<MCObject> objects = associateObjects.get(cluster); // 都是 PD 中的点
-        if (objects != null) {
-            HashSet<MCObject> temp = new HashSet<>(objects);
-            if (objects.size() != temp.size()) {
-                throw new RuntimeException("Duplicate object in micro_cluster");
-            }
-        }
-
+        ArrayList<MCObject> objects = associateObjects.get(cluster);
         if (objects != null) {
             if (fromCluster) {
                 List<MCObject> collect = objects.stream().filter(o -> o.fromShrinkCluster).collect(Collectors.toList());
@@ -180,12 +171,7 @@ public class MicroCluster {
         objects.forEach((o) -> {
             double distance = mtree.getDistanceFunction().calculate(d, o);
             if (distance <= Constants.R) {
-                if ((o.arrivalTime - 1) / Constants.slide == (d.arrivalTime - 1) / Constants.slide || d.arrivalTime > o.arrivalTime) { // d 在 o 的后面
-                    o.numberOfSucceeding++; // 操作的都是 PD 中的点，不操作 d
-                    o.succeedings.add(d.arrivalTime);
-                } else { // d 在 o 的前面
-                    o.exps.add(d.arrivalTime + Constants.W);
-                }
+                updateNeighbors(d, o);
                 // check if o is an inlier
                 if (o.exps.size() + o.numberOfSucceeding >= Constants.k && outlierList.contains(o)) {
                     outlierList.remove(o);
@@ -235,12 +221,11 @@ public class MicroCluster {
             o.succeedings.clear();
             o.exps.clear();
             o.ev = -1;
-            // o.Rmc.clear();
             PD.remove(o);
             eventQueue.remove(o);
             outlierList.remove(o);
         }
-        for (MCObject o : neighbor_in_R2) {// * 对别人的影响：associateObjects
+        for (MCObject o : neighbor_in_R2) {
             for (MCObject cluster : o.Rmc) {
                 if (!associateObjects.get(cluster).remove(o)) {
                     throw new RuntimeException("cluster " + cluster.arrivalTime + " is not associated with object " + o);
@@ -280,62 +265,30 @@ public class MicroCluster {
             }
         }
         // 2.PD 中的点的 exps 与 succeeding 要因 d 更新：设置 PD 中的点的 exps 与 succeeding + 设置 d 的 exps 与 succeeding
-        if (!fromCluster) { // wzm: should not to update neighbors when d is from cluster
-            neighbor_in_PD.stream().peek((o) -> {
-                if ((o.arrivalTime - 1) / Constants.slide == (d.arrivalTime - 1) / Constants.slide || d.arrivalTime > o.arrivalTime) { // d 在 o 的后面
-                    o.numberOfSucceeding++; // 操作的都是 PD 中的点，不操作 d
-                    o.succeedings.add(d.arrivalTime);
-                } else { // d 在 o 的前面
-                    o.exps.add(d.arrivalTime + Constants.W);
-                }
-                // * check for o becomes inlier
-            }).filter((o) -> (o.numberOfSucceeding + o.exps.size() >= Constants.k && outlierList.contains(o))
-            ).peek((o) -> outlierList.remove(o)
-            ).peek((o) -> {
-                if (!o.exps.isEmpty()) o.ev = min(o.exps);
-            }).forEach((o) -> {
-                eventQueue.add(o);
-            });
-        } else {
-            neighbor_in_PD.stream()
-                    .filter((o) -> o.fromShrinkCluster)
-                    .peek((o) -> {
-                        if ((o.arrivalTime - 1) / Constants.slide == (d.arrivalTime - 1) / Constants.slide || d.arrivalTime > o.arrivalTime) { // d 在 o 的后面
-                            o.numberOfSucceeding++; // 操作的都是 PD 中的点，不操作 d
-                            o.succeedings.add(d.arrivalTime);
-                        } else { // d 在 o 的前面
-                            o.exps.add(d.arrivalTime + Constants.W);
-                        }
-                        // * check for o becomes inlier
-                    }).filter((o) -> (o.numberOfSucceeding + o.exps.size() >= Constants.k && outlierList.contains(o))
-                    ).peek((o) -> outlierList.remove(o)
-                    ).peek((o) -> {
-                        if (!o.exps.isEmpty()) o.ev = min(o.exps);
-                    }).forEach((o) -> {
-                        eventQueue.add(o);
-                    });
+        Stream<MCObject> stream = neighbor_in_PD.stream();
+        if (fromCluster) { // wzm: should not to update neighbors when d is from cluster
+            stream = stream.filter(o -> o.fromShrinkCluster);
         }
+        stream.peek((o) -> {
+            updateNeighbors(d, o);
+            // * check for o becomes inlier
+        }).filter((o) -> (o.numberOfSucceeding + o.exps.size() >= Constants.k && outlierList.contains(o))
+        ).peek((o) -> outlierList.remove(o)
+        ).peek((o) -> {
+            if (!o.exps.isEmpty()) o.ev = min(o.exps);
+        }).forEach((o) -> {
+            eventQueue.add(o);
+        });
+
         // 3.d 的 exps 和 succeeding 因 PD 中的点和 cluster 点更新
         neighbor_in_PD.forEach((o) -> {
-            // 对 d 而言，o 可能和 d 处于同一次滑动，或 o 在 d 的前面滑动中
-            if((o.arrivalTime - 1) / Constants.slide == (d.arrivalTime - 1) / Constants.slide || d.arrivalTime < o.arrivalTime) {
-                d.numberOfSucceeding++;
-                d.succeedings.add(o.arrivalTime);
-            } else {
-                d.exps.add(o.arrivalTime + Constants.W);
-            }
+            updateNeighbors(o, d);
         });
         neighborInMTree.forEach((o) -> {
-            // 对 d 而言，o 可能和 d 处于同一次滑动，或 o 在 d 的前面滑动中
-            if((o.arrivalTime - 1) / Constants.slide == (d.arrivalTime - 1) / Constants.slide || d.arrivalTime < o.arrivalTime) {
-                d.numberOfSucceeding++;
-                d.succeedings.add(o.arrivalTime);
-            } else {
-                d.exps.add(o.arrivalTime + Constants.W);
-            }
+            updateNeighbors(o, d);
         });
         //4.判别 d 的 outlier 状态，进行对应的处理
-        PD.add(d); // d 一定在 PD 中
+        PD.add(d);
         d.exps.sort(Collections.reverseOrder());
         for (int i = d.exps.size() - 1; i >= Constants.k - d.numberOfSucceeding && i >= 0; i--) {
             d.exps.remove(i); // 当 d.exps.size() + d.numberOfSucceeding > k 时，去掉多余的 d.exps 中的点，但是要剩 k - d.numberOfSucceeding 个，即 i = k - d.numberOfSucceeding - 1
@@ -346,6 +299,16 @@ public class MicroCluster {
             // * keep k most recent preceding neighbors
             d.ev = min(d.exps);
             eventQueue.add(d); // eventQueue 看的是 element.ev
+        }
+    }
+
+    private void updateNeighbors(MCObject neighbor, MCObject updatingObject) {
+        if ((updatingObject.arrivalTime - 1) / Constants.slide == (neighbor.arrivalTime - 1) / Constants.slide
+                || neighbor.arrivalTime > updatingObject.arrivalTime) { // neighbor 在 updatingObject 的后面
+            updatingObject.numberOfSucceeding++; // 操作的都是 PD 中的点，不操作 neighbor
+            updatingObject.succeedings.add(neighbor.arrivalTime);
+        } else { // neighbor 在 updatingObject 的前面
+            updatingObject.exps.add(neighbor.arrivalTime + Constants.W);
         }
     }
 
