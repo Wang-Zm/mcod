@@ -1,5 +1,6 @@
 package outlierdetection;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import mtree.tests.Data;
@@ -111,43 +112,6 @@ public class MicroCluster {
         MesureMemoryThread.timeForExpireSlide += Utils.getCPUTime() - startTime;
     }
 
-    /*
-    public void print_cluster() {
-        microClusters.keySet().stream().map((o) -> {
-            System.out.println("Center: " + o.values[0]);
-            return o;
-        }).map((o) -> {
-            System.out.print("Member:");
-            return o;
-        }).map((o) -> {
-            microClusters.get(o).forEach((o2) -> {
-                System.out.print(o2.values[0] + " ; ");
-            });
-            return o;
-        }).forEach((_item) -> {
-            System.out.println();
-        });
-        System.out.println();
-    }
-
-    public void print_outlier() {
-        System.out.println("Outliers: ");
-        outlierList.forEach((o) -> {
-            System.out.print(o.values[0] + " ; ");
-        });
-        System.out.println();
-    }
-
-    public void print_PD() {
-        System.out.println();
-        System.out.println("PD list: ");
-        PD.forEach((o) -> {
-            System.out.print(o.values[0] + " ; ");
-        });
-        System.out.println();
-    }
-     */
-
     private void processShrinkCluster(ArrayList<MCObject> inCluster_objects, int currentTime) {
         // * 1.PD 中的部分点引用该 cluster，这些 PD 中删除这些引用，确实需借助 associate_objects 2.从 mtree, micro_clusters, associate_objects 中移除 cluster
         // * 3.将这些点下放到 PD 中，看是否能够再凑齐 cluster；或参考现在的实现，使用 process_data 方法当作新点处理
@@ -162,14 +126,32 @@ public class MicroCluster {
         microClusters.remove(cluster);
 
         MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime;
+        ArrayList<MCObject> rePutObjects = new ArrayList<>();
         inCluster_objects.forEach((d) -> {
             d.cluster = null;
             d.isInCluster = false;
             d.isCenter = false;
             if(d.arrivalTime > currentTime - Constants.W) {
-                processData(d, currentTime, true); // TODO: only need to set its own neighbors, do not need to update other neighbors
+                // processData(d, currentTime, true); // * only need to set its own neighbors, do not need to update other neighbors
+                // * actually, need to update neighbors which are from this cluster.
+                rePutObjects.add(d);
             }
         });
+
+        // collect objects still in current window, and their neighbor relation should be maintained.
+        // * update exps and succeeding
+        for (MCObject d : rePutObjects) {
+            for (MCObject o : rePutObjects) {
+                if (d == o) continue;
+                if ((o.arrivalTime - 1) / Constants.slide == (d.arrivalTime - 1) / Constants.slide || d.arrivalTime < o.arrivalTime) { // d 在 o 的后面
+                    d.numberOfSucceeding++;
+                    d.succeedings.add(o.arrivalTime);
+                } else { // d 在 o 的前面
+                    d.exps.add(o.arrivalTime + Constants.W);
+                }
+            }
+            processData(d, currentTime, true);
+        }
     }
 
     public void addObjectToCluster(MCObject d, MCObject cluster, boolean fromCluster) {
@@ -437,44 +419,37 @@ public class MicroCluster {
         public static void compareOutlier(ArrayList<MCObject> MCODOutlier, ArrayList<MCObject> dataList, MTreeClass mTree) {
             if (MCODOutlier.size() != outlierList.size()) {
                 System.out.println("MCODOutlier.size() != outlierList.size(), MCODOutlier.size()=" + MCODOutlier.size() + ", outlierList.size()=" + outlierList.size());
-                for (int i = 0; i < MCODOutlier.size(); i++) {
+                MCODOutlier.sort(Comparator.comparingInt((MCObject o) -> o.arrivalTime));
+                outlierList.sort(Comparator.comparingInt((MCObject o) -> o.arrivalTime));
+                for (int i = 1; i < MCODOutlier.size(); i++) {
+                    if (MCODOutlier.get(i).arrivalTime < MCODOutlier.get(i - 1).arrivalTime) {
+                        throw new RuntimeException("MCODOutlier.get(i).arrivalTime < MCODOutlier.get(i - 1).arrivalTime");
+                    }
+                }
+                for (int i = 0; i < MCODOutlier.size() && i < outlierList.size(); i++) {
                     if (MCODOutlier.get(i) != outlierList.get(i)) {
-                        System.out.println("MCODOutlier.get(i) != outlierList.get(i), i=" + i + ", MCODOutlier.get(i).arrivalTime=" + MCODOutlier.get(i).arrivalTime + ", outlierList.get(i).arrivalTime=" + outlierList.get(i).arrivalTime);
-                        System.out.println("MCODOutlier.get(i).exps.size()=" + MCODOutlier.get(i).exps.size() + ", MCODOutlier.get(i).numberOfSucceeding=" + MCODOutlier.get(i).numberOfSucceeding);
-                        System.out.println("numNeighborsOfOutliers.get(i)=" + numNeighborsOfOutliers.get(i));
+                        printNeighbors(i, MCODOutlier);
+
                         System.out.println("MCODOutlier:");
                         printMCODOutlier(MCODOutlier);
                         System.out.println("outlierList:");
                         printOutlier();
-                        int _numNeighbors = 0;
-                        for (MCObject mcObject : dataList) {
-                            if (mTree.getDistanceFunction().calculate(outlierList.get(i), mcObject) <= Constants.R) {
-                                _numNeighbors++;
-                            }
-                        }
-                        _numNeighbors--;
-                        System.out.println("_numNeighbors=" + _numNeighbors);
-                        ArrayList<Integer> succ = outlierList.get(i).succeedings;
-                        for (int i1 = 0; i1 < succ.size(); i1++) {
-                            for (MCObject mcObject : dataList) {
-                                if (mcObject.arrivalTime == succ.get(i1)) {
-                                    double dist = mTree.getDistanceFunction().calculate(mcObject, outlierList.get(i));
-                                    System.out.printf("%d, %d, dist=%f\n", i1, succ.get(i1), dist);
-                                }
-                            }
-                        }
-                        HashSet<Integer> set = new HashSet<>(succ);
-                        System.out.println("set.size()=" + set.size()); // succeeding 中有重复的
+
+                        printRealNumNeighbors(MCODOutlier.get(i), mTree, "MCODOutlier");
+                        printRealNumNeighbors(outlierList.get(i), mTree, "outlierList");
+                        printSucceeding(i, mTree);
                         System.exit(-1);
                     }
                 }
             }
-//            for (int i = 0; i < MCODOutlier.size(); i++) {
-//                if (MCODOutlier.get(i) != outlierList.get(i)) {
-//                    System.out.println("MCODOutlier.get(i) != outlierList.get(i), i=" + i);
-//                    System.exit(-1);
-//                }
-//            }
+            MCODOutlier.sort(Comparator.comparingInt((MCObject o) -> o.arrivalTime));
+            outlierList.sort(Comparator.comparingInt((MCObject o) -> o.arrivalTime));
+            for (int i = 0; i < MCODOutlier.size(); i++) {
+                if (MCODOutlier.get(i) != outlierList.get(i)) {
+                    printNeighbors(i, MCODOutlier);
+                    System.exit(-1);
+                }
+            }
         }
 
         public static void printMCODOutlier(ArrayList<MCObject> outliers) {
@@ -487,6 +462,37 @@ public class MicroCluster {
             for (int i = 0; i < outlierList.size(); i++) {
                 System.out.printf("%d, %d, numNeighborsOfOutliers=%d, exps.size()=%d, numberOfSucceeding=%d\n", i, outlierList.get(i).arrivalTime, numNeighborsOfOutliers.get(i), outlierList.get(i).exps.size(), outlierList.get(i).numberOfSucceeding);
             }
+        }
+
+        private static void printNeighbors(int i, ArrayList<MCObject> MCODOutlier) {
+            System.out.println("MCODOutlier.get(i) != outlierList.get(i), i=" + i + ", MCODOutlier.get(i).arrivalTime=" + MCODOutlier.get(i).arrivalTime + ", outlierList.get(i).arrivalTime=" + outlierList.get(i).arrivalTime);
+            System.out.println("MCODOutlier.get(i).exps.size()=" + MCODOutlier.get(i).exps.size() + ", MCODOutlier.get(i).numberOfSucceeding=" + MCODOutlier.get(i).numberOfSucceeding);
+            System.out.println("numNeighborsOfOutliers.get(i)=" + numNeighborsOfOutliers.get(i));
+        }
+
+        private static void printSucceeding(int i, MTreeClass mTree) {
+            ArrayList<Integer> succ = outlierList.get(i).succeedings;
+            for (int i1 = 0; i1 < succ.size(); i1++) {
+                for (MCObject mcObject : dataList) {
+                    if (mcObject.arrivalTime == succ.get(i1)) {
+                        double dist = mTree.getDistanceFunction().calculate(mcObject, outlierList.get(i));
+                        System.out.printf("%d, %d, dist=%f\n", i1, succ.get(i1), dist);
+                    }
+                }
+            }
+            HashSet<Integer> set = new HashSet<>(succ);
+            System.out.println("set.size()=" + set.size()); // succeeding 中有重复的
+        }
+
+        private static void printRealNumNeighbors(MCObject d, MTreeClass mTree, String name) {
+            int _numNeighbors = 0;
+            for (MCObject mcObject : dataList) {
+                if (mTree.getDistanceFunction().calculate(d, mcObject) <= Constants.R) {
+                    _numNeighbors++;
+                }
+            }
+            _numNeighbors--;
+            System.out.println(name + "_realNumNeighbors=" + _numNeighbors);
         }
     }
 }
