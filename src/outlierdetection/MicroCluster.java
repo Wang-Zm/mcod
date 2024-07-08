@@ -36,12 +36,12 @@ public class MicroCluster {
     public static double avgLengthExps = 0;
     public static double avgLengthExpsAllWindows = 0;
     public ArrayList<Data> detectOutlier(ArrayList<Data> data, int currentTime, int W, int slide) {
-        // * purge expired objects
+        // * purge expired data
         purgeExpiredData(currentTime, slide);
-        OutlierTest.computeOutlier(dataList, mtree);
-        System.out.println("Outlier detected for expired");
-        OutlierTest.compareOutlier(outlierList, dataList, mtree);
-        System.out.println("Outlier compared for expired");
+        // OutlierTest.computeOutlier(dataList, mtree);
+        // System.out.println("Outlier detected for expired");
+        // OutlierTest.compareOutlier(outlierList, dataList, mtree);
+        // System.out.println("Outlier compared for expired");
 
         // * process new incoming data
         long startTime = Utils.getCPUTime();
@@ -51,10 +51,10 @@ public class MicroCluster {
             .forEach((d) -> dataList.add(d));
         ArrayList<Data> result = new ArrayList<>(outlierList);
         MesureMemoryThread.timeForNewSlide += Utils.getCPUTime() - startTime;
-        OutlierTest.computeOutlier(dataList, mtree);
-        System.out.println("Outlier detected for new");
-        OutlierTest.compareOutlier(outlierList, dataList, mtree);
-        System.out.println("Outlier compared for new");
+        // OutlierTest.computeOutlier(dataList, mtree);
+        // System.out.println("Outlier detected for new");
+        // OutlierTest.compareOutlier(outlierList, dataList, mtree);
+        // System.out.println("Outlier compared for new");
 
 //        numberCluster += microClusters.size();
 //        if(numberPointsInEventQueue < eventQueue.size())

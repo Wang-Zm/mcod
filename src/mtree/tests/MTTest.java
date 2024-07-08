@@ -1,6 +1,5 @@
 package mtree.tests;
 
-import be.tarsos.lsh.Vector;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -8,51 +7,32 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 
-import outlierdetection.AbstractC;
-import outlierdetection.ApproxStorm;
 import outlierdetection.Direct_Update_Event;
 import outlierdetection.ExactStorm;
-import outlierdetection.Lazy_Update_Event;
 import outlierdetection.MESI;
 import outlierdetection.MicroCluster;
 import mtree.utils.Constants;
 import mtree.utils.Utils;
-import outlierdetection.DataLUEObject;
-import outlierdetection.MESIWithHash;
 import outlierdetection.MicroCluster_New;
 
 public class MTTest {
-
     public static int currentTime = 0;
-
-    public static boolean stop = false;
 
     public static HashSet<Integer> idOutliers = new HashSet<>();
 
     public static String algorithm;
-    public static Date currentRealTime;
 
     public static void main(String[] args) throws IOException, FileNotFoundException, ParseException {
         readArguments(args);
         MesureMemoryThread mesureThread = new MesureMemoryThread();
         mesureThread.start();
         Stream s = Stream.getInstance(Constants.dataFile);
-
-        ExactStorm estorm = new ExactStorm();
-        ApproxStorm apStorm = new ApproxStorm(0.1);
-        AbstractC abstractC = new AbstractC();
-        Lazy_Update_Event lue = new Lazy_Update_Event();
-        Direct_Update_Event due = new Direct_Update_Event();
         MicroCluster micro = new MicroCluster();
-        MicroCluster_New mcnew = new MicroCluster_New();
-        MESI mesi = new MESI();
-        MESIWithHash mesiWithHash = new MESIWithHash();
         int numberWindows = 0;
         double totalTime = 0;
-        while (!stop) {
+        while (true) {
             if (Constants.numberWindow != -1 && numberWindows > Constants.numberWindow) {
                 break;
             }
@@ -68,104 +48,14 @@ public class MTTest {
             }
 
             long start = Utils.getCPUTime(); // requires java 1.5
-            switch (algorithm) {
-                case "exactStorm":
-                    ArrayList<Data> outliers = estorm.detectOutlier(incomingData, currentTime, Constants.W, Constants.slide);
-                    double elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-                    totalTime += elapsedTimeInSec;
-                    outliers.stream().forEach((outlier) -> {
-                        idOutliers.add(outlier.arrivalTime);
-                    });
-                    break;
-                case "approximateStorm":
-                    ArrayList<Data> outliers2 = apStorm.detectOutlier(incomingData, currentTime, Constants.W,
-                            Constants.slide);
-                    elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-                    totalTime += elapsedTimeInSec;
-                    outliers2.stream().forEach((outlier) -> {
-                        idOutliers.add(outlier.arrivalTime);
-                    });
-                    break;
-                case "abstractC":
-                    ArrayList<Data> outliers3 = abstractC.detectOutlier(incomingData, currentTime, Constants.W,
-                            Constants.slide);
-                    elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-
-                    totalTime += elapsedTimeInSec;
-                    outliers3.stream().forEach((outlier) -> {
-                        idOutliers.add(outlier.arrivalTime);
-                    });
-                    break;
-                case "lue":
-                    HashSet<DataLUEObject> outliers4 = lue.detectOutlier(incomingData, currentTime, Constants.W,
-                            Constants.slide);
-                    elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-                    totalTime += elapsedTimeInSec;
-                    outliers4.stream().forEach((outlier) -> {
-                        idOutliers.add(outlier.arrivalTime);
-                    });
-                    break;
-                case "due":
-                    HashSet<DataLUEObject> outliers5 = due.detectOutlier(incomingData, currentTime, Constants.W,
-                            Constants.slide);
-                    elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-                    totalTime += elapsedTimeInSec;
-                    outliers5.stream().forEach((outlier) -> {
-                        idOutliers.add(outlier.arrivalTime);
-                    });
-                    break;
-                case "microCluster":
-                    ArrayList<Data> outliers6 = micro.detectOutlier(incomingData, currentTime, Constants.W,
-                            Constants.slide);
-                    elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-                    totalTime += elapsedTimeInSec;
-                    outliers6.forEach((outlier) -> {
-                        idOutliers.add(outlier.arrivalTime);
-                    });
-                    break;
-                case "microCluster_new":
-                    ArrayList<Data> outliers9 = mcnew.detectOutlier(incomingData, currentTime, Constants.W,
-                            Constants.slide);
-                    elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-                    totalTime += elapsedTimeInSec;
-                    outliers9.stream().forEach((outlier) -> {
-                        idOutliers.add(outlier.arrivalTime);
-                    });
-
-                    // ? original code?
-                    // ArrayList<Data> outliers10 = estorm.detectOutlier(incomingData, currentTime, Constants.W,
-                    //         Constants.slide);
-                    
-                    // System.out.println("--------------------------------------------------");
-                    // System.out.println("Not in exact storm");
-                    // for(Data d: outliers9){
-                    //     if(!outliers10.contains(d))
-                    //         System.out.println(d.arrivalTime);
-                    // }
-                    // System.out.println("---------------------------------------------------");
-                    break;
-                case "mesi":
-                    ArrayList<Data> outliers7 = mesi.detectOutlier(incomingData, currentTime, Constants.W,
-                            Constants.slide);
-                    elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-
-                    totalTime += elapsedTimeInSec;
-                    outliers7.stream().forEach((outlier) -> {
-                        idOutliers.add(outlier.arrivalTime);
-                    });
-                    break;
-                case "mesiWithHash":
-                    HashSet<Vector> outliers8 = mesiWithHash.detectOutlier(incomingData, currentTime, Constants.W,
-                            Constants.slide);
-                    elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
-
-                    totalTime += elapsedTimeInSec;
-                    outliers8.stream().forEach((outlier) -> {
-                        idOutliers.add(outlier.arrivalTime);
-                    });
-                    break;
-
-            }
+            double elapsedTimeInSec;
+            ArrayList<Data> outliers6 = micro.detectOutlier(incomingData, currentTime, Constants.W,
+                    Constants.slide);
+            elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
+            totalTime += elapsedTimeInSec;
+            outliers6.forEach((outlier) -> {
+                idOutliers.add(outlier.arrivalTime);
+            });
             if (numberWindows == 1) {
                 totalTime = 0;
                 MesureMemoryThread.timeForIndexing = 0;
@@ -207,7 +97,7 @@ public class MTTest {
             // reset
             idOutliers.clear();
         }
-
+        System.out.printf("Average Time for a slide: %f ms\n", totalTime / Constants.numberWindow * 1000);
         ExactStorm.avgAllWindowNeighbor = ExactStorm.avgAllWindowNeighbor / numberWindows;
         MESI.avgAllWindowTriggerList = MESI.avgAllWindowTriggerList / numberWindows;
         MicroCluster.numberCluster = MicroCluster.numberCluster / numberWindows;
