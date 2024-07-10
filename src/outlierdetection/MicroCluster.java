@@ -21,11 +21,14 @@ public class MicroCluster {
     public static ArrayList<MCObject> dataList = new ArrayList<>();
 
     public static MTreeClass mtree = new MTreeClass();
+    public static ArrayList<Data> mTreeNodeList = new ArrayList<>();
 
     public static PriorityQueue<MCObject> eventQueue = new PriorityQueue<>(new MCComparator());
 
     public static ArrayList<MCObject> outlierList = new ArrayList<>();
 
+    public static MCObject deleteData = null;
+    
     public static double numberPointsInClusters = 0;
     public static double numberPointsInClustersAllWindows= 0;
     public static double numberCluster = 0;
@@ -35,7 +38,17 @@ public class MicroCluster {
     public static double avgPointsInRmcAllWindows = 0;
     public static double avgLengthExps = 0;
     public static double avgLengthExpsAllWindows = 0;
-    public ArrayList<Data> detectOutlier(ArrayList<Data> data, int currentTime, int W, int slide) {
+    public ArrayList<Data> detectOutlier(ArrayList<Data> data, int currentTime, int W, int slide, Data bugData) {
+        // for (double value : bugData.values) {
+        //     System.out.print(value + " ");
+        // }
+        // System.out.println();
+        // mtree.add(bugData);
+        // if (!mtree.remove(bugData)) {
+        //     System.out.println("!mtree.remove(bugData)");
+        // }
+        // System.exit(0);
+        
         // * purge expired data
         purgeExpiredData(currentTime, slide);
         // OutlierTest.computeOutlier(dataList, mtree);
@@ -55,30 +68,6 @@ public class MicroCluster {
         // System.out.println("Outlier detected for new");
         // OutlierTest.compareOutlier(outlierList, dataList, mtree);
         // System.out.println("Outlier compared for new");
-
-//        numberCluster += microClusters.size();
-//        if(numberPointsInEventQueue < eventQueue.size())
-//            numberPointsInEventQueue = eventQueue.size();
-//        HashSet<Integer> tempTest = new HashSet<>();
-//        for(Data center: microClusters.keySet()){
-//            ArrayList<MCObject> l = microClusters.get(center);
-//            for(MCObject o:l){
-//                if(o.arrivalTime >= currentTime - Constants.W){
-//                    tempTest.add(o.arrivalTime);
-//                    numberPointsInClusters++;
-//                }
-//            }
-//        }
-//        dataList.forEach((o) -> {
-//            avgPointsInRmc += o.Rmc.size();
-//            avgLengthExps += o.exps.size();
-//        });
-//        avgPointsInRmc = avgPointsInRmc/dataList.size();
-//        avgLengthExps = avgLengthExps/dataList.size();
-//        avgLengthExpsAllWindows += avgLengthExps;
-//        avgPointsInRmcAllWindows += avgPointsInRmc;
-//        numberPointsInClustersAllWindows += tempTest.size();
-//        System.out.println("#points in clusters: "+numberPointsInClusters);
         return result;
     }
 
@@ -91,13 +80,16 @@ public class MicroCluster {
             expiredData.add(d);
             if (d.isInCluster) {
                 ArrayList<MCObject> inCluster_objects2;
-                inCluster_objects2 = microClusters.get(d.cluster);
+                inCluster_objects2 = microClusters.get(d.cluster); // 可能是这个 d.cluster 没有设置好，导致其中的数据不够
                 long startTime2 = Utils.getCPUTime();
-                inCluster_objects2.remove(d); // 1.从 cluster 移除该点
+                if (!inCluster_objects2.remove(d)) {
+                    throw new RuntimeException("error on inCluster_objects2.remove(d), d=" + d + ", d.cluster=" + d.cluster);
+                }
+                // inCluster_objects2.remove(d); // 1.从 cluster 移除该点
                 MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime2;
                 //* check if size of cluster shrink below k + 1
                 if (inCluster_objects2.size() < Constants.k + 1) {
-                    processShrinkCluster(inCluster_objects2, currentTime); // 2.若移除之后 cluster 中点不够，则 shrink，部分点放到 eventQueue 中
+                    processShrinkCluster(d.cluster, inCluster_objects2, currentTime); // 2.若移除之后 cluster 中点不够，则 shrink，部分点放到 eventQueue 中
                 }
             } else { // d is in PD
                 long startTime2 = Utils.getCPUTime();
@@ -113,16 +105,44 @@ public class MicroCluster {
         MesureMemoryThread.timeForExpireSlide += Utils.getCPUTime() - startTime;
     }
 
-    private void processShrinkCluster(ArrayList<MCObject> inCluster_objects, int currentTime) {
+    private void processShrinkCluster(MCObject _cluster, ArrayList<MCObject> inCluster_objects, int currentTime) {
         // * 1.PD 中的部分点引用该 cluster，这些 PD 中删除这些引用，确实需借助 associate_objects 2.从 mtree, micro_clusters, associate_objects 中移除 cluster
         // * 3.将这些点下放到 PD 中，看是否能够再凑齐 cluster
 
+        if (_cluster != inCluster_objects.get(0).cluster) {
+            throw new RuntimeException("_cluster != inCluster_objects.get(0).cluster");
+        }
         long startTime = Utils.getCPUTime();
         MCObject cluster = inCluster_objects.get(0).cluster;
         ArrayList<MCObject> list_associates = associateObjects.get(cluster);
         if (list_associates != null)
             list_associates.forEach((o) -> o.Rmc.remove(cluster));
-        mtree.remove(cluster);
+        if (!mTreeNodeList.contains(cluster)) {
+            throw new RuntimeException("!mTreeNodeList.contains(cluster), cluster=" + cluster + ", cluster.arriveTime=" + cluster.arrivalTime);
+        } // mTreeNodeList 包含 cluster，而 mtree 不包含，mtree add 时 mTreeNodeList 也在 add，出现异常，说明 mtree 的实现有问题
+        // if (!mtree.remove(cluster)) { // 一般是 cluster 未添加到 mtree 中，后面方法进行了奇奇怪怪的转换
+        //     System.out.println("mTreeNodeList.size=" + mTreeNodeList.size());
+        //     for (Data node : mTreeNodeList) {
+        //         System.out.println(node.values[0]);
+        //     }
+        //     System.out.println("begin query");
+        //     MTreeClass.Query result = mtree.getNearest(cluster);
+        //     if (result.iterator().hasNext()) {
+        //         MTreeClass.ResultItem ri = result.iterator().next();
+        //         System.out.println(ri.data.values.length + " " + ri.data.values[0] + " distance=" + ri.distance);
+        //     }
+
+        //     if (!mtree.remove(deleteData)) {
+        //         System.out.println("!mtree.remove(deleteData)");
+        //     } else {
+        //         System.out.println("remove deleteData successfully");
+        //     }
+        //     throw new RuntimeException("error on mtree.remove(cluster), cluster=" + cluster.values[0] + ", cluster.arriveTime=" + cluster.arrivalTime);
+        // }
+        if (mtree.remove(cluster)) {
+            System.out.println("mtree.remove(cluster), cluster.arrivalTime=" + cluster.arrivalTime);
+        };
+        mTreeNodeList.remove(cluster);
         associateObjects.remove(cluster);
         microClusters.remove(cluster);
 
@@ -237,7 +257,24 @@ public class MicroCluster {
         if (microClusters.containsKey(d))
             throw new RuntimeException("d should not have been a cluster center before");
         microClusters.put(d, neighbor_in_R2);
+        if (d.arrivalTime == 446855) {
+            System.out.println("form new cluster with d.arrivalTime == 446855");
+            if (d == deleteData) {
+                System.out.println("d == deleteData");
+            } else {
+                System.out.println("d != deleteData");
+            }
+        }
         mtree.add(d);
+        if (mTreeNodeList.contains(d)) {
+            throw new RuntimeException("mTreeNodeList.contains(d), d.arriveTime=" + d.arrivalTime);
+        }
+        for (Data node : mTreeNodeList) {
+            if (node.compareTo(d) == 0) {
+                throw new RuntimeException("node.compareTo(d) == 0, node.arriveTime=" + node.arrivalTime + ", d.arrivalTime=" + d.arrivalTime);
+            }
+        }
+        mTreeNodeList.add(d);
 
         // update Rmc for points in PD
         neighbor_in_3_2Apart_PD.forEach((o) -> o.Rmc.add(d));
@@ -259,7 +296,8 @@ public class MicroCluster {
         // 1.查 cluster 中的邻居数，并更新 d.Rmc 和 associate_objects
         ArrayList<MCObject> neighborInMTree = new ArrayList<>();
         for (MTreeClass.ResultItem ri2 : query) {
-            d.Rmc.add(new MCObject(ri2.data));
+            // d.Rmc.add(new MCObject(ri2.data));
+            d.Rmc.add((MCObject) ri2.data);
             ArrayList<MCObject> l = associateObjects.getOrDefault(ri2.data, new ArrayList<>());
             l.add(d);
             associateObjects.put(ri2.data, l);
@@ -323,20 +361,34 @@ public class MicroCluster {
         if (d.arrivalTime <= currentTime - Constants.W) {
             throw new RuntimeException("d.arrivalTime <= currentTime - Constants.W");
         }
+        if (d.arrivalTime == 446855) {
+            deleteData = d;
+        }
         MTreeClass.Query query = mtree.getNearestByRange(d, Constants.R * 3 / 2);
+        // 将有效的结果收集起来，使得后面取用。可以放出来源码，尽量看结果。这里需要自己重新实现 M-Tree？是否过于抵消
+        Iterator<MTreeClass.ResultItem> it = query.iterator();
+        while (it.hasNext()) {
+            MTreeClass.ResultItem node = it.next();
+            if (!mTreeNodeList.contains(node.data)) {
+                it.remove();
+            }
+        }
+        ArrayList<MTreeClass.ResultItem> results;
+        
         double min_distance = Double.MAX_VALUE;
         MTreeClass.ResultItem ri = null;
         if (query.iterator().hasNext()) {
             ri = query.iterator().next();
             min_distance = ri.distance;
-            if (microClusters.get(ri.data).isEmpty() || microClusters.get(ri.data) == null) {
-                throw new RuntimeException("no object in cluster");
-            }
+            if (microClusters.get(ri.data) == null || microClusters.get(ri.data).isEmpty()) {
+                throw new RuntimeException("no object in cluster, microClusters.get(ri.data)=" + microClusters.get(ri.data) + ", currentTime=" + currentTime);
+            } // ri.data = null，可能是这个点已经被移除了，但是仍然引用这个点，
         }
 
         if (min_distance <= Constants.R / 2) {
             // * assign to this closet cluster
-            MCObject closest_cluster = new MCObject(Objects.requireNonNull(ri).data);
+            // MCObject closest_cluster = new MCObject(Objects.requireNonNull(ri).data); // ! 此时已经不是同一个了
+            MCObject closest_cluster = (MCObject) (ri.data);
             addObjectToCluster(d, closest_cluster, fromCluster);
         } else {
             // * do range query in PD and MTree (distance to center <= 3/2R)
@@ -499,35 +551,5 @@ class MCComparator implements Comparator<MCObject> {
     @Override
     public int compare(MCObject o1, MCObject o2) {
         return Integer.compare(o1.ev, o2.ev);
-    }
-}
-
-class MCObject extends Data {
-    public MCObject cluster;
-    public ArrayList<Integer> exps;
-    public ArrayList<MCObject> Rmc;
-
-    public int ev;
-    public boolean isInCluster;
-    public boolean isCenter;
-
-    public int numberOfSucceeding;
-    public ArrayList<Integer> succeedings;
-    public boolean fromShrinkCluster;
-
-    public MCObject(Data d) {
-        super();
-        this.arrivalTime = d.arrivalTime;
-        this.values = d.values;
-
-        cluster = null;
-        isInCluster = false;
-        isCenter = false;
-        exps = new ArrayList<>();
-        succeedings = new ArrayList<>();
-        numberOfSucceeding = 0;
-        ev = -1;
-        Rmc = new ArrayList<>();
-        fromShrinkCluster = false;
     }
 }

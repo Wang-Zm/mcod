@@ -32,10 +32,8 @@ public class MTTest {
         MicroCluster micro = new MicroCluster();
         int numberWindows = 0;
         double totalTime = 0;
+        // currentTime = 450000;
         while (true) {
-            if (Constants.numberWindow != -1 && numberWindows > Constants.numberWindow) {
-                break;
-            }
             numberWindows++;
 
             ArrayList<Data> incomingData;
@@ -46,11 +44,14 @@ public class MTTest {
                 incomingData = s.getIncomingData(currentTime, Constants.W);
                 currentTime = currentTime + Constants.W;
             }
+            if (incomingData.size() < Constants.slide) {
+                break;
+            }
 
             long start = Utils.getCPUTime(); // requires java 1.5
             double elapsedTimeInSec;
             ArrayList<Data> outliers6 = micro.detectOutlier(incomingData, currentTime, Constants.W,
-                    Constants.slide);
+                    Constants.slide, s.dataList.get(446854));
             elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
             totalTime += elapsedTimeInSec;
             outliers6.forEach((outlier) -> {
@@ -97,7 +98,7 @@ public class MTTest {
             // reset
             idOutliers.clear();
         }
-        System.out.printf("Average Time for a slide: %f ms\n", totalTime / Constants.numberWindow * 1000);
+        System.out.printf("Average Time for a slide: %f ms\n", totalTime / (numberWindows - 1) * 1000);
         ExactStorm.avgAllWindowNeighbor = ExactStorm.avgAllWindowNeighbor / numberWindows;
         MESI.avgAllWindowTriggerList = MESI.avgAllWindowTriggerList / numberWindows;
         MicroCluster.numberCluster = MicroCluster.numberCluster / numberWindows;
@@ -135,9 +136,9 @@ public class MTTest {
                     case "--output":
                         Constants.outputFile = args[i + 1];
                         break;
-                    case "--numberWindow":
-                        Constants.numberWindow = Integer.valueOf(args[i + 1]);
-                        break;
+                    // case "--numberWindow":
+                    //     Constants.numberWindow = Integer.valueOf(args[i + 1]);
+                    //     break;
                     case "--slide":
                         Constants.slide = Integer.valueOf(args[i + 1]);
                         break;

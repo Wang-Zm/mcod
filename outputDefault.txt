@@ -418,3 +418,1098 @@ R=525.0;k=50;W=10000;slide=500
 Number Window = -1
 Peak Memory = 849.3400726318359
 CPU time = 0.34702797202797203
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 60.551658630371094
+CPU time = 0.005157459896460172
+Time for index structure: 1.35581196460177E-4
+Time for querying: 0.0
+Time for new slide: 0.004615430725663717
+Time for expired slide: 5.404987141592921E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=50;W=100000;slide=5000
+Number Window = 180
+Peak Memory = 125.56249237060547
+CPU time = 0.15163708714999985
+Time for index structure: 0.002172945044444444
+Time for querying: 0.0
+Time for new slide: 0.13232643751666667
+Time for expired slide: 0.019306795322222223
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=50;W=100000;slide=5000
+Number Window = 189
+Peak Memory = 92.4327621459961
+CPU time = 0.054923646476190476
+Time for index structure: 0.0017732469523809523
+Time for querying: 0.0
+Time for new slide: 0.047809189074074075
+Time for expired slide: 0.007110359232804233
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=1000;slide=500
+Number Window = 1130
+Peak Memory = 44.69341278076172
+CPU time = 0.002299846238938053
+Time for index structure: 1.236212646017699E-4
+Time for querying: 0.0
+Time for new slide: 0.001810868378761062
+Time for expired slide: 4.876105230088496E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=1000;slide=500
+Number Window = 1130
+Peak Memory = 44.880950927734375
+CPU time = 0.002334988228318584
+Time for index structure: 1.2747720088495575E-4
+Time for querying: 0.0
+Time for new slide: 0.0018346270362831858
+Time for expired slide: 4.987637460176992E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=5000;slide=500
+Number Window = 1130
+Peak Memory = 50.86260223388672
+CPU time = 0.0039818824964601715
+Time for index structure: 1.2868098938053097E-4
+Time for querying: 0.0
+Time for new slide: 0.0034551566495575224
+Time for expired slide: 5.252606407079646E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 58.644927978515625
+CPU time = 0.005456408952212393
+Time for index structure: 1.3631732654867257E-4
+Time for querying: 0.0
+Time for new slide: 0.004886194332743363
+Time for expired slide: 5.685958858407079E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=1000;slide=500
+Number Window = 1130
+Peak Memory = 44.67811584472656
+CPU time = 0.0023552474389380504
+Time for index structure: 1.253788477876106E-4
+Time for querying: 0.0
+Time for new slide: 0.001858609685840708
+Time for expired slide: 4.952690575221239E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=5000;slide=500
+Number Window = 1130
+Peak Memory = 51.15629577636719
+CPU time = 0.004143831237168136
+Time for index structure: 1.4044277079646017E-4
+Time for querying: 0.0
+Time for new slide: 0.003586306976106194
+Time for expired slide: 5.559823920353983E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 63.696044921875
+CPU time = 0.005314297760176993
+Time for index structure: 1.436082E-4
+Time for querying: 0.0
+Time for new slide: 0.0047429514973451325
+Time for expired slide: 5.697640982300885E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=1000;slide=500
+Number Window = 1130
+Peak Memory = 44.84674835205078
+CPU time = 0.002278129342906875
+Time for index structure: 1.3062851415929206E-4
+Time for querying: 0.0
+Time for new slide: 0.0018104128690265486
+Time for expired slide: 5.046213017699115E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=5000;slide=500
+Number Window = 1130
+Peak Memory = 51.879547119140625
+CPU time = 0.004095256164767755
+Time for index structure: 1.428939389380531E-4
+Time for querying: 0.0
+Time for new slide: 0.003579092731858407
+Time for expired slide: 5.544752079646018E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 60.71815490722656
+CPU time = 0.0054076910008841765
+Time for index structure: 1.4069657522123894E-4
+Time for querying: 0.0
+Time for new slide: 0.004850132784955752
+Time for expired slide: 5.608117637168142E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=15000;slide=500
+Number Window = 1130
+Peak Memory = 74.08892822265625
+CPU time = 0.005883342991079388
+Time for index structure: 1.5536977345132744E-4
+Time for querying: 0.0
+Time for new slide: 0.005237876166371682
+Time for expired slide: 5.970481584070796E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=20000;slide=500
+Number Window = 1130
+Peak Memory = 88.17327117919922
+CPU time = 0.0068140728118811795
+Time for index structure: 1.5655676371681415E-4
+Time for querying: 0.0
+Time for new slide: 0.006022646268141593
+Time for expired slide: 6.753654584070797E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 61.55908966064453
+CPU time = 0.0052315324429708186
+Time for index structure: 1.4213541238938053E-4
+Time for querying: 0.0
+Time for new slide: 0.0046782614752212395
+Time for expired slide: 5.56362438938053E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=10000;slide=1000
+Number Window = 1130
+Peak Memory = 61.26770782470703
+CPU time = 0.010153320171378086
+Time for index structure: 1.3940953008849557E-4
+Time for querying: 0.0
+Time for new slide: 0.004574896810619469
+Time for expired slide: 5.098788557522123E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=1000;slide=500
+Number Window = 1130
+Peak Memory = 45.039527893066406
+CPU time = 0.002334206107919929
+Time for index structure: 1.3908926194690265E-4
+Time for querying: 0.0
+Time for new slide: 0.0018384843681415928
+Time for expired slide: 5.333963380530973E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=5000;slide=500
+Number Window = 1130
+Peak Memory = 51.04151916503906
+CPU time = 0.004071844434706408
+Time for index structure: 1.3960241946902655E-4
+Time for querying: 0.0
+Time for new slide: 0.00356569043539823
+Time for expired slide: 5.44301357522124E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 61.448463439941406
+CPU time = 0.005341298493368704
+Time for index structure: 1.4272104159292036E-4
+Time for querying: 0.0
+Time for new slide: 0.004775097736283186
+Time for expired slide: 5.694604681415929E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=15000;slide=500
+Number Window = 1130
+Peak Memory = 75.80964660644531
+CPU time = 0.005946655559322034
+Time for index structure: 1.511628796460177E-4
+Time for querying: 0.0
+Time for new slide: 0.0053036700778761065
+Time for expired slide: 5.94080971681416E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=20000;slide=500
+Number Window = 1130
+Peak Memory = 88.3936996459961
+CPU time = 0.0071507276363636406
+Time for index structure: 1.5871745398230087E-4
+Time for querying: 0.0
+Time for new slide: 0.006353370931858407
+Time for expired slide: 6.754424725663717E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 59.99412536621094
+CPU time = 0.005341169454465078
+Time for index structure: 1.4410085221238937E-4
+Time for querying: 0.0
+Time for new slide: 0.004774471710619468
+Time for expired slide: 5.698799238938053E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=10000;slide=1000
+Number Window = 1130
+Peak Memory = 62.08527374267578
+CPU time = 0.01031749713427561
+Time for index structure: 1.3799639557522125E-4
+Time for querying: 0.0
+Time for new slide: 0.004659886493805309
+Time for expired slide: 5.070482530973451E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=10000;slide=2000
+Number Window = 1130
+Peak Memory = 59.40081024169922
+CPU time = 0.018781855925795028
+Time for index structure: 1.325627238938053E-4
+Time for querying: 0.0
+Time for new slide: 0.0042611839628318585
+Time for expired slide: 4.42035882300885E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=10000;slide=5000
+Number Window = 1130
+Peak Memory = 60.492332458496094
+CPU time = 0.04348627462280702
+Time for index structure: 1.250280539823009E-4
+Time for querying: 0.0
+Time for new slide: 0.004001602342477876
+Time for expired slide: 3.8518520884955757E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=10000;slide=10000
+Number Window = 1130
+Peak Memory = 63.23645782470703
+CPU time = 0.07000443343859648
+Time for index structure: 1.1960945663716814E-4
+Time for querying: 0.0
+Time for new slide: 0.00326554544159292
+Time for expired slide: 2.6549557522123895E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=0.475;k=50;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 69.10909271240234
+CPU time = 0.04696121439434127
+Time for index structure: 9.57402478761062E-4
+Time for querying: 0.0
+Time for new slide: 0.038544215486725666
+Time for expired slide: 0.008456270896460177
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=0.95;k=50;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 64.77462768554688
+CPU time = 0.010810539137046866
+Time for index structure: 2.5171210884955753E-4
+Time for querying: 0.0
+Time for new slide: 0.009109156477876107
+Time for expired slide: 0.0017092677415929203
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 60.756065368652344
+CPU time = 0.0052757982396109656
+Time for index structure: 1.436315168141593E-4
+Time for querying: 0.0
+Time for new slide: 0.004710403090265486
+Time for expired slide: 5.686242690265486E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=9.5;k=50;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 56.10260772705078
+CPU time = 0.0048663684571176
+Time for index structure: 1.9208027168141593E-4
+Time for querying: 0.0
+Time for new slide: 0.004481498374336283
+Time for expired slide: 3.87785192920354E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=19.0;k=50;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 60.02738952636719
+CPU time = 0.005297690653404065
+Time for index structure: 2.4871322831858405E-4
+Time for querying: 0.0
+Time for new slide: 0.004896045938053098
+Time for expired slide: 4.0501004778761065E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=10;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 51.654541015625
+CPU time = 0.0024125255923961105
+Time for index structure: 1.297382831858407E-4
+Time for querying: 0.0
+Time for new slide: 0.0020428912230088495
+Time for expired slide: 3.702402814159292E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=30;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 55.91880798339844
+CPU time = 0.0037858667462422587
+Time for index structure: 1.3579193274336284E-4
+Time for querying: 0.0
+Time for new slide: 0.003342957975221239
+Time for expired slide: 4.4476874513274333E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=50;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 60.61681365966797
+CPU time = 0.005202247834659597
+Time for index structure: 1.4256284867256638E-4
+Time for querying: 0.0
+Time for new slide: 0.0046454796044247786
+Time for expired slide: 5.598427867256637E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=70;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 64.62764739990234
+CPU time = 0.006929198094606541
+Time for index structure: 1.527935017699115E-4
+Time for querying: 0.0
+Time for new slide: 0.006204404642477877
+Time for expired slide: 7.293346159292036E-4
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = tao.txt
+R=1.9;k=100;W=10000;slide=500
+Number Window = 1130
+Peak Memory = 71.93061828613281
+CPU time = 0.009874599987621583
+Time for index structure: 1.6739569911504424E-4
+Time for querying: 0.0
+Time for new slide: 0.008805309032743363
+Time for expired slide: 0.0010763725867256636
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=50;W=10000;slide=5000
+Number Window = 180
+Peak Memory = 68.75535583496094
+CPU time = 1.1189256151256282
+Time for index structure: 0.003592723455555556
+Time for querying: 0.0
+Time for new slide: 1.2134206259222222
+Time for expired slide: 0.023610476883333335
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=50;W=100000;slide=5000
+Number Window = 180
+Peak Memory = 126.51004791259766
+CPU time = 0.15856906565193377
+Time for index structure: 0.002250535783333333
+Time for querying: 0.0
+Time for new slide: 0.13928588555555554
+Time for expired slide: 0.020159909905555554
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=50;W=200000;slide=5000
+Number Window = 180
+Peak Memory = 163.28717803955078
+CPU time = 0.14023146157142852
+Time for index structure: 0.0015783308722222221
+Time for querying: 0.0
+Time for new slide: 0.10963304301666668
+Time for expired slide: 0.01579287838888889
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=50;W=100000;slide=5000
+Number Window = 180
+Peak Memory = 127.23771667480469
+CPU time = 0.15632494290607737
+Time for index structure: 0.002221936994444444
+Time for querying: 0.0
+Time for new slide: 0.13749976724444446
+Time for expired slide: 0.019689947305555556
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=50;W=100000;slide=10000
+Number Window = 180
+Peak Memory = 127.23487091064453
+CPU time = 0.3044394380329672
+Time for index structure: 0.0021512747722222223
+Time for querying: 0.0
+Time for new slide: 0.1340179249111111
+Time for expired slide: 0.019891294011111112
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=50;W=100000;slide=20000
+Number Window = 180
+Peak Memory = 125.63665771484375
+CPU time = 0.6735117930000002
+Time for index structure: 0.0023366752611111113
+Time for querying: 0.0
+Time for new slide: 0.1470713815611111
+Time for expired slide: 0.02504730564444444
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=50;W=100000;slide=5000
+Number Window = 180
+Peak Memory = 124.09563446044922
+CPU time = 0.15265529795027624
+Time for index structure: 0.002141447761111111
+Time for querying: 0.0
+Time for new slide: 0.13413369811666667
+Time for expired slide: 0.019366328272222223
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.14;k=50;W=100000;slide=5000
+Number Window = 180
+Peak Memory = 98.95044708251953
+CPU time = 0.052632474668508254
+Time for index structure: 0.0013656337666666666
+Time for querying: 0.0
+Time for new slide: 0.047390538311111105
+Time for expired slide: 0.0055307528833333335
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.28;k=50;W=100000;slide=5000
+Number Window = 180
+Peak Memory = 90.24095916748047
+CPU time = 0.042866933801104984
+Time for index structure: 0.0015785956555555555
+Time for querying: 0.0
+Time for new slide: 0.038365984105555556
+Time for expired slide: 0.004734742566666667
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=10;W=100000;slide=5000
+Number Window = 180
+Peak Memory = 84.58647918701172
+CPU time = 0.09251513126519341
+Time for index structure: 0.0013282399555555556
+Time for querying: 0.0
+Time for new slide: 0.07792855444444445
+Time for expired slide: 0.0150973633
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=30;W=100000;slide=5000
+Number Window = 180
+Peak Memory = 100.46809387207031
+CPU time = 0.10319425880110501
+Time for index structure: 0.0017593180222222223
+Time for querying: 0.0
+Time for new slide: 0.08716677933888889
+Time for expired slide: 0.016597341072222223
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=50;W=100000;slide=5000
+Number Window = 180
+Peak Memory = 124.50041198730469
+CPU time = 0.15357211825966854
+Time for index structure: 0.002203572538888889
+Time for querying: 0.0
+Time for new slide: 0.1346209607611111
+Time for expired slide: 0.019800654966666664
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=70;W=100000;slide=5000
+Number Window = 180
+Peak Memory = 153.95069885253906
+CPU time = 0.3849446432817679
+Time for index structure: 0.0028059926777777777
+Time for querying: 0.0
+Time for new slide: 0.3580575510333333
+Time for expired slide: 0.02902238575
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=100;W=100000;slide=5000
+Number Window = 180
+Peak Memory = 198.68955993652344
+CPU time = 2.5846857774198906
+Time for index structure: 0.004500128377777778
+Time for querying: 0.0
+Time for new slide: 2.4506920843055555
+Time for expired slide: 0.14834948104444445
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=50;W=10000;slide=5000
+Number Window = 189
+Peak Memory = 68.18296813964844
+CPU time = 0.045525890745192296
+Time for index structure: 0.0014271720793650792
+Time for querying: 0.0
+Time for new slide: 0.04032506726984127
+Time for expired slide: 0.009774920391534391
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=50;W=50000;slide=5000
+Number Window = 189
+Peak Memory = 78.71782684326172
+CPU time = 0.03985938739999999
+Time for index structure: 0.001490959984126984
+Time for querying: 0.0
+Time for new slide: 0.03565613758730159
+Time for expired slide: 0.006520250291005292
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=50;W=100000;slide=5000
+Number Window = 189
+Peak Memory = 94.93635559082031
+CPU time = 0.05476569268947367
+Time for index structure: 0.0017664979576719577
+Time for querying: 0.0
+Time for new slide: 0.04791637148677248
+Time for expired slide: 0.007135329825396826
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=50;W=150000;slide=5000
+Number Window = 189
+Peak Memory = 110.2981948852539
+CPU time = 0.07543125948888887
+Time for index structure: 0.002045507417989418
+Time for querying: 0.0
+Time for new slide: 0.0639639320952381
+Time for expired slide: 0.007871408518518518
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=50;W=200000;slide=5000
+Number Window = 189
+Peak Memory = 123.142578125
+CPU time = 0.1008082266058823
+Time for index structure: 0.002339451830687831
+Time for querying: 0.0
+Time for new slide: 0.08266523357142858
+Time for expired slide: 0.008004966402116401
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=50;W=100000;slide=5000
+Number Window = 189
+Peak Memory = 94.45271301269531
+CPU time = 0.056473763852631614
+Time for index structure: 0.0018018909312169313
+Time for querying: 0.0
+Time for new slide: 0.04950260954497355
+Time for expired slide: 0.0072662306772486775
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=50;W=100000;slide=10000
+Number Window = 189
+Peak Memory = 94.90493774414062
+CPU time = 0.11258399395789469
+Time for index structure: 0.0017807286666666666
+Time for querying: 0.0
+Time for new slide: 0.04932155022222222
+Time for expired slide: 0.007266282687830688
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=50;W=100000;slide=20000
+Number Window = 189
+Peak Memory = 96.34983825683594
+CPU time = 0.20405359600000003
+Time for index structure: 0.0016762216666666666
+Time for querying: 0.0
+Time for new slide: 0.045233193671957675
+Time for expired slide: 0.006588837994708995
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=50;W=100000;slide=50000
+Number Window = 189
+Peak Memory = 96.92123413085938
+CPU time = 0.4685790061052632
+Time for index structure: 0.0015438143968253969
+Time for querying: 0.0
+Time for new slide: 0.04125823813756614
+Time for expired slide: 0.0058471773439153435
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=50;W=100000;slide=100000
+Number Window = 189
+Peak Memory = 101.67695617675781
+CPU time = 0.8450377377
+Time for index structure: 0.0013630789365079363
+Time for querying: 0.0
+Time for new slide: 0.04036829267724868
+Time for expired slide: 0.004342468460317461
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.225;k=50;W=100000;slide=5000
+Number Window = 189
+Peak Memory = 99.93203735351562
+CPU time = 0.08280590948421052
+Time for index structure: 0.0016848181322751323
+Time for querying: 0.0
+Time for new slide: 0.06970099529100529
+Time for expired slide: 0.01353927880952381
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=50;W=100000;slide=5000
+Number Window = 189
+Peak Memory = 93.80033874511719
+CPU time = 0.05792908147894737
+Time for index structure: 0.001782949634920635
+Time for querying: 0.0
+Time for new slide: 0.050992498275132275
+Time for expired slide: 0.007239448042328043
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=2.25;k=50;W=100000;slide=5000
+Number Window = 189
+Peak Memory = 88.65349578857422
+CPU time = 0.1124650884263158
+Time for index structure: 0.004080802624338625
+Time for querying: 0.0
+Time for new slide: 0.10700091140211641
+Time for expired slide: 0.006055145603174603
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=4.5;k=50;W=100000;slide=5000
+Number Window = 189
+Peak Memory = 104.09445190429688
+CPU time = 0.19604906499473676
+Time for index structure: 0.007134463576719576
+Time for querying: 0.0
+Time for new slide: 0.18815439815873014
+Time for expired slide: 0.0089278271005291
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=10;W=100000;slide=5000
+Number Window = 189
+Peak Memory = 84.70575714111328
+CPU time = 0.048702619236842125
+Time for index structure: 0.0016628073862433863
+Time for querying: 0.0
+Time for new slide: 0.04369339633862434
+Time for expired slide: 0.005263522010582011
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=30;W=100000;slide=5000
+Number Window = 189
+Peak Memory = 88.43509674072266
+CPU time = 0.044767788894736864
+Time for index structure: 0.0016912797936507937
+Time for querying: 0.0
+Time for new slide: 0.03927240158730159
+Time for expired slide: 0.00572848234920635
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=50;W=100000;slide=5000
+Number Window = 189
+Peak Memory = 95.45207977294922
+CPU time = 0.05341636605789475
+Time for index structure: 0.0017430809047619047
+Time for querying: 0.0
+Time for new slide: 0.046672973222222226
+Time for expired slide: 0.00702266837037037
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = stock.txt
+R=0.45;k=100;W=100000;slide=5000
+Number Window = 189
+Peak Memory = 117.09584045410156
+CPU time = 0.12351060924210522
+Time for index structure: 0.0019843269735449736
+Time for querying: 0.0
+Time for new slide: 0.11069028845502644
+Time for expired slide: 0.013470391063492062
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=50;W=10000;slide=5000
+Number Window = 180
+Peak Memory = 68.65435791015625
+CPU time = 1.2684927579748744
+Time for index structure: 0.0035968868499999997
+Time for querying: 0.0
+Time for new slide: 1.3758656964055556
+Time for expired slide: 0.026519844277777777
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=50;W=100000;slide=5000
+Number Window = 180
+Peak Memory = 127.32064819335938
+CPU time = 0.15290866424309393
+Time for index structure: 0.002204260538888889
+Time for querying: 0.0
+Time for new slide: 0.13404741435
+Time for expired slide: 0.019706885405555555
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=50;W=10000;slide=5000
+Number Window = 180
+Peak Memory = 68.78084564208984
+CPU time = 1.2855086852261315
+Time for index structure: 0.0041062806
+Time for querying: 0.0
+Time for new slide: 1.3923757187722223
+Time for expired slide: 0.02882089672777778
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+----------------------------------------
+Algorithm=microCluster
+Data File = gaussian.txt
+R=0.028;k=50;W=100000;slide=5000
+Number Window = -1
+Peak Memory = 118.46412658691406
+CPU time = 0.14873799733149165
+Time for index structure: -0.39031633
+Time for querying: -0.0
+Time for new slide: -23.463946603
+Time for expired slide: -3.456963736
+Number cluster = 0.0
+Number points in event queue = 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0

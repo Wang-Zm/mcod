@@ -5,18 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.PriorityQueue;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import mtree.utils.Constants;
 
 public class Stream {
 
@@ -35,7 +24,7 @@ public class Stream {
         if (currentTime + length <= dataList.size()) {
             return new ArrayList<>(dataList.subList(currentTime, currentTime + length));
         }
-        return new ArrayList<>(dataList.subList(currentTime + length, dataList.size()));
+        return new ArrayList<>(dataList.subList(currentTime, dataList.size()));
     }
 
     public void getData(String filename) {
