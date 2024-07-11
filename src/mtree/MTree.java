@@ -838,7 +838,6 @@ public class MTree<DATA> {
 							return;
 						} catch(DataNotFound e) {
 							// If DataNotFound was thrown, then the data was not found in the child
-							// e.printStackTrace(); // 在这个里面没有找到是合理的，不应该直接抛出异常
 						} catch(NodeUnderCapacity e) {
 							Node expandedChild = balanceChildren(child);
 							thisNode.updateRadius(expandedChild);

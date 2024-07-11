@@ -38,17 +38,7 @@ public class MicroCluster {
     public static double avgPointsInRmcAllWindows = 0;
     public static double avgLengthExps = 0;
     public static double avgLengthExpsAllWindows = 0;
-    public ArrayList<Data> detectOutlier(ArrayList<Data> data, int currentTime, int W, int slide, Data bugData) {
-        // for (double value : bugData.values) {
-        //     System.out.print(value + " ");
-        // }
-        // System.out.println();
-        // mtree.add(bugData);
-        // if (!mtree.remove(bugData)) {
-        //     System.out.println("!mtree.remove(bugData)");
-        // }
-        // System.exit(0);
-        
+    public ArrayList<Data> detectOutlier(ArrayList<Data> data, int currentTime, int W, int slide, Data bugData) {        
         // * purge expired data
         purgeExpiredData(currentTime, slide);
         // OutlierTest.computeOutlier(dataList, mtree);
@@ -82,9 +72,10 @@ public class MicroCluster {
                 ArrayList<MCObject> inCluster_objects2;
                 inCluster_objects2 = microClusters.get(d.cluster); // 可能是这个 d.cluster 没有设置好，导致其中的数据不够
                 long startTime2 = Utils.getCPUTime();
-                if (!inCluster_objects2.remove(d)) {
-                    throw new RuntimeException("error on inCluster_objects2.remove(d), d=" + d + ", d.cluster=" + d.cluster);
-                }
+                // if (!inCluster_objects2.remove(d)) {
+                //     throw new RuntimeException("error on inCluster_objects2.remove(d), d=" + d + ", d.cluster=" + d.cluster);
+                // }
+                inCluster_objects2.remove(d);
                 // inCluster_objects2.remove(d); // 1.从 cluster 移除该点
                 MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime2;
                 //* check if size of cluster shrink below k + 1
@@ -117,9 +108,9 @@ public class MicroCluster {
         ArrayList<MCObject> list_associates = associateObjects.get(cluster);
         if (list_associates != null)
             list_associates.forEach((o) -> o.Rmc.remove(cluster));
-        if (!mTreeNodeList.contains(cluster)) {
-            throw new RuntimeException("!mTreeNodeList.contains(cluster), cluster=" + cluster + ", cluster.arriveTime=" + cluster.arrivalTime);
-        } // mTreeNodeList 包含 cluster，而 mtree 不包含，mtree add 时 mTreeNodeList 也在 add，出现异常，说明 mtree 的实现有问题
+        // if (!mTreeNodeList.contains(cluster)) {
+        //     throw new RuntimeException("!mTreeNodeList.contains(cluster), cluster=" + cluster + ", cluster.arriveTime=" + cluster.arrivalTime);
+        // } // mTreeNodeList 包含 cluster，而 mtree 不包含，mtree add 时 mTreeNodeList 也在 add，出现异常，说明 mtree 的实现有问题
         // if (!mtree.remove(cluster)) { // 一般是 cluster 未添加到 mtree 中，后面方法进行了奇奇怪怪的转换
         //     System.out.println("mTreeNodeList.size=" + mTreeNodeList.size());
         //     for (Data node : mTreeNodeList) {
@@ -139,9 +130,10 @@ public class MicroCluster {
         //     }
         //     throw new RuntimeException("error on mtree.remove(cluster), cluster=" + cluster.values[0] + ", cluster.arriveTime=" + cluster.arrivalTime);
         // }
-        if (mtree.remove(cluster)) {
-            System.out.println("mtree.remove(cluster), cluster.arrivalTime=" + cluster.arrivalTime);
-        };
+        // if (mtree.remove(cluster)) {
+        //     System.out.println("mtree.remove(cluster), cluster.arrivalTime=" + cluster.arrivalTime);
+        // }
+        mtree.remove(cluster);
         mTreeNodeList.remove(cluster);
         associateObjects.remove(cluster);
         microClusters.remove(cluster);
@@ -205,7 +197,7 @@ public class MicroCluster {
         });
     }
 
-    private void rangeQueryInPDAndCluster(MTreeClass.Query query, MCObject d, boolean fromCluster) {
+    private void rangeQueryInPDAndCluster(ArrayList<MTreeClass.ResultItem> results, MCObject d, boolean fromCluster) {
         ArrayList<MCObject> neighbor_in_PD = new ArrayList<>();
         ArrayList<MCObject> neighbor_in_3_2Apart_PD = new ArrayList<>();
         ArrayList<MCObject> neighbor_in_R2 = new ArrayList<>();
@@ -224,7 +216,7 @@ public class MicroCluster {
         if (neighbor_in_R2.size() > Constants.k * 1.1) {
             formNewCluster(neighbor_in_R2, neighbor_in_3_2Apart_PD, d, fromCluster);
         } else {
-            applyEventBasedAlgo(query, neighbor_in_PD, d, fromCluster);
+            applyEventBasedAlgo(results, neighbor_in_PD, d, fromCluster);
         }
     }
 
@@ -254,26 +246,26 @@ public class MicroCluster {
             o.Rmc.clear();
         }
         d.isCenter = true;
-        if (microClusters.containsKey(d))
-            throw new RuntimeException("d should not have been a cluster center before");
+        // if (microClusters.containsKey(d))
+        //     throw new RuntimeException("d should not have been a cluster center before");
         microClusters.put(d, neighbor_in_R2);
-        if (d.arrivalTime == 446855) {
-            System.out.println("form new cluster with d.arrivalTime == 446855");
-            if (d == deleteData) {
-                System.out.println("d == deleteData");
-            } else {
-                System.out.println("d != deleteData");
-            }
-        }
+        // if (d.arrivalTime == 446855) {
+        //     System.out.println("form new cluster with d.arrivalTime == 446855");
+        //     if (d == deleteData) {
+        //         System.out.println("d == deleteData");
+        //     } else {
+        //         System.out.println("d != deleteData");
+        //     }
+        // }
         mtree.add(d);
-        if (mTreeNodeList.contains(d)) {
-            throw new RuntimeException("mTreeNodeList.contains(d), d.arriveTime=" + d.arrivalTime);
-        }
-        for (Data node : mTreeNodeList) {
-            if (node.compareTo(d) == 0) {
-                throw new RuntimeException("node.compareTo(d) == 0, node.arriveTime=" + node.arrivalTime + ", d.arrivalTime=" + d.arrivalTime);
-            }
-        }
+        // if (mTreeNodeList.contains(d)) {
+        //     throw new RuntimeException("mTreeNodeList.contains(d), d.arriveTime=" + d.arrivalTime);
+        // }
+        // for (Data node : mTreeNodeList) {
+        //     if (node.compareTo(d) == 0) {
+        //         throw new RuntimeException("node.compareTo(d) == 0, node.arriveTime=" + node.arrivalTime + ", d.arrivalTime=" + d.arrivalTime);
+        //     }
+        // }
         mTreeNodeList.add(d);
 
         // update Rmc for points in PD
@@ -291,24 +283,26 @@ public class MicroCluster {
         }
     }
 
-    private void applyEventBasedAlgo(MTreeClass.Query query, ArrayList<MCObject> neighbor_in_PD, MCObject d, boolean fromCluster) {
+    private void applyEventBasedAlgo(ArrayList<MTreeClass.ResultItem> results, ArrayList<MCObject> neighbor_in_PD, MCObject d, boolean fromCluster) {
         // * 当成普通的点处理：1.查 cluster 和 PD 中的邻居数，更新 d.exps 与 succeeding 2.更新 d.Rmc
         // 1.查 cluster 中的邻居数，并更新 d.Rmc 和 associate_objects
         ArrayList<MCObject> neighborInMTree = new ArrayList<>();
-        for (MTreeClass.ResultItem ri2 : query) {
-            // d.Rmc.add(new MCObject(ri2.data));
-            d.Rmc.add((MCObject) ri2.data);
-            ArrayList<MCObject> l = associateObjects.getOrDefault(ri2.data, new ArrayList<>());
-            l.add(d);
-            associateObjects.put(ri2.data, l);
-            ArrayList<MCObject> object_in_cluster = microClusters.get(ri2.data);
-            if (object_in_cluster == null) throw new RuntimeException("no object in cluster");
-            for (MCObject o : object_in_cluster) {
-                if (mtree.getDistanceFunction().calculate(d, o) <= Constants.R) {
-                    neighborInMTree.add(o); // 记录 d 的在 cluster 中的邻居
+        if (!results.isEmpty()) {
+            for (MTreeClass.ResultItem ri2 : results) {
+                d.Rmc.add((MCObject) ri2.data);
+                ArrayList<MCObject> l = associateObjects.getOrDefault(ri2.data, new ArrayList<>());
+                l.add(d);
+                associateObjects.put(ri2.data, l);
+                ArrayList<MCObject> object_in_cluster = microClusters.get(ri2.data);
+                if (object_in_cluster == null) throw new RuntimeException("no object in cluster");
+                for (MCObject o : object_in_cluster) {
+                    if (mtree.getDistanceFunction().calculate(d, o) <= Constants.R) {
+                        neighborInMTree.add(o); // 记录 d 的在 cluster 中的邻居
+                    }
                 }
-            }
+            }        
         }
+        
         // 2.PD 中的点的 exps 与 succeeding 要因 d 更新：设置 PD 中的点的 exps 与 succeeding + 设置 d 的 exps 与 succeeding
         Stream<MCObject> stream = neighbor_in_PD.stream();
         if (fromCluster) { // wzm: should not to update neighbors when d is from cluster
@@ -361,38 +355,39 @@ public class MicroCluster {
         if (d.arrivalTime <= currentTime - Constants.W) {
             throw new RuntimeException("d.arrivalTime <= currentTime - Constants.W");
         }
-        if (d.arrivalTime == 446855) {
-            deleteData = d;
-        }
+        // if (d.arrivalTime == 446855) {
+        //     deleteData = d;
+        // }
         MTreeClass.Query query = mtree.getNearestByRange(d, Constants.R * 3 / 2);
-        // 将有效的结果收集起来，使得后面取用。可以放出来源码，尽量看结果。这里需要自己重新实现 M-Tree？是否过于抵消
-        Iterator<MTreeClass.ResultItem> it = query.iterator();
-        while (it.hasNext()) {
-            MTreeClass.ResultItem node = it.next();
-            if (!mTreeNodeList.contains(node.data)) {
-                it.remove();
-            }
-        }
-        ArrayList<MTreeClass.ResultItem> results;
-        
         double min_distance = Double.MAX_VALUE;
         MTreeClass.ResultItem ri = null;
-        if (query.iterator().hasNext()) {
-            ri = query.iterator().next();
-            min_distance = ri.distance;
-            if (microClusters.get(ri.data) == null || microClusters.get(ri.data).isEmpty()) {
-                throw new RuntimeException("no object in cluster, microClusters.get(ri.data)=" + microClusters.get(ri.data) + ", currentTime=" + currentTime);
-            } // ri.data = null，可能是这个点已经被移除了，但是仍然引用这个点，
+        // 将有效的结果收集起来，使得后面取用。
+        ArrayList<MTreeClass.ResultItem> results = new ArrayList<>();
+        for (MTreeClass.ResultItem node : query) {
+            if (mTreeNodeList.contains(node.data)) {
+                results.add(node);
+            }
         }
+        if (!results.isEmpty()) {
+            ri = results.get(0);
+            min_distance = ri.distance;
+        }
+
+        // if (query.iterator().hasNext()) {
+        //     ri = query.iterator().next();
+        //     min_distance = ri.distance;
+        //     if (microClusters.get(ri.data) == null || microClusters.get(ri.data).isEmpty()) {
+        //         throw new RuntimeException("no object in cluster, microClusters.get(ri.data)=" + microClusters.get(ri.data) + ", currentTime=" + currentTime);
+        //     } // ri.data = null，可能是这个点已经被移除了，但是仍然引用这个点，
+        // }
 
         if (min_distance <= Constants.R / 2) {
             // * assign to this closet cluster
-            // MCObject closest_cluster = new MCObject(Objects.requireNonNull(ri).data); // ! 此时已经不是同一个了
             MCObject closest_cluster = (MCObject) (ri.data);
             addObjectToCluster(d, closest_cluster, fromCluster);
         } else {
             // * do range query in PD and MTree (distance to center <= 3/2R)
-            rangeQueryInPDAndCluster(query, d, fromCluster);
+            rangeQueryInPDAndCluster(results, d, fromCluster);
         }
     }
 
