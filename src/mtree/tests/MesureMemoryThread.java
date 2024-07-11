@@ -67,7 +67,6 @@ public class MesureMemoryThread extends Thread {
 
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Constants.outputFile, true)))) {
             out.println("----------------------------------------");
-            out.println("Algorithm=" + MTTest.algorithm);
             out.println("Data File = " + Constants.dataFile);
             out.println("R=" + Constants.R + ";" + "k=" + Constants.k + ";W=" + Constants.W + ";slide=" + Constants.slide);
             out.println("Number Window = " + Constants.numberWindow);
@@ -77,12 +76,11 @@ public class MesureMemoryThread extends Thread {
             out.println("Time for querying: "+ MesureMemoryThread.timeForQuerying*1.0/1000000000/Constants.numberWindow);
             out.println("Time for new slide: "+ MesureMemoryThread.timeForNewSlide*1.0/1000000000/Constants.numberWindow);
             out.println("Time for expired slide: "+ MesureMemoryThread.timeForExpireSlide*1.0/1000000000/Constants.numberWindow);
-            if(MTTest.algorithm.equals("microCluster")){
-                out.println("Number cluster = "+ MicroCluster.numberCluster);
-                out.println("Number points in event queue = "+ MicroCluster.numberPointsInEventQueue);
-                out.println("Avg Rmc size = " + MicroCluster.avgPointsInRmcAllWindows);
-                out.println("Avg Length exps= "+ MicroCluster.avgLengthExpsAllWindows);
-            }
+            out.println("Number cluster = "+ MicroCluster.numberCluster);
+            out.println("Number points in event queue = "+ MicroCluster.numberPointsInEventQueue);
+            out.println("Avg Rmc size = " + MicroCluster.avgPointsInRmcAllWindows);
+            out.println("Avg Length exps= "+ MicroCluster.avgLengthExpsAllWindows);
+            
         } catch (IOException e) {
         }
     }

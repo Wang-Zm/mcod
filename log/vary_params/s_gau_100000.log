@@ -1,7 +1,7 @@
 #window: 1
 Total #outliers: 804
 Average Time: 0.0
-Peak memory: 135.4411392211914
+Peak memory: 126.65758514404297
 Time index, remove data from structure: 0.0
 Time for querying: 0.0
 Time for new slide: 0.0
@@ -12,21 +12,131 @@ Max  Number points in event queue = 0.0
 Avg number points in clusters= 0.0
 Avg Rmc size = 0.0
 Avg Length exps= 0.0
-#
-# A fatal error has been detected by the Java Runtime Environment:
-#
-#  SIGSEGV (0xb) at pc=0x0000752ba6abc03d, pid=261606, tid=0x0000752b90fff640
-#
-# JRE version: OpenJDK Runtime Environment (8.0_412-b08) (build 1.8.0_412-8u412-ga-1~22.04.1-b08)
-# Java VM: OpenJDK 64-Bit Server VM (25.412-b08 mixed mode linux-amd64 compressed oops)
-# Problematic frame:
-# V  [libjvm.so+0x4bc03d]
-#
-# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
-#
-# An error report file with more information is saved as:
-# /home/wzm/Code/MCOD/hs_err_pid261606.log
-#
-# If you would like to submit a bug report, please visit:
-#   http://bugreport.java.com/bugreport/crash.jsp
-#
+#window: 2
+Total #outliers: 770
+Average Time: 6.745050909
+Peak memory: 126.65758514404297
+Time index, remove data from structure: 0.0584043815
+Time for querying: 0.0
+Time for new slide: 6.5979408285
+Time for expired slide: 0.147107854
+------------------------------------
+Number clusters = 0.0
+Max  Number points in event queue = 0.0
+Avg number points in clusters= 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+#window: 3
+Total #outliers: 770
+Average Time: 9.106155762999999
+Peak memory: 126.65758514404297
+Time index, remove data from structure: 0.07131844533333333
+Time for querying: 0.0
+Time for new slide: 8.920024164333332
+Time for expired slide: 0.1861268043333333
+------------------------------------
+Number clusters = 0.0
+Max  Number points in event queue = 0.0
+Avg number points in clusters= 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+#window: 4
+Total #outliers: 829
+Average Time: 10.27637787175
+Peak memory: 127.31883239746094
+Time index, remove data from structure: 0.0794132285
+Time for querying: 0.0
+Time for new slide: 10.07104280775
+Time for expired slide: 0.20532998725
+------------------------------------
+Number clusters = 0.0
+Max  Number points in event queue = 0.0
+Avg number points in clusters= 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+#window: 5
+Total #outliers: 861
+Average Time: 10.854569582
+Peak memory: 127.31883239746094
+Time index, remove data from structure: 0.082692719
+Time for querying: 0.0
+Time for new slide: 10.637879938400001
+Time for expired slide: 0.21668473540000002
+------------------------------------
+Number clusters = 0.0
+Max  Number points in event queue = 0.0
+Avg number points in clusters= 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+#window: 6
+Total #outliers: 913
+Average Time: 11.292491261666667
+Peak memory: 127.95496368408203
+Time index, remove data from structure: 0.08565549316666667
+Time for querying: 0.0
+Time for new slide: 11.067128428666665
+Time for expired slide: 0.225358235
+------------------------------------
+Number clusters = 0.0
+Max  Number points in event queue = 0.0
+Avg number points in clusters= 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+#window: 7
+Total #outliers: 748
+Average Time: 11.613864185285715
+Peak memory: 128.0886459350586
+Time index, remove data from structure: 0.08849487728571429
+Time for querying: 0.0
+Time for new slide: 11.382026563714286
+Time for expired slide: 0.23183316685714286
+------------------------------------
+Number clusters = 0.0
+Max  Number points in event queue = 0.0
+Avg number points in clusters= 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+#window: 8
+Total #outliers: 925
+Average Time: 11.8167536505
+Peak memory: 128.0886459350586
+Time index, remove data from structure: 0.089374271375
+Time for querying: 0.0
+Time for new slide: 11.5826934955
+Time for expired slide: 0.23405576375
+------------------------------------
+Number clusters = 0.0
+Max  Number points in event queue = 0.0
+Avg number points in clusters= 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+#window: 9
+Total #outliers: 820
+Average Time: 12.005614057444445
+Peak memory: 128.0886459350586
+Time index, remove data from structure: 0.09017201744444445
+Time for querying: 0.0
+Time for new slide: 11.768546606444444
+Time for expired slide: 0.23706312466666665
+------------------------------------
+Number clusters = 0.0
+Max  Number points in event queue = 0.0
+Avg number points in clusters= 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+#window: 10
+Total #outliers: 808
+Average Time: 12.1136579328
+Peak memory: 128.0886459350586
+Time index, remove data from structure: 0.0902013896
+Time for querying: 0.0
+Time for new slide: 11.8754459506
+Time for expired slide: 0.2382077357
+------------------------------------
+Number clusters = 0.0
+Max  Number points in event queue = 0.0
+Avg number points in clusters= 0.0
+Avg Rmc size = 0.0
+Avg Length exps= 0.0
+Peak memory: 128.0886459350586 MB
+Average CPU time: 12113.6579328 ms

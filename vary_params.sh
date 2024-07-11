@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dir_path=log/vary_params_check
+dir_path=log/vary_params
 
 # TAO
 function run_tao() {
@@ -92,10 +92,51 @@ function run_stk() {
     done
 }
 
+function run_gau_for_error() {
+    window_list=(50000 150000)
+    slide_list=(0.5 1.0)
+    R_list=(0.25 0.5)
+    for w in ${window_list[*]} 
+    do
+        echo "processing gau, vary window, window = ${w}"
+        java -cp out mtree.tests.MTTest --algorithm microCluster --W ${w} --slide 5000 --R 0.028 --k 50 --datafile gaussian.txt > ${dir_path}/w_gau_${w}.log
+    done
+    for s in ${slide_list[*]}
+    do
+        real_s=`echo "scale=0; ${s}*100000/1" | bc`
+        echo "processing gau, vary slide, slide = ${real_s}"
+        java -cp out mtree.tests.MTTest --algorithm microCluster --W 100000 --slide ${real_s} --R 0.028 --k 50 --datafile gaussian.txt > ${dir_path}/s_gau_${real_s}.log
+    done
+    for r in ${R_list[*]}
+    do
+        real_r=`echo "scale=3; ${r}*0.028" | bc`
+        echo "processing gau, vary r, r = ${real_r}"
+        java -cp out mtree.tests.MTTest --algorithm microCluster --W 100000 --slide 5000 --R ${real_r} --k 50 --datafile gaussian.txt > ${dir_path}/r_gau_${real_r}.log
+    done
+}
+
+function run_stk_for_error() {
+    R_list=(0.25)
+    K_list=(70)
+    for r in ${R_list[*]}
+    do
+        real_r=`echo "scale=4; ${r}*0.45" | bc`
+        echo "processing stk, vary r, r = ${real_r}"
+        java -cp out mtree.tests.MTTest --algorithm microCluster --W 100000 --slide 5000 --R ${real_r} --k 50 --datafile stock.txt > ${dir_path}/r_stk_${real_r}.log
+    done
+    for k in ${K_list[*]}
+    do
+        echo "processing gau, vary k, k = ${k}"
+        java -cp out mtree.tests.MTTest --algorithm microCluster --W 100000 --slide 5000 --R 0.45 --k ${k} --datafile stock.txt > ${dir_path}/k_stk_${k}.log
+    done
+}
+
 bash compile.sh
 # run_tao
 # run_gau
 # run_stk
+run_gau_for_error
+run_stk_for_error
 
 # window_list=(50000)
 # window_list=(10000 50000 100000 150000 200000)
@@ -108,10 +149,10 @@ bash compile.sh
 #     java -cp out mtree.tests.MTTest --algorithm microCluster --W ${w} --slide 5000 --R 0.028 --k 50 --datafile gaussian.txt > ${dir_path}/w_gau_${w}.log
 # done
 
-R_list=(0.25)
-for r in ${R_list[*]}
-do
-    real_r=`echo "scale=3; ${r}*0.028" | bc`
-    echo "processing gau, vary r, r = ${real_r}"
-    java -cp out mtree.tests.MTTest --algorithm microCluster --W 100000 --slide 5000 --R ${real_r} --k 50 --datafile gaussian.txt > log/bugfix/r_gau_${real_r}.log
-done
+# R_list=(0.25)
+# for r in ${R_list[*]}
+# do
+#     real_r=`echo "scale=3; ${r}*0.028" | bc`
+#     echo "processing gau, vary r, r = ${real_r}"
+#     java -cp out mtree.tests.MTTest --algorithm microCluster --W 100000 --slide 5000 --R ${real_r} --k 50 --datafile gaussian.txt > log/bugfix/r_gau_${real_r}.log
+# done

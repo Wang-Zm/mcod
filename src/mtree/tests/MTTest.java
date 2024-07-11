@@ -15,10 +15,7 @@ import mtree.utils.Utils;
 
 public class MTTest {
     public static int currentTime = 0;
-
     public static HashSet<Integer> idOutliers = new HashSet<>();
-
-    public static String algorithm;
 
     public static void main(String[] args) throws IOException, FileNotFoundException, ParseException {
         readArguments(args);
@@ -31,7 +28,6 @@ public class MTTest {
         // currentTime = 450000;
         while (true) {
             numberWindows++;
-
             ArrayList<Data> incomingData;
             if (numberWindows > 1) {
                 incomingData = s.getIncomingData(currentTime, Constants.slide);
@@ -43,15 +39,11 @@ public class MTTest {
             if (incomingData.size() < Constants.slide) {
                 break;
             }
-
             long start = Utils.getCPUTime(); // requires java 1.5
-            double elapsedTimeInSec;
             ArrayList<Data> outliers6 = micro.detectOutlier(incomingData, currentTime, Constants.W, Constants.slide);
-            elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
+            double elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
             totalTime += elapsedTimeInSec;
-            outliers6.forEach((outlier) -> {
-                idOutliers.add(outlier.arrivalTime);
-            });
+            outliers6.forEach((outlier) -> idOutliers.add(outlier.arrivalTime));
             if (numberWindows == 1) {
                 totalTime = 0;
                 MesureMemoryThread.timeForIndexing = 0;
@@ -60,21 +52,18 @@ public class MTTest {
             }
             System.out.println("#window: " + numberWindows);
             System.out.println("Total #outliers: " + idOutliers.size());
-            System.out.println("Average Time: " + totalTime * 1.0 / numberWindows);
-            System.out.println("Peak memory: " + MesureMemoryThread.maxMemory * 1.0 / 1024 / 1024);
+            System.out.println("Average Time: " + totalTime * 1.0 / numberWindows * 1000 + " ms");
+            System.out.println("Peak memory: " + MesureMemoryThread.maxMemory * 1.0 / 1024 / 1024 + " MB");
             System.out.println("Time index, remove data from structure: " + MesureMemoryThread.timeForIndexing * 1.0 / 1000000000 / numberWindows);
             System.out.println("Time for querying: " + MesureMemoryThread.timeForQuerying * 1.0 / 1000000000 / numberWindows);
             System.out.println("Time for new slide: " + MesureMemoryThread.timeForNewSlide * 1.0 / 1000000000 / numberWindows);
             System.out.println("Time for expired slide: " + MesureMemoryThread.timeForExpireSlide * 1.0 / 1000000000 / numberWindows);
             System.out.println("------------------------------------");
-
-            if (algorithm.equals("microCluster")) {
-                System.out.println("Number clusters = " + MicroCluster.numberCluster / numberWindows);
-                System.out.println("Max  Number points in event queue = " + MicroCluster.numberPointsInEventQueue);
-                System.out.println("Avg number points in clusters= " + MicroCluster.numberPointsInClustersAllWindows / numberWindows);
-                System.out.println("Avg Rmc size = " + MicroCluster.avgPointsInRmcAllWindows / numberWindows);
-                System.out.println("Avg Length exps= " + MicroCluster.avgLengthExpsAllWindows / numberWindows);
-            }
+            System.out.println("Number clusters = " + MicroCluster.numberCluster / numberWindows);
+            System.out.println("Max Number points in event queue = " + MicroCluster.numberPointsInEventQueue);
+            System.out.println("Avg number points in clusters= " + MicroCluster.numberPointsInClustersAllWindows / numberWindows);
+            System.out.println("Avg Rmc size = " + MicroCluster.avgPointsInRmcAllWindows / numberWindows);
+            System.out.println("Avg Length exps= " + MicroCluster.avgLengthExpsAllWindows / numberWindows);
 
             // reset
             idOutliers.clear();
@@ -95,9 +84,6 @@ public class MTTest {
             String arg = args[i];
             if (arg.indexOf("--") == 0) {
                 switch (arg) {
-                    case "--algorithm":
-                        algorithm = args[i + 1];
-                        break;
                     case "--R":
                         Constants.R = Double.valueOf(args[i + 1]);
                         break;

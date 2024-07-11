@@ -9,7 +9,6 @@ public class Data implements EuclideanCoordinate, Comparable<Data> {
 	public double[] values;
 	public final int hashCode;
 	
-	//arrival time 
 	public int arrivalTime;
         
 	public Data(double... values) {
