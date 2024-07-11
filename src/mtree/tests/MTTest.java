@@ -46,8 +46,7 @@ public class MTTest {
 
             long start = Utils.getCPUTime(); // requires java 1.5
             double elapsedTimeInSec;
-            ArrayList<Data> outliers6 = micro.detectOutlier(incomingData, currentTime, Constants.W,
-                    Constants.slide, s.dataList.get(446854));
+            ArrayList<Data> outliers6 = micro.detectOutlier(incomingData, currentTime, Constants.W, Constants.slide);
             elapsedTimeInSec = (Utils.getCPUTime() - start) * 1.0 / 1000000000;
             totalTime += elapsedTimeInSec;
             outliers6.forEach((outlier) -> {
@@ -80,12 +79,11 @@ public class MTTest {
             // reset
             idOutliers.clear();
         }
-        System.out.printf("Average Time for a slide: %f ms\n", totalTime / (numberWindows - 1) * 1000);
         MicroCluster.numberCluster = MicroCluster.numberCluster / numberWindows;
         MicroCluster.avgPointsInRmcAllWindows = MicroCluster.avgPointsInRmcAllWindows / numberWindows;
         MicroCluster.avgLengthExpsAllWindows = MicroCluster.avgLengthExpsAllWindows / numberWindows;
         MicroCluster.numberPointsInClustersAllWindows = MicroCluster.numberPointsInClustersAllWindows / numberWindows;
-        mesureThread.averageTime = totalTime * 1.0 / (numberWindows - 1);
+        mesureThread.averageTime = totalTime / (numberWindows - 1) * 1000;
         mesureThread.writeResult();
         mesureThread.stop();
         mesureThread.interrupt();

@@ -9,24 +9,10 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.management.ManagementFactory;
-import java.lang.management.MemoryMXBean;
-import java.lang.management.MemoryPoolMXBean;
-import java.lang.management.MemoryType;
-import java.lang.management.MemoryUsage;
-import java.lang.management.ThreadInfo;
-import java.lang.management.ThreadMXBean;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static mtree.tests.MTTest.algorithm;
 import mtree.utils.Constants;
-import mtree.utils.Utils;
-import outlierdetection.Direct_Update_Event;
-import outlierdetection.ExactStorm;
-import outlierdetection.MESI;
 import outlierdetection.MicroCluster;
-import outlierdetection.MicroCluster_New;
 
 /**
  *
@@ -49,7 +35,6 @@ public class MesureMemoryThread extends Thread {
     public static double timeForNewSlide = 0;
     public static double timeForExpireSlide = 0;
     public void computeMemory() {
-
 //        List<MemoryPoolMXBean> pools= ManagementFactory.getMemoryPoolMXBeans();
 //        for(MemoryPoolMXBean p: pools){
 //            
@@ -61,15 +46,10 @@ public class MesureMemoryThread extends Thread {
         long used = Runtime.getRuntime().totalMemory()- Runtime.getRuntime().freeMemory();
         if(maxMemory < used)
             maxMemory = used;
-        
-        
-        
-       
     }
 
     @Override
     public void run() {
-
         while (true) {
             computeMemory();
             try {
@@ -82,8 +62,8 @@ public class MesureMemoryThread extends Thread {
 
     public void writeResult() {
 
-        System.out.println("Peak memory: " + maxMemory * 1.0 / 1024 / 1024);
-        System.out.println("Average CPU time: " + averageTime);
+        System.out.println("Peak memory: " + maxMemory * 1.0 / 1024 / 1024 + " MB");
+        System.out.println("Average CPU time: " + averageTime + " ms");
 
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Constants.outputFile, true)))) {
             out.println("----------------------------------------");
