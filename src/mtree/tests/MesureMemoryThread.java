@@ -38,7 +38,7 @@ public class MesureMemoryThread extends Thread {
 //                if(maxMemory < p.getUsage().getUsed())
 //                    maxMemory = p.getUsage().getUsed();
 //        }
-        // Runtime.getRuntime().gc();
+        Runtime.getRuntime().gc();
         long used = Runtime.getRuntime().totalMemory()- Runtime.getRuntime().freeMemory();
         if(maxMemory < used)
             maxMemory = used;

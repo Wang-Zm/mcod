@@ -20,7 +20,7 @@ public class MTTest {
     public static void main(String[] args) throws IOException, FileNotFoundException, ParseException {
         readArguments(args);
         MesureMemoryThread mesureThread = new MesureMemoryThread();
-        mesureThread.start();
+        // mesureThread.start();
         Stream s = Stream.getInstance(Constants.dataFile);
         MicroCluster micro = new MicroCluster();
         int numberWindows = 0;
@@ -73,8 +73,9 @@ public class MTTest {
         MicroCluster.avgLengthExpsAllWindows = MicroCluster.avgLengthExpsAllWindows / numberWindows;
         MicroCluster.numberPointsInClustersAllWindows = MicroCluster.numberPointsInClustersAllWindows / numberWindows;
         mesureThread.averageTime = totalTime / (numberWindows - 1) * 1000;
+        mesureThread.computeMemory();
         mesureThread.writeResult();
-        mesureThread.stop();
+        // mesureThread.stop();
         mesureThread.interrupt();
     }
 

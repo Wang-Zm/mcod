@@ -1,7 +1,14 @@
 #!/bin/bash
 
-dir_path=log/vary_params
-check=check_ # NULL or "check_"
+dir_path=log/vary_params_final_gc
+check= # NULL or "check_"
+
+if [ ! -d "$dir_path" ]; then
+    mkdir -p "$dir_path"
+    echo "Directory created: $dir_path"
+else
+    echo "Directory already exists: $dir_path"
+fi
 
 # TAO
 function run_tao() {
@@ -153,15 +160,15 @@ function run_check_if_error() {
 }
 
 bash compile.sh
-# run_tao
-# run_gau
-# run_stk
+run_tao
+run_gau
+run_stk
 # run_gau_for_error
 # run_stk_for_error
-run_check_if_error
+# run_check_if_error
 
-# echo "processing tao, vary k, k = 100"
-# java -cp out mtree.tests.MTTest --W 10000 --slide 500 --R 1.9 --k 100 --datafile tao.txt > ${dir_path}/k_tao_100.log
+# echo "processing tao, vary k, k = 50"
+# java -cp out mtree.tests.MTTest --W 10000 --slide 500 --R 1.9 --k 50 --datafile tao.txt > k_tao_50.log
 
 # window_list=(50000)
 # window_list=(10000 50000 100000 150000 200000)
