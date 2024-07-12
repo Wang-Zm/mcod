@@ -2,3 +2,4 @@
 /.idea
 *.iml
 /log/vary_params/check*
+hs_err*.log
