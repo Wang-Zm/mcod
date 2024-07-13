@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import mtree.tests.Data;
-import mtree.tests.MesureMemoryThread;
+import mtree.tests.MeasureMemoryThread;
 import mtree.utils.Constants;
 import mtree.utils.Utils;
 
@@ -53,11 +53,15 @@ public class MicroCluster {
             .peek((d) -> processData(d, currentTime, false))
             .forEach((d) -> dataList.add(d));
         ArrayList<Data> result = new ArrayList<>(outlierList);
-        MesureMemoryThread.timeForNewSlide += Utils.getCPUTime() - startTime;
+        MeasureMemoryThread.timeForNewSlide += Utils.getCPUTime() - startTime;
         // OutlierTest.computeOutlier(dataList, mtree);
         // System.out.println("Outlier detected for new");
         // OutlierTest.compareOutlier(outlierList, dataList, mtree);
         // System.out.println("Outlier compared for new");
+        
+        numberCluster += microClusters.size();
+        numberPointsInEventQueue += eventQueue.size();
+        numberPointsInClusters += W - PD.size();
         return result;
     }
 
@@ -69,35 +73,36 @@ public class MicroCluster {
             MCObject d = dataList.get(i);
             expiredData.add(d);
             if (d.isInCluster) {
-                ArrayList<MCObject> inCluster_objects2;
-                inCluster_objects2 = microClusters.get(d.cluster);
                 long startTime2 = Utils.getCPUTime();
-                inCluster_objects2.remove(d);
-                MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime2;
-                if (inCluster_objects2.size() < Constants.k + 1) {
-                    processShrinkCluster(d.cluster, inCluster_objects2, currentTime);
+                ArrayList<MCObject> inClusterObjects = microClusters.get(d.cluster);
+                MeasureMemoryThread.removeTimesForObjectsInClusterWhenExpiring++;
+                inClusterObjects.remove(d); // R 过大时，remove 的开销大，移除的很多点在 cluster 中，或者这个直接不写。
+                if (inClusterObjects.size() < Constants.k + 1) {
+                    long startShrink = Utils.getCPUTime();
+                    processShrinkCluster(inClusterObjects, currentTime);
+                    MeasureMemoryThread.timeForShrinkCluster += Utils.getCPUTime() - startShrink;
                 }
+                MeasureMemoryThread.timeForExpireDataInCluster += Utils.getCPUTime() - startTime2;
             } else { // d is in PD
                 long startTime2 = Utils.getCPUTime();
                 PD.remove(d);
                 d.Rmc.stream()
                     .map((c) -> associateObjects.get(c))
                     .forEach((list_associates) -> list_associates.remove(d));
-                MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime2;
+                MeasureMemoryThread.timeForExpireDataInPD += Utils.getCPUTime() - startTime2;
             }
         }
         dataList.subList(0, slide).clear();
+        long startTime2 = Utils.getCPUTime();
         processEventQueue(expiredData, currentTime); // ! 之前的是减少对 cluster 的干扰，现在是处理 expiredData 自己
-        MesureMemoryThread.timeForExpireSlide += Utils.getCPUTime() - startTime;
+        MeasureMemoryThread.timeForProcessEventQueue += Utils.getCPUTime() - startTime2;
+        MeasureMemoryThread.timeForExpireSlide += Utils.getCPUTime() - startTime;
     }
 
-    private void processShrinkCluster(MCObject _cluster, ArrayList<MCObject> inCluster_objects, int currentTime) {
+    private void processShrinkCluster(ArrayList<MCObject> inCluster_objects, int currentTime) {
         // * 1.PD 中的部分点引用该 cluster，这些 PD 中删除这些引用，确实需借助 associate_objects 2.从 mtree, micro_clusters, associate_objects 中移除 cluster
         // * 3.将这些点下放到 PD 中，看是否能够再凑齐 cluster
 
-        if (_cluster != inCluster_objects.get(0).cluster) {
-            throw new RuntimeException("_cluster != inCluster_objects.get(0).cluster");
-        }
         long startTime = Utils.getCPUTime();
         MCObject cluster = inCluster_objects.get(0).cluster;
         ArrayList<MCObject> list_associates = associateObjects.get(cluster);
@@ -108,7 +113,7 @@ public class MicroCluster {
         associateObjects.remove(cluster);
         microClusters.remove(cluster);
 
-        MesureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime;
+        MeasureMemoryThread.timeForIndexing += Utils.getCPUTime() - startTime;
         inCluster_objects.forEach((d) -> {
             d.cluster = null;
             d.isInCluster = false;
@@ -132,9 +137,6 @@ public class MicroCluster {
         d.isInCluster = true;
 
         ArrayList<MCObject> list = microClusters.get(cluster);
-        if (list.contains(d)) {
-            throw new RuntimeException("Duplicate object in micro_cluster");
-        }
         list.add(d);
         microClusters.put(cluster, list);
 
@@ -145,7 +147,11 @@ public class MicroCluster {
                 List<MCObject> collect = objects.stream().filter(o -> o.fromShrinkCluster).collect(Collectors.toList());
                 objects = (ArrayList<MCObject>) collect;
             }
+            long startTime = Utils.getCPUTime();
             updateNeighborsOfList(objects, d);
+            if (!fromCluster) {
+                MeasureMemoryThread.timeForAddObjectToClusterUpdateNeighbors += Utils.getCPUTime() - startTime;
+            }
         }
     }
 
@@ -215,7 +221,8 @@ public class MicroCluster {
             }
             o.Rmc.clear();
         }
-        d.isCenter = true;microClusters.put(d, neighbor_in_R2);
+        d.isCenter = true;
+        microClusters.put(d, neighbor_in_R2);
         mtree.add(d);
         mTreeNodeList.add(d);
 
@@ -305,6 +312,7 @@ public class MicroCluster {
         if (d.arrivalTime <= currentTime - Constants.W) {
             throw new RuntimeException("d.arrivalTime <= currentTime - Constants.W");
         }
+        long startTime = Utils.getCPUTime();
         MTreeClass.Query query = mtree.getNearestByRange(d, Constants.R * 3 / 2);
         double min_distance = Double.MAX_VALUE;
         MTreeClass.ResultItem ri = null;
@@ -318,14 +326,25 @@ public class MicroCluster {
             ri = results.get(0);
             min_distance = ri.distance;
         }
+        if (!fromCluster) {
+            MeasureMemoryThread.timeForQuerying += Utils.getCPUTime() - startTime;
+        }
 
         if (min_distance <= Constants.R / 2) {
             // * assign to this closet cluster
+            long startTime2 = Utils.getCPUTime();
             MCObject closest_cluster = (MCObject) (ri.data);
             addObjectToCluster(d, closest_cluster, fromCluster);
+            if (!fromCluster) {
+                MeasureMemoryThread.timeForAddObjectToCluster += Utils.getCPUTime() - startTime2;
+            }
         } else {
             // * do range query in PD and MTree (distance to center <= 3/2R)
+            long startTime2 = Utils.getCPUTime();
             rangeQueryInPDAndCluster(results, d, fromCluster);
+            if (!fromCluster) {
+                MeasureMemoryThread.timeForRangeQueryInPDAndCluster += Utils.getCPUTime() - startTime2;
+            }
         }
     }
 

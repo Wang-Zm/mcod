@@ -13,9 +13,7 @@ public class Stream {
     public ArrayList<Data> dataList;
 
     public static Stream getInstance(String file) {
-        // 根据传入的文件名，生成一个数组，每次返回指定区间的数据
         streamInstance = new Stream();
-        // 读取文件中的数据
         streamInstance.getData(file);
         return streamInstance;
     }

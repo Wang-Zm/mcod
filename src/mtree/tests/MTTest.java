@@ -1,10 +1,7 @@
 package mtree.tests;
 
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,13 +16,11 @@ public class MTTest {
 
     public static void main(String[] args) throws IOException, FileNotFoundException, ParseException {
         readArguments(args);
-        MesureMemoryThread mesureThread = new MesureMemoryThread();
-        // mesureThread.start();
+        MeasureMemoryThread mesureThread = new MeasureMemoryThread();
         Stream s = Stream.getInstance(Constants.dataFile);
         MicroCluster micro = new MicroCluster();
         int numberWindows = 0;
         double totalTime = 0;
-        // currentTime = 450000;
         while (true) {
             numberWindows++;
             ArrayList<Data> incomingData;
@@ -46,42 +41,52 @@ public class MTTest {
             outliers6.forEach((outlier) -> idOutliers.add(outlier.arrivalTime));
             if (numberWindows == 1) {
                 totalTime = 0;
-                MesureMemoryThread.timeForIndexing = 0;
-                MesureMemoryThread.timeForNewSlide = 0;
-                MesureMemoryThread.timeForExpireSlide = 0;
+                MeasureMemoryThread.timeForIndexing = 0;
+                MeasureMemoryThread.timeForNewSlide = 0;
+                MeasureMemoryThread.timeForExpireSlide = 0;
+                MicroCluster.numberCluster = 0;
+                MicroCluster.numberPointsInClusters = 0;
+                MicroCluster.numberPointsInEventQueue = 0;
             }
             System.out.println("#window: " + numberWindows);
             System.out.println("Total #outliers: " + idOutliers.size());
-            System.out.println("Average Time: " + totalTime * 1.0 / numberWindows * 1000 + " ms");
-            System.out.println("Peak memory: " + MesureMemoryThread.maxMemory * 1.0 / 1024 / 1024 + " MB");
-            System.out.println("Time index, remove data from structure: " + MesureMemoryThread.timeForIndexing * 1.0 / 1000000000 / numberWindows);
-            System.out.println("Time for querying: " + MesureMemoryThread.timeForQuerying * 1.0 / 1000000000 / numberWindows);
-            System.out.println("Time for new slide: " + MesureMemoryThread.timeForNewSlide * 1.0 / 1000000000 / numberWindows);
-            System.out.println("Time for expired slide: " + MesureMemoryThread.timeForExpireSlide * 1.0 / 1000000000 / numberWindows);
+            if (numberWindows == 1) continue;
+            System.out.printf("Average Time: %.3f ms\n", totalTime / (numberWindows - 1) * 1000);
+            System.out.printf("Peak memory: %.3f MB\n", MeasureMemoryThread.maxMemory * 1.0 / 1024 / 1024);
+            // System.out.printf("Time index, remove data from structure: %.3f ms\n", MesureMemoryThread.timeForIndexing / 1000000 / (numberWindows - 1));
+            System.out.printf("Time for shrinking cluster: %.3f ms\n", MeasureMemoryThread.timeForShrinkCluster / 1000000 / (numberWindows - 1));
+            System.out.printf("Time for expiring data in cluster: %.3f ms\n", MeasureMemoryThread.timeForExpireDataInCluster / 1000000 / (numberWindows - 1));
+            System.out.printf("Time for expiring data in PD: %.3f ms\n", MeasureMemoryThread.timeForExpireDataInPD / 1000000 / (numberWindows - 1));
+            System.out.printf("Time for processing event queue: %.3f ms\n", MeasureMemoryThread.timeForProcessEventQueue / 1000000 / (numberWindows - 1));
+            System.out.printf("Time for expired slide: %.3f ms\n", MeasureMemoryThread.timeForExpireSlide / 1000000 / (numberWindows - 1));
+            System.out.printf("Time for querying: %.3f ms\n", MeasureMemoryThread.timeForQuerying / 1000000 / (numberWindows - 1));
+            System.out.printf("Time for updating neighbors when adding object to cluster: %.3f ms\n", MeasureMemoryThread.timeForAddObjectToClusterUpdateNeighbors / 1000000 / (numberWindows - 1));
+            System.out.printf("Time for adding object to cluster: %.3f ms\n", MeasureMemoryThread.timeForAddObjectToCluster / 1000000 / (numberWindows - 1));
+            System.out.printf("Time for range query in PD and cluster: %.3f ms\n", MeasureMemoryThread.timeForRangeQueryInPDAndCluster / 1000000 / (numberWindows - 1));
+            System.out.printf("Time for new slide: %.3f ms\n", MeasureMemoryThread.timeForNewSlide / 1000000 / (numberWindows - 1));
+            System.out.printf("Number clusters = %.3f\n", MicroCluster.numberCluster / (numberWindows - 1));
+            System.out.printf("Avg Number points in event queue = %.3f\n", MicroCluster.numberPointsInEventQueue / (numberWindows - 1));
+            System.out.printf("Avg number points in clusters = %.3f\n", MicroCluster.numberPointsInClusters / (numberWindows - 1));
+            System.out.printf("Avg remove times for objects in clusters when expiring = %.3f\n", 1.0 * MeasureMemoryThread.removeTimesForObjectsInClusterWhenExpiring / (numberWindows - 1));
+            // System.out.println("Avg Rmc size = " + MicroCluster.avgPointsInRmcAllWindows / (numberWindows - 1));
+            // System.out.println("Avg Length exps= " + MicroCluster.avgLengthExpsAllWindows / (numberWindows - 1));
             System.out.println("------------------------------------");
-            System.out.println("Number clusters = " + MicroCluster.numberCluster / numberWindows);
-            System.out.println("Max Number points in event queue = " + MicroCluster.numberPointsInEventQueue);
-            System.out.println("Avg number points in clusters= " + MicroCluster.numberPointsInClustersAllWindows / numberWindows);
-            System.out.println("Avg Rmc size = " + MicroCluster.avgPointsInRmcAllWindows / numberWindows);
-            System.out.println("Avg Length exps= " + MicroCluster.avgLengthExpsAllWindows / numberWindows);
 
             // reset
             idOutliers.clear();
         }
-        MicroCluster.numberCluster = MicroCluster.numberCluster / numberWindows;
-        MicroCluster.avgPointsInRmcAllWindows = MicroCluster.avgPointsInRmcAllWindows / numberWindows;
-        MicroCluster.avgLengthExpsAllWindows = MicroCluster.avgLengthExpsAllWindows / numberWindows;
-        MicroCluster.numberPointsInClustersAllWindows = MicroCluster.numberPointsInClustersAllWindows / numberWindows;
-        mesureThread.averageTime = totalTime / (numberWindows - 1) * 1000;
+        MicroCluster.numberCluster = MicroCluster.numberCluster / (numberWindows - 2);
+        MicroCluster.avgPointsInRmcAllWindows = MicroCluster.avgPointsInRmcAllWindows / (numberWindows - 2);
+        MicroCluster.avgLengthExpsAllWindows = MicroCluster.avgLengthExpsAllWindows / (numberWindows - 2);
+        MicroCluster.numberPointsInClustersAllWindows = MicroCluster.numberPointsInClustersAllWindows / (numberWindows - 2);
+        mesureThread.averageTime = totalTime / (numberWindows - 2) * 1000;
         mesureThread.computeMemory();
         mesureThread.writeResult();
-        // mesureThread.stop();
         mesureThread.interrupt();
     }
 
     public static void readArguments(String[] args) {
         for (int i = 0; i < args.length; i++) {
-            //check if arg starts with --
             String arg = args[i];
             if (arg.indexOf("--") == 0) {
                 switch (arg) {
@@ -114,15 +119,6 @@ public class MTTest {
                         break;
                 }
             }
-        }
-    }
-
-    public static void writeResult() {
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Constants.resultFile, true)))) {
-            for (Integer time : idOutliers) {
-                out.println(time);
-            }
-        } catch (IOException e) {
         }
     }
 }
