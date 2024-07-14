@@ -8,7 +8,4 @@ public class Constants {
     public static int slide = 500;
     public static int samplingPeriod = 100;
     public static String dataFile= "";
-    public static String outputFile= "outputDefault.txt";
-    public static String resultFile="";
-    public static double likely = 0.5;
 }

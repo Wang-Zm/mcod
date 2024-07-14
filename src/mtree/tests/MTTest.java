@@ -102,20 +102,11 @@ public class MTTest {
                     case "--datafile":
                         Constants.dataFile = args[i + 1];
                         break;
-                    case "--output":
-                        Constants.outputFile = args[i + 1];
-                        break;
                     case "--slide":
                         Constants.slide = Integer.valueOf(args[i + 1]);
                         break;
-                    case "--resultFile":
-                        Constants.resultFile = args[i + 1];
-                        break;
                     case "--samplingTime":
                         Constants.samplingPeriod = Integer.valueOf(args[i + 1]);
-                        break;
-                    case "--likely":
-                        Constants.likely = Double.valueOf(args[i + 1]);
                         break;
                 }
             }

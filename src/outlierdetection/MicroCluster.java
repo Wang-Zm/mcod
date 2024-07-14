@@ -41,10 +41,6 @@ public class MicroCluster {
     public ArrayList<Data> detectOutlier(ArrayList<Data> data, int currentTime, int W, int slide) {        
         // * purge expired data
         purgeExpiredData(currentTime, slide);
-        // OutlierTest.computeOutlier(dataList, mtree);
-        // System.out.println("Outlier detected for expired");
-        // OutlierTest.compareOutlier(outlierList, dataList, mtree);
-        // System.out.println("Outlier compared for expired");
 
         // * process new incoming data
         long startTime = Utils.getCPUTime();
@@ -76,7 +72,7 @@ public class MicroCluster {
                 long startTime2 = Utils.getCPUTime();
                 ArrayList<MCObject> inClusterObjects = microClusters.get(d.cluster);
                 MeasureMemoryThread.removeTimesForObjectsInClusterWhenExpiring++;
-                inClusterObjects.remove(d); // R 过大时，remove 的开销大，移除的很多点在 cluster 中，或者这个直接不写。
+                inClusterObjects.remove(d);
                 if (inClusterObjects.size() < Constants.k + 1) {
                     long startShrink = Utils.getCPUTime();
                     processShrinkCluster(inClusterObjects, currentTime);
@@ -94,15 +90,12 @@ public class MicroCluster {
         }
         dataList.subList(0, slide).clear();
         long startTime2 = Utils.getCPUTime();
-        processEventQueue(expiredData, currentTime); // ! 之前的是减少对 cluster 的干扰，现在是处理 expiredData 自己
+        processEventQueue(expiredData, currentTime);
         MeasureMemoryThread.timeForProcessEventQueue += Utils.getCPUTime() - startTime2;
         MeasureMemoryThread.timeForExpireSlide += Utils.getCPUTime() - startTime;
     }
 
     private void processShrinkCluster(ArrayList<MCObject> inCluster_objects, int currentTime) {
-        // * 1.PD 中的部分点引用该 cluster，这些 PD 中删除这些引用，确实需借助 associate_objects 2.从 mtree, micro_clusters, associate_objects 中移除 cluster
-        // * 3.将这些点下放到 PD 中，看是否能够再凑齐 cluster
-
         long startTime = Utils.getCPUTime();
         MCObject cluster = inCluster_objects.get(0).cluster;
         ArrayList<MCObject> list_associates = associateObjects.get(cluster);
@@ -119,8 +112,7 @@ public class MicroCluster {
             d.isInCluster = false;
             d.isCenter = false;
             if(d.arrivalTime > currentTime - Constants.W) {
-                processData(d, currentTime, true); // * only need to set its own neighbors, do not need to update other neighbors
-                // * actually, need to update neighbors which are from this cluster.
+                processData(d, currentTime, true);
                 d.fromShrinkCluster = true;
             }
         });
@@ -131,7 +123,6 @@ public class MicroCluster {
         });
     }
 
-    // 除了将 d 放到 cluster 里，还要增加 PD 中点的邻居
     public void addObjectToCluster(MCObject d, MCObject cluster, boolean fromCluster) {
         d.cluster = cluster;
         d.isInCluster = true;
@@ -196,7 +187,6 @@ public class MicroCluster {
         }
     }
 
-    // 1.设置自己 2.设置自己影响的点，包括 cluster associateObjects 与邻居情况
     private void formNewCluster(ArrayList<MCObject> neighbor_in_R2, ArrayList<MCObject> neighbor_in_3_2Apart_PD, MCObject d, boolean fromCluster) {
         neighbor_in_R2.add(d);
         for (MCObject o : neighbor_in_R2) {
@@ -228,9 +218,8 @@ public class MicroCluster {
 
         // update Rmc for points in PD
         neighbor_in_3_2Apart_PD.forEach((o) -> o.Rmc.add(d));
-        associateObjects.put(d, neighbor_in_3_2Apart_PD); // associate_objects value 是 PD 中的点
+        associateObjects.put(d, neighbor_in_3_2Apart_PD);
 
-        // * 对于新插入的点 d，更新 neighbor_in_3_2Apart_PD 点的邻居
         if (fromCluster) {
             List<MCObject> collect = neighbor_in_3_2Apart_PD.stream().filter(o -> o.fromShrinkCluster).collect(Collectors.toList());
             if (!collect.isEmpty()) {
@@ -242,7 +231,6 @@ public class MicroCluster {
     }
 
     private void applyEventBasedAlgo(ArrayList<MTreeClass.ResultItem> results, ArrayList<MCObject> neighbor_in_PD, MCObject d, boolean fromCluster) {
-        // 1.查 cluster 中的邻居数，并更新 d.Rmc 和 associate_objects
         ArrayList<MCObject> neighborInMTree = new ArrayList<>();
         if (!results.isEmpty()) {
             for (MTreeClass.ResultItem ri2 : results) {
@@ -254,15 +242,14 @@ public class MicroCluster {
                 if (object_in_cluster == null) throw new RuntimeException("no object in cluster");
                 for (MCObject o : object_in_cluster) {
                     if (mtree.getDistanceFunction().calculate(d, o) <= Constants.R) {
-                        neighborInMTree.add(o); // 记录 d 的在 cluster 中的邻居
+                        neighborInMTree.add(o);
                     }
                 }
             }        
         }
         
-        // 2.PD 中的点的 exps 与 succeeding 要因 d 更新：设置 PD 中的点的 exps 与 succeeding + 设置 d 的 exps 与 succeeding
         Stream<MCObject> stream = neighbor_in_PD.stream();
-        if (fromCluster) { // wzm: should not to update neighbors when d is from cluster
+        if (fromCluster) {
             stream = stream.filter(o -> o.fromShrinkCluster);
         }
         stream.peek((o) -> {
@@ -276,34 +263,32 @@ public class MicroCluster {
             eventQueue.add(o);
         });
 
-        // 3.d 的 exps 和 succeeding 因 PD 中的点和 cluster 点更新
         neighbor_in_PD.forEach((o) -> {
             updateNeighbors(o, d);
         });
         neighborInMTree.forEach((o) -> {
             updateNeighbors(o, d);
         });
-        //4.判别 d 的 outlier 状态，进行对应的处理
         PD.add(d);
         d.exps.sort(Collections.reverseOrder());
         for (int i = d.exps.size() - 1; i >= Constants.k - d.numberOfSucceeding && i >= 0; i--) {
-            d.exps.remove(i); // 当 d.exps.size() + d.numberOfSucceeding > k 时，去掉多余的 d.exps 中的点，但是要剩 k - d.numberOfSucceeding 个，即 i = k - d.numberOfSucceeding - 1
+            d.exps.remove(i);
         }
         if (d.numberOfSucceeding + d.exps.size() < Constants.k) {
-            outlierList.add(d); // outlier 无需再设置 ev，无需添加到 eventQueue 中
+            outlierList.add(d);
         } else if (d.numberOfSucceeding + d.exps.size() >= Constants.k && !d.exps.isEmpty()) {
             // * keep k most recent preceding neighbors
             d.ev = min(d.exps);
-            eventQueue.add(d); // eventQueue 看的是 element.ev
+            eventQueue.add(d);
         }
     }
 
     private void updateNeighbors(MCObject neighbor, MCObject updatingObject) {
         if ((updatingObject.arrivalTime - 1) / Constants.slide == (neighbor.arrivalTime - 1) / Constants.slide
-                || neighbor.arrivalTime > updatingObject.arrivalTime) { // neighbor 在 updatingObject 的后面
-            updatingObject.numberOfSucceeding++; // 操作的都是 PD 中的点，不操作 neighbor
+                || neighbor.arrivalTime > updatingObject.arrivalTime) {
+            updatingObject.numberOfSucceeding++;
             updatingObject.succeedings.add(neighbor.arrivalTime);
-        } else { // neighbor 在 updatingObject 的前面
+        } else {
             updatingObject.exps.add(neighbor.arrivalTime + Constants.W);
         }
     }
